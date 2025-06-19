@@ -1,21 +1,31 @@
-import { Button } from "@/app/components/ui/button";
-import { Separator } from "@/app/components/ui/separator";
-import { SidebarTrigger } from "@/app/components/ui/sidebar";
-import { ThemeToggle } from "./theme-toggle";
+"use client";
 
-export function SiteHeader() {
+import { useSite } from "@/lib/store/site";
+
+import { SidebarHeader } from "@/components/ui/sidebar";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Separator } from "@/components/ui/separator";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Skeleton } from "./ui/skeleton";
+
+export default function SiteHeader() {
+  const { title } = useSite();
   return (
-    <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
-      <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
+    <header className="flex h-16 shrink-0 items- justify-between gap-2">
+      <div className="flex items-center gap-2 px-4">
         <SidebarTrigger className="-ml-1" />
         <Separator
           orientation="vertical"
-          className="mx-2 data-[orientation=vertical]:h-4"
+          className="mr-2 data-[orientation=vertical]:h-4"
         />
-        <h1 className="text-base font-medium">Documents</h1>
-        <div className="ml-auto flex items-center gap-2">
-          <ThemeToggle />
-        </div>
+        {title ? (
+          <SidebarHeader>{title}</SidebarHeader>
+        ) : (
+          <Skeleton className="h-4 w-20 sm:w-40" />
+        )}
+      </div>
+      <div className="content-center mr-4">
+        <ThemeToggle />
       </div>
     </header>
   );
