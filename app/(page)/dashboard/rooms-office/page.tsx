@@ -1,20 +1,12 @@
-import { roomType } from "@/validators/roomSchema";
+import { RoomsOffice } from "@/components/dashboard/rooms-office/room-office";
 
-export default async function RoomsOffice() {
+export default async function RoomsOfficePage() {
   const url = process.env.NEXT_PUBLIC_API_URL;
   const res = await fetch(`${url}/api/rooms`);
   const data = await res.json();
-
-  console.log("data", data);
-
   return (
-    <>
-      {data.map((item:roomType) => (
-        <li key={item.id}>
-          {item.number}-{item.location}-{item.type}-{item.description}-
-          {item.pricePerNight}
-        </li>
-      ))}
-    </>
+    <div>
+      <RoomsOffice data={data} />
+    </div>
   );
 }

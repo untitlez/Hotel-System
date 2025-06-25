@@ -1,14 +1,12 @@
 import { z } from "zod";
 
-export const userSchema = z.object({
-  id: z.string().optional(),
-  name: z.string().nullable().optional(),
-  email: z.string().email(),
-  passwordHash: z.string(),
-  role: z.enum(["ADMIN", "MEMBER"]).optional(),
-  createdAt: z.date().optional(),
-  updatedAt: z.date().optional(),
-  deletedAt: z.date().nullable().optional(),
+export const UserSchema = z.object({
+  id: z.string().cuid(),
+  email: z.string().email("อีเมลไม่ถูกต้อง"),
+  password: z.string(),
+  role: z.enum(["ADMIN", "MEMBER"]).default("MEMBER"),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+  deletedAt: z.coerce.date().nullable(),
 });
-
-export type userType = z.infer<typeof userSchema>;
+export type UserType = z.infer<typeof UserSchema>;

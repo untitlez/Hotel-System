@@ -3,7 +3,7 @@ import {
   removeProfile,
   updateProfile,
 } from "@/services/usersProfile.services";
-import { userProfileSchema } from "@/validators/userProfileSchema";
+import { UserProfileSchema } from "@/validators/userProfileSchema";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -25,7 +25,7 @@ export async function PUT(
 ) {
   try {
     const body = await req.json();
-    const parsed = userProfileSchema.safeParse(body);
+    const parsed = UserProfileSchema.safeParse(body);
     const payload = await updateProfile(params.id, parsed.data);
 
     return NextResponse.json({

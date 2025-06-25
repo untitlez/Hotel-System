@@ -1,9 +1,10 @@
 import { Inter } from "next/font/google";
 
-import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/dashboard/layout/app-sidebar";
 import { SidebarInset } from "@/components/ui/sidebar";
-import SiteHeader from "@/components/site-header";
+import SiteHeader from "@/components/dashboard/layout/site-header";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,6 +23,7 @@ export default function DashboardLayout({
       <SidebarInset>
         <SiteHeader />
         <section className="mx-4">{children}</section>
+        <Toaster position="top-right" expand={true} richColors />
       </SidebarInset>
     </SidebarProvider>
   );

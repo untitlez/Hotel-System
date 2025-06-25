@@ -20,6 +20,7 @@ export const updateProfile = async (paramsId: string, parsed: any) => {
       birthday: parsed.birthday,
       address: parsed.address,
       phone: parsed.phone,
+      status: parsed.status,
     },
   });
   return services;

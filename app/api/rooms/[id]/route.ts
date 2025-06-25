@@ -8,7 +8,7 @@ export async function GET(
   try {
     const payload = await prisma.room.findUnique({
       where: {
-        id: params.id,
+        id: await params.id,
       },
     });
     return NextResponse.json(payload);
@@ -26,7 +26,7 @@ export async function PUT(
     const body = await req.json();
     const payload = await prisma.room.update({
       where: {
-        id: params.id,
+        id: await params.id,
       },
       data: body,
     });
@@ -47,7 +47,7 @@ export async function DELETE(
   try {
     await prisma.room.delete({
       where: {
-        id: params.id,
+        id: await params.id,
       },
     });
     return NextResponse.json({

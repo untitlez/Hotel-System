@@ -1,14 +1,14 @@
 import { z } from "zod";
 
 export const bookingSchema = z.object({
-  id: z.string().optional(),
-  userId: z.string(),
-  roomId: z.string(),
-  checkInDate: z.date(),
-  checkOutDate: z.date(),
-  createdAt: z.date().optional(),
-  updatedAt: z.date().optional(),
-  deletedAt: z.date().nullable().optional(),
+  id: z.string().cuid(),
+  userId: z.string().cuid(),
+  roomId: z.string().cuid(),
+  checkInDate: z.coerce.date(),
+  checkOutDate: z.coerce.date(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+  deletedAt: z.coerce.date().nullable(),
 });
 
-export type bookingType = z.infer<typeof bookingSchema>;
+export type BookingType = z.infer<typeof bookingSchema>;

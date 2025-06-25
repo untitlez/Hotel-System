@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createNewUser, getAllUser } from "@/services/users.services";
-import { userSchema } from "@/validators/userSchema";
+import { UserSchema } from "@/validators/userSchema";
 
 export async function GET() {
   try {
@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const parsed = userSchema.safeParse(body);
+    const parsed = UserSchema.safeParse(body);
     const payload = await createNewUser(parsed);
     return NextResponse.json({
       message: "Created successfully",

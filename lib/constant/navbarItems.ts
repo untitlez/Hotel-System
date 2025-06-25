@@ -1,4 +1,4 @@
-import { Armchair, BookOpen, Command, LayoutDashboard, Settings, User } from "lucide-react"
+import { Armchair, BookOpen, Command, LayoutDashboard, Send, Settings, User } from "lucide-react"
 
 export const navbarItems = {
   navHeader: {
@@ -31,12 +31,17 @@ export const navbarItems = {
   ],
 
   navSecondary: [
+       {
+      title: "Contact",
+      url: "#",
+      icon: Send,
+    },
     {
       title: "Settings",
       url: "#",
       icon: Settings,
     },
-  ],
+     ],
   navUser: {
     name: "Shiba Inu",
     email: "shiba@example.com",

@@ -7,46 +7,61 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  ADMIN
+  MEMBER
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+}
+
 model User {
-  id           String       @id @default(cuid())
-  name         String?
-  email        String       @unique
-  passwordHash String
-  role         UserRole     @default(MEMBER)
-  profile      UserProfile?
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  deletedAt    DateTime?
-  bookings     Booking[]
+  id        String       @id @default(cuid())
+  email     String       @unique
+  password  String
+  role      UserRole     @default(MEMBER)
+  profile   UserProfile?
+  bookings  Booking[]
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  deletedAt DateTime?
+
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@index([deletedAt])
 }
 
 model UserProfile {
-  id        String    @id
-  user      User      @relation(fields: [id], references: [id])
+  id        String     @id
+  user      User       @relation(fields: [id], references: [id])
   fullName  String?
   gender    String?
   birthday  DateTime?
   address   String?
   phone     String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  status    UserStatus @default(ACTIVE)
+  updatedAt DateTime   @updatedAt
 
   @@index([updatedAt])
 }
 
 model Room {
   id            String    @id @default(cuid())
-  number        String    @unique
-  location      String
+  roomNumber    String?   @unique
+  location      String?
   type          String?
   description   String?
-  pricePerNight Int
+  pricePerNight Int?
   bookings      Booking[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   deletedAt     DateTime?
 
   @@index([type, location])
+  @@index([pricePerNight])
+  @@index([createdAt])
   @@index([updatedAt])
   @@index([deletedAt])
 }
@@ -63,12 +78,8 @@ model Booking {
   updatedAt    DateTime  @updatedAt
   deletedAt    DateTime?
 
-  @@index([roomId])
+  @@index([userId, checkInDate, checkOutDate])
+  @@index([createdAt])
   @@index([updatedAt])
   @@index([deletedAt])
-}
-
-enum UserRole {
-  ADMIN
-  MEMBER
 }

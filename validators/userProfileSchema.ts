@@ -1,14 +1,24 @@
 import { z } from "zod";
 
-export const userProfileSchema = z.object({
-  id: z.string(),
-  fullName: z.string().optional().nullable(),
-  gender: z.string().optional().nullable(),
-  birthday: z.date().optional().nullable(),
-  address: z.string().optional().nullable(),
-  phone: z.string().optional().nullable(),
-  createdAt: z.date().optional(),
-  updatedAt: z.date().optional(),
+export const UserProfileSchema = z.object({
+  id: z.string().cuid(),
+  fullName: z.string().optional(),
+  gender: z.string().optional(),
+  birthday: z.date().optional(),
+  address: z.string().optional(),
+  phone: z.string().optional(),
+  status: z.enum(["ACTIVE", "DISABLED"]).default("ACTIVE"),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date().optional(),
 });
+export type UserProfileType = z.infer<typeof UserProfileSchema>;
 
-export type userProfileType = z.infer<typeof userProfileSchema>;
+export const ListUserProfileSchema = UserProfileSchema.pick({
+  fullName: true,
+  gender: true,
+  birthday: true,
+  address: true,
+  phone: true,
+  status: true,
+});
+export type ListUserProfileType = z.infer<typeof ListUserProfileSchema>;

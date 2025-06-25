@@ -7,20 +7,8 @@ export const getAllUser = async () => {
       deletedAt: null,
     },
     select: {
-      id: true,
-      name: true,
-      email: true,
-      role: true,
-      profile: {
-        select: {
-          id: true,
-        },
-      },
-      bookings: {
-        select: {
-          id: true,
-        },
-      },
+      profile: true,
+      bookings: true,
       createdAt: true,
     },
   });
@@ -40,13 +28,15 @@ export const listUser = async (paramsId: string) => {
       id: paramsId,
     },
     select: {
-      name: true,
-      email: true,
       role: true,
       profile: true,
       bookings: true,
+      createdAt: true,
+      updatedAt: true,
+      deletedAt: true,
     },
   });
+
   return services;
 };
 
@@ -56,7 +46,6 @@ export const updateUser = async (paramsId: string, parsed: any) => {
       id: paramsId,
     },
     data: {
-      name: parsed.name,
       email: parsed.name,
       role: parsed.name,
     },
