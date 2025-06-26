@@ -1,4 +1,4 @@
-import { MembersOffice } from "@/components/dashboard/members-office/members-office";
+import { MembersOffice } from "@/components/dashboard/member-office/members-office";
 
 export default async function MembersOfficePage() {
   const url = process.env.NEXT_PUBLIC_API_URL;

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Search } from "lucide-react";
 
-import { UserProfileType } from "@/validators/userProfileSchema";
+import { UserProfileType } from "@/validators/user-profile.validator";
 
 import { Input } from "@/components/ui/input";
 import {

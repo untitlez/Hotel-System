@@ -1,4 +1,4 @@
-import RoomsOfficeForm from "@/components/dashboard/rooms-office/room-office-form";
+import RoomsOfficeForm from "@/components/dashboard/room-office/room-office-form";
 
 export default async function CreateRoomPage({
   params,

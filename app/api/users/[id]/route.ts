@@ -1,5 +1,5 @@
-import { listUser, removeUser, updateUser } from "@/services/users.services";
-import { userSchema } from "@/validators/userSchema";
+import { listUser, removeUser, updateUser } from "@/services/user.services";
+import { UserSchema } from "@/validators/user.validator";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -21,7 +21,7 @@ export async function PUT(
 ) {
   try {
     const body = await req.json();
-    const parsed = userSchema.safeParse(body);
+    const parsed = UserSchema.safeParse(body);
     const payload = await updateUser(params.id, parsed);
     return NextResponse.json({
       message: "Update successfully",

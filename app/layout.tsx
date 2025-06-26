@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Quicksand } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster position="top-right" expand={true} richColors />
         </ThemeProvider>
       </body>
     </html>

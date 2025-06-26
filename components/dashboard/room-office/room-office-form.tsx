@@ -8,8 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronLeft, Loader2Icon, X } from "lucide-react";
 import axios from "axios";
 
-import { RoomFormSchema, RoomFormType } from "@/validators/roomSchema";
-import { inputItems } from "@/lib/constant/create-room/inputItems";
+import { RoomFormSchema, RoomFormType } from "@/validators/room.validator";
+import { inputItems } from "@/lib/fields/rooms-office";
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
 
@@ -65,7 +65,7 @@ export default function RoomsOfficeForm({ data }: RoomsOfficeFormProps) {
     if (data) {
       try {
         await axios.put(Config.API_URL + Endpoints.rooms + paramsId, newData);
-        toast.success("Edit Room Info Success!");
+        toast.success("Changes saved successfully.");
         console.log("Form Data", newData);
         router.push("/dashboard/rooms-office");
       } catch (error: unknown) {
@@ -75,7 +75,7 @@ export default function RoomsOfficeForm({ data }: RoomsOfficeFormProps) {
     } else {
       try {
         await axios.post(Config.API_URL + Endpoints.rooms, newData);
-        toast.success("Create Room Success!");
+        toast.success("Room created successfully!");
         console.log("Form Data", newData);
         reset();
         router.push("/dashboard/rooms-office");
@@ -90,7 +90,7 @@ export default function RoomsOfficeForm({ data }: RoomsOfficeFormProps) {
     if (!paramsId) return;
     try {
       await axios.delete(Config.API_URL + Endpoints.rooms + paramsId);
-      toast.success("Deleted Success!");
+      toast.success("Item has been deleted.");
       router.push("/dashboard/rooms-office");
     } catch (error: unknown) {
       console.error("Error", error);

@@ -2,8 +2,8 @@ import {
   listProfile,
   removeProfile,
   updateProfile,
-} from "@/services/usersProfile.services";
-import { UserProfileSchema } from "@/validators/userProfileSchema";
+} from "@/services/user-profile.services";
+import { UserProfileSchema } from "@/validators/user-profile.validator";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(

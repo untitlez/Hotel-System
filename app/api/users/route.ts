@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createNewUser, getAllUser } from "@/services/users.services";
-import { UserSchema } from "@/validators/userSchema";
+import { createNewUser, getAllUser } from "@/services/user.services";
+import { UserSchema } from "@/validators/user.validator";
 
 export async function GET() {
   try {

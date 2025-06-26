@@ -1,4 +1,4 @@
-import { RoomsOffice } from "@/components/dashboard/rooms-office/room-office";
+import { RoomsOffice } from "@/components/dashboard/room-office/room-office";
 
 export default async function RoomsOfficePage() {
   const url = process.env.NEXT_PUBLIC_API_URL;

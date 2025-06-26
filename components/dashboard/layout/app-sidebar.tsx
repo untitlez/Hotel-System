@@ -11,7 +11,7 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar";
-import { navbarItems } from "@/lib/constant/navbarItems";
+import { navbarItems } from "@/lib/fields/app-sidebar";
 import { NavHeader } from "./nav-header";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

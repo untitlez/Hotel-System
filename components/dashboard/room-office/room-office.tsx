@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Search } from "lucide-react";
 
-import { RoomType } from "@/validators/roomSchema";
+import { RoomType } from "@/validators/room.validator";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

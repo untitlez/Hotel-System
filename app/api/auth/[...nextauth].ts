@@ -1,15 +1,60 @@
-// import NextAuth from "next-auth";
-// import GithubProvider from "next-auth/providers/github";
+// import NextAuth from 'next-auth'
+// import CredentialsProvider from 'next-auth/providers/credentials'
+// import { PrismaClient } from '@prisma/client'
+// import bcrypt from 'bcrypt'
+// import { PrismaAdapter } from '@auth/prisma-adapter'
+
+// const prisma = new PrismaClient()
 
 // export const authOptions = {
-//   // Configure one or more authentication providers
 //   providers: [
-//     GithubProvider({
-//       clientId: process.env.GITHUB_ID,
-//       clientSecret: process.env.GITHUB_SECRET,
-//     }),
-//     // ...add more providers here
-//   ],
-// };
+//     CredentialsProvider({
+//       name: 'Credentials',
+//       credentials: {
+//         email: { label: 'Email', type: 'email', placeholder: 'john@doe.com' },
+//         password: { label: 'Password', type: 'password' },
+//       },
+//       async authorize(credentials, req) {
+//         if (!credentials) return null
+//         const user = await prisma.user.findUnique({
+//           where: { email: credentials.email },
+//         })
 
-// export default NextAuth(authOptions);
+//         if (
+//           user &&
+//           (await bcrypt.compare(credentials.password, user.password))
+//         ) {
+//           return {
+//             id: user.id,
+//             name: user.name,
+//             email: user.email
+//           }
+//         } else {
+//           throw new Error('Invalid email or password')
+//         }
+//       },
+//     })
+//   ],
+//   adapter: PrismaAdapter(prisma),
+//   session: {
+//     strategy: 'jwt',
+//   },
+//   callbacks: {
+//     jwt: async ({ token, user }) => {
+//       if (user) {
+//         token.id = user.id
+//       }
+//       return token
+//     },
+//     session: async ({ session, token }) => {
+//       if (session.user) {
+//         session.user.id = token.id
+//       }
+//       return session
+//     }
+//   },
+// }
+
+// const handler = NextAuth(authOptions)
+
+// export { handler as GET, handler as POST }
