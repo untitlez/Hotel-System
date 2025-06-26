@@ -22,7 +22,7 @@ import {
 
 import { useSite } from "@/lib/store/site";
 
-export function NavMain({
+export const NavMain = ({
   items,
 }: {
   items: {
@@ -35,7 +35,7 @@ export function NavMain({
       url: string;
     }[];
   }[];
-}) {
+}) => {
   const { setTitle } = useSite();
   return (
     <SidebarGroup>
@@ -85,4 +85,4 @@ export function NavMain({
       </SidebarMenu>
     </SidebarGroup>
   );
-}
+};

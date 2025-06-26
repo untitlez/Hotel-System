@@ -29,7 +29,7 @@ interface ModalButtonProps
   confirm?: string;
 }
 
-export function ModalButton({
+export const ModalButton = ({
   variant = "default",
   label = "Label",
   title = "Title",
@@ -37,7 +37,7 @@ export function ModalButton({
   cancel = "Cancel",
   confirm = "Confirm",
   ...props
-}: ModalButtonProps) {
+}: ModalButtonProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild className="cursor-pointer">
@@ -59,4 +59,4 @@ export function ModalButton({
       </AlertDialogContent>
     </AlertDialog>
   );
-}
+};

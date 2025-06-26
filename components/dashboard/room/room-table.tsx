@@ -17,20 +17,20 @@ import {
 } from "@/components/ui/table";
 import { useRouter } from "next/navigation";
 
-interface RoomsOfficeProps {
+const tableHeader = [
+  "Room Number",
+  "Image",
+  "Location",
+  "Room Type",
+  "Description",
+  "Price",
+];
+
+interface DashboardRoomTableProps {
   data: RoomType[];
 }
 
-export const RoomsOffice = ({ data }: RoomsOfficeProps) => {
-  const tableHeader = [
-    "Room Number",
-    "Image",
-    "Location",
-    "Room Type",
-    "Description",
-    "Price",
-  ];
-
+export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
   const router = useRouter();
 
   const handleView = (id: string) =>

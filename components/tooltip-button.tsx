@@ -17,14 +17,14 @@ interface TooltipButtonProps extends React.ComponentProps<typeof Button> {
   side?: "top" | "right" | "bottom" | "left";
   tooltip?: string;
 }
-export function TooltipButton({
+export const TooltipButton = ({
   label = "Label",
   icon: Icon,
   href = "#",
   side = "top",
   tooltip = "Tooltip",
   ...props
-}: TooltipButtonProps) {
+}: TooltipButtonProps) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -40,4 +40,4 @@ export function TooltipButton({
       </TooltipContent>
     </Tooltip>
   );
-}
+};

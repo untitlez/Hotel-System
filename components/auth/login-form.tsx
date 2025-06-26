@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
-export function LoginForm() {
+export const LoginForm = () => {
   return (
     <Card>
       <CardHeader className="text-center">
@@ -85,10 +85,7 @@ export function LoginForm() {
             </div>
             <div className="text-center text-sm">
               Don't have an account?{" "}
-              <Link
-                href="/login/sign-up"
-                className="underline underline-offset-4"
-              >
+              <Link href="/sign-up" className="underline underline-offset-4">
                 Sign up
               </Link>
             </div>
@@ -97,4 +94,4 @@ export function LoginForm() {
       </CardContent>
     </Card>
   );
-}
+};

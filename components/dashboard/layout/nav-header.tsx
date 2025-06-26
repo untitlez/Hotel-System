@@ -8,7 +8,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-export function NavHeader({
+export const NavHeader = ({
   items,
 }: {
   items: {
@@ -17,7 +17,7 @@ export function NavHeader({
     url: string;
     icon: LucideIcon;
   };
-}) {
+}) => {
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -28,11 +28,13 @@ export function NavHeader({
             </div>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-medium">{items.title}</span>
-              <span className="truncate text-xs text-muted-foreground">{items.subtitle}</span>
+              <span className="truncate text-xs text-muted-foreground">
+                {items.subtitle}
+              </span>
             </div>
           </a>
         </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>
   );
-}
+};

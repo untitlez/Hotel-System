@@ -9,7 +9,6 @@ import { ChevronLeft, Loader2Icon, X } from "lucide-react";
 import axios from "axios";
 
 import { RoomFormSchema, RoomFormType } from "@/validators/room.validator";
-import { inputItems } from "@/lib/fields/rooms-office";
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
 
@@ -40,11 +39,55 @@ import {
 } from "@/components/ui/select";
 import { ModalButton } from "@/components/modal-button";
 
-interface RoomsOfficeFormProps {
+const inputItems = [
+  {
+    name: "roomNumber",
+    label: "Room Number",
+    type: "text",
+    placeholder: "เช่น A101",
+    required: true,
+  },
+  {
+    name: "location",
+    label: "Location",
+    type: "text",
+    placeholder: "เช่น เชียงใหม่, ประเทศไทย",
+    required: true,
+  },
+  {
+    name: "type",
+    label: "Room Type",
+    type: "select",
+    placeholder: "เลือกประเภทห้อง",
+    options: [
+      { value: "Single Room", label: "Single Room" },
+      { value: "Twin Room", label: "Twin Room" },
+      { value: "Deluxe Room", label: "Deluxe Room" },
+      { value: "Suite", label: "Suite" },
+    ],
+    required: false,
+  },
+  {
+    name: "description",
+    label: "Description",
+    type: "text",
+    placeholder: "รายละเอียดเพิ่มเติม",
+    required: false,
+  },
+  {
+    name: "pricePerNight",
+    label: "Price",
+    type: "number",
+    placeholder: "เช่น 1000",
+    required: true,
+  },
+];
+
+interface DashboardRoomFormProps {
   data?: RoomFormType;
 }
 
-export default function RoomsOfficeForm({ data }: RoomsOfficeFormProps) {
+export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
   const form = useForm<RoomFormType>({
     resolver: zodResolver(RoomFormSchema),
     defaultValues: {
@@ -216,4 +259,4 @@ export default function RoomsOfficeForm({ data }: RoomsOfficeFormProps) {
       </CardContent>
     </Card>
   );
-}
+};

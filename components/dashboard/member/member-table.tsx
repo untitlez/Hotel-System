@@ -16,24 +16,24 @@ import {
 } from "@/components/ui/table";
 import { useRouter } from "next/navigation";
 
-interface MembersOfficeProps {
+const tableHeader = [
+  "Id",
+  "Image",
+  "Full Name",
+  "Gender",
+  "Birthday",
+  "Address",
+  "Phone",
+  "Status",
+  "CreatedAt",
+  "UpdatedAt",
+];
+
+interface DashboardMemberTableProps {
   data: UserProfileType[];
 }
 
-export const MembersOffice = ({ data }: MembersOfficeProps) => {
-  const tableHeader = [
-    "Id",
-    "Image",
-    "Full Name",
-    "Gender",
-    "Birthday",
-    "Address",
-    "Phone",
-    "Status",
-    "CreatedAt",
-    "UpdatedAt",
-  ];
-
+export const DashboardMemberTable = ({ data }: DashboardMemberTableProps) => {
   const router = useRouter();
 
   const handleView = (id: string) =>

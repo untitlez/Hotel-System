@@ -12,7 +12,6 @@ import { toast } from "sonner";
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
 import { SignUpSchema, SignUpType } from "@/validators/sign-up.validator";
-import { signUpItems } from "@/lib/fields/sign-up";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,7 +31,28 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-export function SignUpForm() {
+const signUpItems = [
+  {
+    name: "email",
+    type: "email",
+    label: "Email",
+    placeholder: "m@example.com",
+  },
+  {
+    name: "password",
+    type: "password",
+    label: "Password",
+    placeholder: "******",
+  },
+  {
+    name: "confirmPassword",
+    type: "password",
+    label: "Confirm Password",
+    placeholder: "******",
+  },
+];
+
+export const SignUpForm = () => {
   const router = useRouter();
   const form = useForm<SignUpType>({
     resolver: zodResolver(SignUpSchema),
@@ -115,4 +135,4 @@ export function SignUpForm() {
       </CardContent>
     </Card>
   );
-}
+};

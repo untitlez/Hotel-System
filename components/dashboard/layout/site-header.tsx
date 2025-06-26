@@ -6,11 +6,11 @@ import { SidebarHeader } from "@/components/ui/sidebar";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Skeleton } from "../../ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export default function SiteHeader() {
+export const SiteHeader = () => {
   const { title } = useSite();
-  
+
   return (
     <header className="flex h-16 shrink-0 items- justify-between gap-2">
       <div className="flex items-center gap-2 px-4">
@@ -30,4 +30,4 @@ export default function SiteHeader() {
       </div>
     </header>
   );
-}
+};
