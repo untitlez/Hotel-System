@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Routes } from "@/lib/routes";
 import { Search } from "lucide-react";
 
-import { UserProfileType } from "@/validators/user-profile.validator";
+import { BookingType } from "@/validators/booking.validator";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -18,27 +18,24 @@ import {
 } from "@/components/ui/table";
 
 const tableHeader = [
-  "Id",
-  "Image",
-  "Full Name",
-  "Gender",
-  "Birthday",
-  "Address",
-  "Phone",
-  "Status",
-  "CreatedAt",
-  "UpdatedAt",
+  "id",
+  "userId",
+  "roomId",
+  "checkInDate",
+  "checkOutDate",
+  "createdAt",
+  "updatedAt",
 ];
 
-interface DashboardMemberTableProps {
-  data: UserProfileType[];
+interface DashboardBookingTableProps {
+  data: BookingType[];
 }
 
-export const DashboardMemberTable = ({ data }: DashboardMemberTableProps) => {
+export const DashboardBookingTable = ({ data }: DashboardBookingTableProps) => {
   const router = useRouter();
 
   const handleView = (id: string) => {
-    router.push(Routes.dashboard.member + id);
+    router.push(Routes.dashboard.booking + id);
   };
 
   return (

@@ -4,6 +4,8 @@ export const Endpoints = {
   rooms: "/api/rooms/",
   booking: "/api/booking/",
 
-  authLogin: "/api/auth/login",
-  authSignUp: "/api/auth/sign-up",
+  auth: {
+    login: "/api/auth/login",
+    signUp: "/api/auth/sign-up",
+  },
 };

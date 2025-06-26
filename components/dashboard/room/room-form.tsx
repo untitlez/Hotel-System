@@ -3,16 +3,18 @@
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronLeft, Loader2Icon, X } from "lucide-react";
-import axios from "axios";
 
-import { RoomFormSchema, RoomFormType } from "@/validators/room.validator";
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
+import { Routes } from "@/lib/routes";
+import { RoomFormSchema, RoomFormType } from "@/validators/room.validator";
 
 import { toast } from "sonner";
+import { ModalButton } from "@/components/modal-button";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,7 +39,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ModalButton } from "@/components/modal-button";
 
 const inputItems = [
   {
@@ -103,14 +104,14 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
   const { handleSubmit, reset, formState, control } = form;
   const router = useRouter();
   const paramsId = useParams().id;
-  console.log("paramsId", paramsId);
+
   const onSubmit = async (newData: RoomFormType) => {
     if (data) {
       try {
         await axios.put(Config.API_URL + Endpoints.rooms + paramsId, newData);
         toast.success("Changes saved successfully.");
         console.log("Form Data", newData);
-        router.push("/dashboard/rooms-office");
+        router.push(Routes.dashboard.room);
       } catch (error: unknown) {
         console.error("Error", error);
         toast.error("Failed to Edit Room Info!");
@@ -121,7 +122,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
         toast.success("Room created successfully!");
         console.log("Form Data", newData);
         reset();
-        router.push("/dashboard/rooms-office");
+        router.push(Routes.dashboard.room);
       } catch (error: unknown) {
         console.error("Error", error);
         toast.error("Failed to Create Room!");
@@ -134,7 +135,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
     try {
       await axios.delete(Config.API_URL + Endpoints.rooms + paramsId);
       toast.success("Item has been deleted.");
-      router.push("/dashboard/rooms-office");
+      router.push(Routes.dashboard.room);
     } catch (error: unknown) {
       console.error("Error", error);
       toast.error("Failed to Delete!");
@@ -212,7 +213,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
                 variant={"outline"}
                 className="cursor-pointer"
               >
-                <Link href="/dashboard/rooms-office">
+                <Link href={Routes.dashboard.room}>
                   {formState.isDirty ? (
                     <ChevronLeft />
                   ) : (

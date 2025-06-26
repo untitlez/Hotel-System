@@ -1,4 +1,21 @@
-import { cn } from "@/lib/utils";
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2Icon } from "lucide-react";
+import { toast } from "sonner";
+
+import { Config } from "@/lib/config";
+import { Endpoints } from "@/lib/endpoints";
+import { Routes } from "@/lib/routes";
+import { SignUpSchema, SignUpType } from "@/validators/sign-up.validator";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,11 +24,59 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import Link from "next/link";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+const loginItems = [
+  {
+    name: "email",
+    type: "email",
+    label: "Email",
+    placeholder: "m@example.com",
+  },
+  {
+    name: "password",
+    type: "password",
+    label: "Password",
+    placeholder: "******",
+  },
+  {
+    name: "confirmPassword",
+    type: "password",
+    label: "Confirm Password",
+    placeholder: "******",
+  },
+];
 
 export const LoginForm = () => {
+  const router = useRouter();
+  const form = useForm<SignUpType>({
+    resolver: zodResolver(SignUpSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    mode: "onBlur",
+  });
+
+  const onSubmit = async (formData: SignUpType) => {
+    try {
+      await axios.post(Config.API_URL + Endpoints.auth.login, formData);
+      toast.success("Account created successfully!");
+      console.log("FormData", formData);
+      router.push(Routes.auth.login);
+    } catch (error: unknown) {
+      console.log("Error", error);
+      toast.error("Failed to create account.");
+    }
+  };
   return (
     <Card>
       <CardHeader className="text-center">
@@ -21,34 +86,31 @@ export const LoginForm = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form>
+        <form
+          className="space-y-6 my-4 "
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
           <div className="grid gap-6">
-            <div className="grid gap-6">
-              <div className="grid gap-3">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
-                />
-              </div>
-              <div className="grid gap-3">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                  <a
-                    href="#"
-                    className="ml-auto text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
-                </div>
-                <Input id="password" type="password" required />
-              </div>
-              <Button type="submit" className="w-full">
-                Login
-              </Button>
-            </div>
+            {loginItems.map((item) => (
+              <FormField
+                key={item.name}
+                control={form.control}
+                name={item.name as keyof SignUpType}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{item.label}</FormLabel>
+                    <FormControl>
+                      <Input
+                        type={item.type}
+                        placeholder={item.placeholder}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ))}
             <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
               <span className="bg-card text-muted-foreground relative z-10 px-2">
                 Or continue with
@@ -85,7 +147,10 @@ export const LoginForm = () => {
             </div>
             <div className="text-center text-sm">
               Don't have an account?{" "}
-              <Link href="/sign-up" className="underline underline-offset-4">
+              <Link
+                href={Routes.auth.signUp}
+                className="underline underline-offset-4"
+              >
                 Sign up
               </Link>
             </div>

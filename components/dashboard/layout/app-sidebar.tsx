@@ -10,6 +10,8 @@ import {
   User,
 } from "lucide-react";
 
+import { Routes } from "@/lib/routes";
+
 import { NavHeader } from "./nav-header";
 import { NavMain } from "./nav-main";
 import { NavSecondary } from "./nav-secondary";
@@ -31,22 +33,22 @@ const navbarItems = {
   navMain: [
     {
       title: "Dashboard",
-      url: "/dashboard",
+      url: Routes.dashboardBase,
       icon: LayoutDashboard,
     },
     {
       title: "Bookings",
-      url: "/dashboard/bookings-office",
+      url: Routes.dashboard.booking,
       icon: BookOpen,
     },
     {
       title: "Members",
-      url: "/dashboard/members-office",
+      url: Routes.dashboard.member,
       icon: User,
     },
     {
-      title: "Rooms",
-      url: "/dashboard/rooms-office",
+      title: "Room",
+      url: Routes.dashboard.room,
       icon: Armchair,
     },
   ],

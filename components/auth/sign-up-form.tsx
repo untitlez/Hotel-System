@@ -11,6 +11,7 @@ import { toast } from "sonner";
 
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
+import { Routes } from "@/lib/routes";
 import { SignUpSchema, SignUpType } from "@/validators/sign-up.validator";
 
 import { Button } from "@/components/ui/button";
@@ -66,10 +67,10 @@ export const SignUpForm = () => {
 
   const onSubmit = async (formData: SignUpType) => {
     try {
-      await axios.post(Config.API_URL + Endpoints.authSignUp, formData);
+      await axios.post(Config.API_URL + Endpoints.auth.signUp, formData);
       toast.success("Account created successfully!");
       console.log("FormData", formData);
-      router.push("/login");
+      router.push(Routes.auth.login);
     } catch (error: unknown) {
       console.log("Error", error);
       toast.error("Failed to create account.");
@@ -87,8 +88,8 @@ export const SignUpForm = () => {
       <CardContent>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-6 my-4 "
+            onSubmit={form.handleSubmit(onSubmit)}
           >
             {signUpItems.map((item) => (
               <FormField
@@ -128,7 +129,10 @@ export const SignUpForm = () => {
         </Form>
         <div className="text-center text-sm">
           I have an account{" "}
-          <Link href="/login/" className="underline underline-offset-4">
+          <Link
+            href={Routes.auth.login}
+            className="underline underline-offset-4"
+          >
             Login
           </Link>
         </div>
