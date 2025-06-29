@@ -2,8 +2,8 @@ import {
   listProfile,
   removeProfile,
   updateProfile,
-} from "@/services/user-profile.services";
-import { UserProfileSchema } from "@/validators/user-profile.validator";
+} from "@/services/profile.services";
+import { UserProfileSchema } from "@/validators/profile.validator";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -11,7 +11,8 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const payload = await listProfile(params.id);
+    const { id } = await params;
+    const payload = await listProfile(id);
     return NextResponse.json(payload);
   } catch (error) {
     console.error("error", error);
@@ -24,9 +25,10 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
+    const { id } = await params;
     const body = await req.json();
     const parsed = UserProfileSchema.safeParse(body);
-    const payload = await updateProfile(params.id, parsed.data);
+    const payload = await updateProfile(id, parsed.data);
 
     return NextResponse.json({
       message: "Update successfully",
@@ -43,7 +45,8 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    await removeProfile(params.id);
+    const { id } = await params;
+    await removeProfile(id);
     return NextResponse.json({
       message: "Delete successfully",
     });

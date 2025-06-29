@@ -65,7 +65,7 @@ export const SignUpForm = () => {
     mode: "onBlur",
   });
 
-  const onSubmit = async (formData: SignUpType) => {
+  const onSignUp = async (formData: SignUpType) => {
     try {
       await axios.post(Config.API_URL + Endpoints.auth.signUp, formData);
       toast.success("Account created successfully!");
@@ -89,7 +89,7 @@ export const SignUpForm = () => {
         <Form {...form}>
           <form
             className="space-y-6 my-4 "
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(onSignUp)}
           >
             {signUpItems.map((item) => (
               <FormField

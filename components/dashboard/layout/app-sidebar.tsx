@@ -1,5 +1,6 @@
 "use client";
 
+import { Routes } from "@/lib/routes";
 import {
   Armchair,
   BookOpen,
@@ -9,8 +10,6 @@ import {
   Settings,
   User,
 } from "lucide-react";
-
-import { Routes } from "@/lib/routes";
 
 import { NavHeader } from "./nav-header";
 import { NavMain } from "./nav-main";

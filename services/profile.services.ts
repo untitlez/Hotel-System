@@ -1,18 +1,18 @@
 import { prisma } from "@/lib/prisma";
 
 export const listProfile = async (paramsId: string) => {
-  const services = await prisma.userProfile.findUnique({
+  const services = await prisma.profile.findUnique({
     where: {
-      id: paramsId,
+      userId: paramsId,
     },
   });
   return services;
 };
 
 export const updateProfile = async (paramsId: string, parsed: any) => {
-  const services = await prisma.userProfile.update({
+  const services = await prisma.profile.update({
     where: {
-      id: paramsId,
+      userId: paramsId,
     },
     data: {
       fullName: parsed.fullName,
@@ -27,9 +27,9 @@ export const updateProfile = async (paramsId: string, parsed: any) => {
 };
 
 export const removeProfile = async (paramsId: string) => {
-  const services = await prisma.userProfile.delete({
+  const services = await prisma.profile.delete({
     where: {
-      id: paramsId,
+      userId: paramsId,
     },
   });
   return services;

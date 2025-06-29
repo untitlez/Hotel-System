@@ -14,13 +14,6 @@ export type SignUpType = z.infer<typeof SignUpSchema>;
 
 export function validateSignUp(data: unknown) {
   const parsed = SignUpSchema.safeParse(data);
-
-  if (!parsed.success) {
-    throw {
-      message: "Validation failed",
-      errors: parsed.error.format(),
-    };
-  }
-
+  if (!parsed.success) throw parsed.error;
   return parsed.data;
 }

@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import {
   BadgeCheck,
   Bell,
@@ -8,6 +11,8 @@ import {
   LogOut,
   Sparkles,
 } from "lucide-react";
+
+import { Routes } from "@/lib/routes";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -26,16 +31,21 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-export const NavUser = ({
-  user,
-}: {
+interface NavUserProps {
   user: {
     name: string;
     email: string;
     avatar: string;
   };
-}) => {
+}
+
+export const NavUser = ({ user }: NavUserProps) => {
   const { isMobile } = useSidebar();
+  const { data: session } = useSession();
+
+  const handleLogOut = () => {
+    signOut({ callbackUrl: Routes.auth.login });
+  };
 
   return (
     <SidebarMenu>
@@ -51,8 +61,12 @@ export const NavUser = ({
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-medium">
+                  {session?.user.role ?? user.name}
+                </span>
+                <span className="truncate text-xs">
+                  {session?.user.email ?? user.email}
+                </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -71,7 +85,9 @@ export const NavUser = ({
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate text-xs">
+                    {session?.user?.email ?? user.email}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -98,7 +114,7 @@ export const NavUser = ({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogOut}>
               <LogOut />
               Log out
             </DropdownMenuItem>

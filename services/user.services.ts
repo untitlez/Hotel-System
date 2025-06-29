@@ -7,17 +7,14 @@ export const getAllUser = async () => {
       deletedAt: null,
     },
     select: {
+      id: true,
+      email: true,
+      role: true,
       profile: true,
       bookings: true,
       createdAt: true,
+      updatedAt: true,
     },
-  });
-  return services;
-};
-
-export const createNewUser = async (parsed: any) => {
-  const services = await prisma.user.create({
-    data: parsed,
   });
   return services;
 };
@@ -28,12 +25,8 @@ export const listUser = async (paramsId: string) => {
       id: paramsId,
     },
     select: {
-      role: true,
       profile: true,
       bookings: true,
-      createdAt: true,
-      updatedAt: true,
-      deletedAt: true,
     },
   });
 
@@ -46,8 +39,14 @@ export const updateUser = async (paramsId: string, parsed: any) => {
       id: paramsId,
     },
     data: {
-      email: parsed.name,
-      role: parsed.name,
+      email: parsed.email,
+      password: parsed.password,
+      role: parsed.role,
+    },
+    select: {
+      email: true,
+      role: true,
+      updatedAt: true,
     },
   });
   return services;
@@ -61,6 +60,10 @@ export const removeUser = async (paramsId: string) => {
     },
     data: {
       deletedAt: new Date(),
+    },
+    select: {
+      email: true,
+      deletedAt: true,
     },
   });
   return services;

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Routes } from "@/lib/routes";
 import { Search } from "lucide-react";
 
-import { UserProfileType } from "@/validators/user-profile.validator";
+import { UserProfileType } from "@/validators/profile.validator";
 
 import { Input } from "@/components/ui/input";
 import {
