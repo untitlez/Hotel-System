@@ -21,3 +21,9 @@ export const RoomFormSchema = RoomSchema.pick({
   pricePerNight: true,
 });
 export type RoomFormType = z.infer<typeof RoomFormSchema>;
+
+export function validateRoom(data: unknown) {
+  const parsed = RoomFormSchema.safeParse(data);
+  if (!parsed.success) throw parsed.error;
+  return parsed.data;
+}

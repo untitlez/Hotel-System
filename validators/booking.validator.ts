@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const bookingSchema = z.object({
+export const BookingSchema = z.object({
   id: z.string().cuid(),
   userId: z.string().cuid(),
   roomId: z.string().cuid(),
@@ -10,5 +10,10 @@ export const bookingSchema = z.object({
   updatedAt: z.coerce.date(),
   deletedAt: z.coerce.date().nullable(),
 });
+export type BookingType = z.infer<typeof BookingSchema>;
 
-export type BookingType = z.infer<typeof bookingSchema>;
+export function validateBooking(data: unknown) {
+  const parsed = BookingSchema.safeParse(data);
+  if (!parsed.success) throw parsed.error;
+  return parsed.data;
+}

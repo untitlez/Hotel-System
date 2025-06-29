@@ -1,6 +1,9 @@
 import { prisma } from "@/lib/prisma";
 
-export const getAllUser = async () => {
+//
+// GET
+//
+export const allUser = async () => {
   const services = await prisma.user.findMany({
     where: {
       role: "MEMBER",
@@ -19,6 +22,9 @@ export const getAllUser = async () => {
   return services;
 };
 
+//
+// GET by ID
+//
 export const listUser = async (paramsId: string) => {
   const services = await prisma.user.findUnique({
     where: {
@@ -33,6 +39,9 @@ export const listUser = async (paramsId: string) => {
   return services;
 };
 
+//
+// PUT
+//
 export const updateUser = async (paramsId: string, parsed: any) => {
   const services = await prisma.user.update({
     where: {
@@ -52,6 +61,9 @@ export const updateUser = async (paramsId: string, parsed: any) => {
   return services;
 };
 
+//
+// DELETE
+//
 export const removeUser = async (paramsId: string) => {
   const services = await prisma.user.update({
     where: {

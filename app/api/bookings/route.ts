@@ -1,19 +1,25 @@
-import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+
+import { validateBooking } from "@/validators/booking.validator";
+import { allBooking, createBooking } from "@/services/booking.services";
+
+export async function GET(req: NextRequest) {
+  try {
+    const payload = await allBooking();
+    return NextResponse.json(payload);
+  } catch (error) {
+    console.error("error", error);
+    return NextResponse.json({ message: "Something went wrong" });
+  }
+}
 
 export async function POST(req: NextRequest) {
   try {
-    const { roomId, userId, checkInDate, checkOutDate } = await req.json();
-    const payload = await prisma.booking.create({
-      data: {
-        roomId,
-        userId,
-        checkInDate: new Date(checkInDate),
-        checkOutDate: new Date(checkOutDate),
-      },
-    });
+    const body = await req.json();
+    const parsed = validateBooking(body);
+    const payload = await createBooking(parsed);
     return NextResponse.json({
-      message: "Booking successfully",
+      message: "New Booking",
       data: payload,
     });
   } catch (error) {

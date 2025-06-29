@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-
-import { validateRoom } from "@/validators/room.validator";
-import { listRoom, removeRoom, updateRoom } from "@/services/room.services";
+import { listBooking, removeBooking } from "@/services/booking.services";
 
 export async function GET(
   req: NextRequest,
@@ -9,27 +7,8 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const payload = await listRoom(id);
+    const payload = await listBooking(id);
     return NextResponse.json(payload);
-  } catch (error) {
-    console.error("error", error);
-    return NextResponse.json({ message: "Something went wrong" });
-  }
-}
-
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const { id } = await params;
-    const body = await req.json();
-    const parsed = validateRoom(body);
-    const payload = await updateRoom(id, parsed);
-    return NextResponse.json({
-      message: "Update successfully",
-      data: payload,
-    });
   } catch (error) {
     console.error("error", error);
     return NextResponse.json({ message: "Something went wrong" });
@@ -42,7 +21,7 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    await removeRoom(id);
+    await removeBooking(id);
     return NextResponse.json({
       message: "Delete successfully",
     });

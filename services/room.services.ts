@@ -1,38 +1,72 @@
-// import { prisma } from "@/lib/prisma";
-// import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { RoomFormType } from "@/validators/room.validator";
 
-// export async function GET(req: NextRequest) {
-//   const searchParams = req.nextUrl.searchParams;
-//   const query = searchParams.get("search") || "";
+//
+// GET
+//
+export const queryRoom = async (query: string) => {
+  const services = await prisma.room.findMany({
+    where: {
+      OR: [
+        { roomNumber: { contains: query, mode: "insensitive" } },
+        { location: { contains: query, mode: "insensitive" } },
+        { type: { contains: query, mode: "insensitive" } },
+      ],
+    },
+  });
+  return services;
+};
 
-//   try {
-//     const payload = await prisma.room.findMany({
-//       where: {
-//         OR: [
-//           { location: { contains: query, mode: "insensitive" } },
-//           { type: { contains: query, mode: "insensitive" } },
-//         ],
-//       },
-//     });
-//     return NextResponse.json(payload);
-//   } catch (error) {
-//     console.error("error", error);
-//     return NextResponse.json({ message: "Something went wrong" });
-//   }
-// }
+//
+// POST
+//
+export const createRoom = async (parsed: RoomFormType) => {
+  const services = await prisma.room.create({
+    data: parsed,
+  });
+  return services;
+};
 
-// export async function POST(req: NextRequest) {
-//   try {
-//     const body = await req.json();
-//     const payload = await prisma.room.create({
-//       data: body,
-//     });
-//     return NextResponse.json({
-//       message: "Created successfully",
-//       data: payload,
-//     });
-//   } catch (error) {
-//     console.error("error", error);
-//     return NextResponse.json({ message: "Something went wrong" });
-//   }
-// }
+//
+// GET by ID
+//
+export const listRoom = async (paramsId: string) => {
+  const services = await prisma.room.findUnique({
+    where: {
+      id: paramsId,
+    },
+    select: {
+      roomNumber: true,
+      location: true,
+      type: true,
+      description: true,
+      pricePerNight: true,
+    },
+  });
+  return services;
+};
+
+///
+// PUT
+//
+export const updateRoom = async (paramsId: string, parsed: RoomFormType) => {
+  const services = await prisma.room.update({
+    where: {
+      id: paramsId,
+    },
+    data: parsed,
+  });
+  return services;
+};
+
+//
+// DELETE
+//
+export const removeRoom = async (paramsId: string) => {
+  const services = await prisma.room.delete({
+    where: {
+      id: paramsId,
+    },
+  });
+  return services;
+};

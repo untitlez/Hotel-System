@@ -1,12 +1,12 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronLeft, Loader2Icon, X } from "lucide-react";
+import { ChevronLeft, Loader2Icon } from "lucide-react";
 
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
@@ -197,7 +197,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
                           {...field}
                           type={item.type}
                           placeholder={item.placeholder}
-                          value={field.value}
+                          value={field.value ?? ""}
                         />
                       )}
                     </FormControl>

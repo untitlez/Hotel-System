@@ -1,10 +1,11 @@
+import { NextRequest, NextResponse } from "next/server";
+
+import { validateProfile } from "@/validators/profile.validator";
 import {
   listProfile,
   removeProfile,
   updateProfile,
 } from "@/services/profile.services";
-import { UserProfileSchema } from "@/validators/profile.validator";
-import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
@@ -27,9 +28,8 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await req.json();
-    const parsed = UserProfileSchema.safeParse(body);
-    const payload = await updateProfile(id, parsed.data);
-
+    const parsed = validateProfile(body);
+    const payload = await updateProfile(id, parsed);
     return NextResponse.json({
       message: "Update successfully",
       data: payload,

@@ -1,19 +1,13 @@
-import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
-  const searchParams = req.nextUrl.searchParams;
-  const query = searchParams.get("search") || "";
+import { validateRoom } from "@/validators/room.validator";
+import { createRoom, queryRoom } from "@/services/room.services";
 
+export async function GET(req: NextRequest) {
   try {
-    const payload = await prisma.room.findMany({
-      where: {
-        OR: [
-          { location: { contains: query, mode: "insensitive" } },
-          { type: { contains: query, mode: "insensitive" } },
-        ],
-      },
-    });
+    const searchParams = req.nextUrl.searchParams;
+    const query = searchParams.get("search") || "";
+    const payload = await queryRoom(query);
     return NextResponse.json(payload);
   } catch (error) {
     console.error("error", error);
@@ -24,9 +18,8 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const payload = await prisma.room.create({
-      data: body,
-    });
+    const parsed = validateRoom(body);
+    const payload = await createRoom(parsed);
     return NextResponse.json({
       message: "Created successfully",
       data: payload,
