@@ -10,8 +10,10 @@ export async function GET(
     const payload = await listBooking(id);
     return NextResponse.json(payload);
   } catch (error) {
-    console.error("error", error);
-    return NextResponse.json({ message: "Something went wrong" });
+    return NextResponse.json(
+      { message: "Something went wrong", error },
+      { status: 500 }
+    );
   }
 }
 
@@ -22,11 +24,17 @@ export async function DELETE(
   try {
     const { id } = await params;
     await removeBooking(id);
-    return NextResponse.json({
-      message: "Delete successfully",
-    });
-  } catch (error) {
-    console.error("error", error);
-    return NextResponse.json({ message: "Something went wrong" });
+    return NextResponse.json(
+      { message: "Delete successfully" },
+      { status: 204 }
+    );
+  } catch (error: any) {
+    if (error.code === "P2025") {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+    return NextResponse.json(
+      { message: "Something went wrong", error },
+      { status: 500 }
+    );
   }
 }

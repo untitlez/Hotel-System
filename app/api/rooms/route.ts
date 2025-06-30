@@ -10,8 +10,10 @@ export async function GET(req: NextRequest) {
     const payload = await queryRoom(query);
     return NextResponse.json(payload);
   } catch (error) {
-    console.error("error", error);
-    return NextResponse.json({ message: "Something went wrong" });
+    return NextResponse.json(
+      { message: "Something went wrong", error },
+      { status: 500 }
+    );
   }
 }
 
@@ -20,12 +22,17 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const parsed = validateRoom(body);
     const payload = await createRoom(parsed);
-    return NextResponse.json({
-      message: "Created successfully",
-      data: payload,
-    });
+    return NextResponse.json(
+      {
+        message: "Created successfully",
+        payload,
+      },
+      { status: 201 }
+    );
   } catch (error) {
-    console.error("error", error);
-    return NextResponse.json({ message: "Something went wrong" });
+    return NextResponse.json(
+      { message: "Something went wrong", error },
+      { status: 500 }
+    );
   }
 }

@@ -8,8 +8,10 @@ export async function GET(req: NextRequest) {
     const payload = await allBooking();
     return NextResponse.json(payload);
   } catch (error) {
-    console.error("error", error);
-    return NextResponse.json({ message: "Something went wrong" });
+    return NextResponse.json(
+      { message: "Something went wrong", error },
+      { status: 500 }
+    );
   }
 }
 
@@ -18,12 +20,17 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const parsed = validateBooking(body);
     const payload = await createBooking(parsed);
-    return NextResponse.json({
-      message: "New Booking",
-      data: payload,
-    });
+    return NextResponse.json(
+      {
+        message: "Created successfully",
+        payload,
+      },
+      { status: 201 }
+    );
   } catch (error) {
-    console.error("error", error);
-    return NextResponse.json({ message: "Something went wrong" });
+    return NextResponse.json(
+      { message: "Something went wrong", error },
+      { status: 500 }
+    );
   }
 }
