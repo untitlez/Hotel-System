@@ -8,10 +8,22 @@ export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     const query = searchParams.get("search") || "";
     const payload = await queryRoom(query);
-    return NextResponse.json(payload);
+    return NextResponse.json(
+      {
+        success: true,
+        data: payload,
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error("error", error);
-    return NextResponse.json({ message: "Something went wrong" });
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Something went wrong",
+        error: error,
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -20,12 +32,22 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const parsed = validateRoom(body);
     const payload = await createRoom(parsed);
-    return NextResponse.json({
-      message: "Created successfully",
-      data: payload,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Create Successfully!",
+        data: payload,
+      },
+      { status: 201 }
+    );
   } catch (error) {
-    console.error("error", error);
-    return NextResponse.json({ message: "Something went wrong" });
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Something went wrong",
+        error: error,
+      },
+      { status: 500 }
+    );
   }
 }

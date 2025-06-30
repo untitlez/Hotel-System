@@ -14,13 +14,24 @@ export async function GET(
   try {
     const { id } = await params;
     const payload = await listProfile(id);
-    return NextResponse.json(payload);
+    return NextResponse.json(
+      {
+        success: true,
+        data: payload,
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error("error", error);
-    return NextResponse.json({ message: "Something went wrong" });
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Something went wrong",
+        error: error,
+      },
+      { status: 500 }
+    );
   }
 }
-
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -30,13 +41,32 @@ export async function PUT(
     const body = await req.json();
     const parsed = validateProfile(body);
     const payload = await updateProfile(id, parsed);
-    return NextResponse.json({
-      message: "Update successfully",
-      data: payload,
-    });
-  } catch (error) {
-    console.error("error", error);
-    return NextResponse.json({ message: "Something went wrong" });
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Update Successfully!",
+        data: payload,
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    if (error.code === "P2025") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Not found",
+        },
+        { status: 404 }
+      );
+    }
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Something went wrong",
+        error: error,
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -47,11 +77,30 @@ export async function DELETE(
   try {
     const { id } = await params;
     await removeProfile(id);
-    return NextResponse.json({
-      message: "Delete successfully",
-    });
-  } catch (error) {
-    console.error("error", error);
-    return NextResponse.json({ message: "Something went wrong" });
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Deleted  Successfully!",
+      },
+      { status: 204 }
+    );
+  } catch (error: any) {
+    if (error.code === "P2025") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Not found",
+        },
+        { status: 404 }
+      );
+    }
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Something went wrong",
+        error: error,
+      },
+      { status: 500 }
+    );
   }
 }
