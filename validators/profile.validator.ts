@@ -13,7 +13,6 @@ export const ProfileSchema = z.object({
     .regex(/^0[0-9]{9}$/, "เบอร์โทรไม่ถูกต้อง")
     .trim(),
   status: z.enum(["ACTIVE", "DISABLED"]).default("ACTIVE"),
-  createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 });
 export type ProfileType = z.infer<typeof ProfileSchema>;

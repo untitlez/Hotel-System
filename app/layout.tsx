@@ -29,7 +29,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <main>{children}</main>
           <Toaster position="top-center" expand={true} richColors />
         </ThemeProvider>
       </body>

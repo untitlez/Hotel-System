@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon, Loader2 } from "lucide-react";
+import { CalendarIcon, Edit, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import axios from "axios";
 
@@ -123,7 +123,10 @@ export const EditProfile = ({ data, id }: EditProfileProps) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Edit</Button>
+        <Button variant="ghost" className="flex justify-start cursor-pointer">
+          <Edit />
+          <span>Edit Profile</span>
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

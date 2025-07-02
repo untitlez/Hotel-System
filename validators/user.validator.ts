@@ -19,6 +19,7 @@ export const UserUpdateSchema = UserSchema.pick({
   password: true,
   role: true,
 }).partial();
+export type UserUpdateType = z.infer<typeof UserUpdateSchema>;
 
 export function validateUser(data: unknown) {
   const parsed = UserUpdateSchema.safeParse(data);
