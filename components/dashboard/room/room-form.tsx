@@ -14,7 +14,7 @@ import { Routes } from "@/lib/routes";
 import { RoomFormSchema, RoomFormType } from "@/validators/room.validator";
 
 import { toast } from "sonner";
-import { ModalButton } from "@/components/modal-button";
+import { DeleteButton } from "@/components/delete-button";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -243,7 +243,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
               )}
 
               {data && (
-                <ModalButton
+                <DeleteButton
                   type="button"
                   label="Delete"
                   variant="destructive"

@@ -55,7 +55,7 @@ export async function DELETE(
     await removeRoom(id);
     return NextResponse.json(
       { message: "Delete successfully" },
-      { status: 204 }
+      
     );
   } catch (error: any) {
     if (error.code === "P2025") {

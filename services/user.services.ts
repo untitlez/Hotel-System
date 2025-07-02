@@ -7,7 +7,6 @@ export const allUser = async () => {
   const services = await prisma.user.findMany({
     where: {
       role: "MEMBER",
-      deletedAt: null,
     },
     select: {
       id: true,
@@ -31,6 +30,8 @@ export const listUser = async (paramsId: string) => {
       id: paramsId,
     },
     select: {
+      email: true,
+      role: true,
       profile: true,
       bookings: true,
     },
@@ -65,17 +66,9 @@ export const updateUser = async (paramsId: string, parsed: any) => {
 // DELETE
 //
 export const removeUser = async (paramsId: string) => {
-  const services = await prisma.user.update({
+  const services = await prisma.user.delete({
     where: {
       id: paramsId,
-      deletedAt: null,
-    },
-    data: {
-      deletedAt: new Date(),
-    },
-    select: {
-      email: true,
-      deletedAt: true,
     },
   });
   return services;

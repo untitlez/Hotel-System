@@ -28,10 +28,12 @@ export async function PUT(
     const { id } = await params;
     const body = await req.json();
     const parsed = validateUser(body);
+
     const session = await auth();
     const data =
       session?.user.role === "ADMIN" ? parsed : { ...parsed, role: undefined };
-    const payload = await updateUser(id, data);
+
+    const payload = await updateUser(id, parsed);
     return NextResponse.json(
       {
         message: "Update successfully",
@@ -59,7 +61,7 @@ export async function DELETE(
     await removeUser(id);
     return NextResponse.json(
       { message: "Delete successfully" },
-      { status: 204 }
+      
     );
   } catch (error: any) {
     if (error.code === "P2025") {

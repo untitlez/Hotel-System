@@ -1,6 +1,6 @@
 export const Endpoints = {
   users: "/api/users/",
-  usersProfile: "/api/users-profile/",
+  profile: "/api/profile/",
   rooms: "/api/rooms/",
   booking: "/api/booking/",
 

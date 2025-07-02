@@ -12,8 +12,9 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
 
-interface ModalButtonProps
+interface DeleteButtonProps
   extends React.ComponentProps<typeof AlertDialogAction> {
   variant?:
     | "link"
@@ -29,19 +30,19 @@ interface ModalButtonProps
   confirm?: string;
 }
 
-export const ModalButton = ({
-  variant = "default",
-  label = "Label",
+export const DeleteButton = ({
+  variant = "destructive",
+  label,
   title = "Title",
   description = "Description",
   cancel = "Cancel",
   confirm = "Confirm",
   ...props
-}: ModalButtonProps) => {
+}: DeleteButtonProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild className="cursor-pointer">
-        <Button variant={variant}>{label}</Button>
+        <Button variant={variant}>{label ? label : <Trash2 />}</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

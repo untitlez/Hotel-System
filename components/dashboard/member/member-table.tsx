@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Routes } from "@/lib/routes";
 import { Search } from "lucide-react";
 
-import { UserProfileType } from "@/validators/profile.validator";
+import { ProfileType } from "@/validators/profile.validator";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -31,7 +31,7 @@ const tableHeader = [
 ];
 
 interface DashboardMemberTableProps {
-  data: UserProfileType[];
+  data: ProfileType[];
 }
 
 export const DashboardMemberTable = ({ data }: DashboardMemberTableProps) => {
@@ -40,7 +40,6 @@ export const DashboardMemberTable = ({ data }: DashboardMemberTableProps) => {
   const handleView = (id: string) => {
     router.push(Routes.dashboard.member + id);
   };
-
   return (
     <div className="space-y-4 my-2">
       <div className="flex items-center justify-between">
@@ -58,13 +57,13 @@ export const DashboardMemberTable = ({ data }: DashboardMemberTableProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((item, i) => (
+          {/* {data.map((item, i) => (
             <TableRow
               key={i}
               onClick={() => handleView(item.id)}
               className="cursor-pointer"
             >
-              {/* <TableCell>{item.id}</TableCell>
+              <TableCell>{item.id}</TableCell>
               <TableCell>{item.fullName}</TableCell>
               <TableCell>{item.gender}</TableCell>
               <TableCell>{item.birthday}</TableCell>
@@ -72,9 +71,9 @@ export const DashboardMemberTable = ({ data }: DashboardMemberTableProps) => {
               <TableCell>{item.phone}</TableCell>
               <TableCell>{item.status}</TableCell>
               <TableCell>{item.createdAt}</TableCell>
-              <TableCell>{item.updatedAt}</TableCell> */}
+              <TableCell>{item.updatedAt}</TableCell>
             </TableRow>
-          ))}
+          ))} */}
         </TableBody>
       </Table>
     </div>

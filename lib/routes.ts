@@ -7,9 +7,8 @@ export const Routes = {
     member: "/dashboard/member/",
   },
   pages: {
-    room: "/room/",
-    booking: "/booking/",
-    member: "/member/",
+    home: "/home/",
+    profile: "/profile/",
   },
   auth: {
     login: "/login/",

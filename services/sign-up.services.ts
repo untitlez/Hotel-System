@@ -11,6 +11,12 @@ export const createAccount = async (parsed: SignUpType) => {
     data: {
       email: parsed.email,
       password: hashedPassword,
+      profile: {
+        create: {},
+      },
+    },
+    include: {
+      profile: true,
     },
   });
 

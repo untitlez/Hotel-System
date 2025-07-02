@@ -26,16 +26,14 @@ model User {
   bookings  Booking[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
 
   @@index([createdAt])
   @@index([updatedAt])
-  @@index([deletedAt])
 }
 
 model Profile {
   userId    String     @id
-  user      User       @relation(fields: [userId], references: [id])
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   fullName  String?
   gender    String?
   birthday  DateTime?
@@ -57,29 +55,25 @@ model Room {
   bookings      Booking[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  deletedAt     DateTime?
 
   @@index([type, location])
   @@index([pricePerNight])
   @@index([createdAt])
   @@index([updatedAt])
-  @@index([deletedAt])
 }
 
 model Booking {
-  id           String    @id @default(cuid())
-  user         User      @relation(fields: [userId], references: [id])
+  id           String   @id @default(cuid())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String
-  room         Room      @relation(fields: [roomId], references: [id])
+  room         Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
   roomId       String
   checkInDate  DateTime
   checkOutDate DateTime
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  deletedAt    DateTime?
+  createdAt    DateTime @default(now())
 
   @@index([userId, checkInDate, checkOutDate])
+  @@index([roomId, checkInDate])
+  @@index([roomId, checkOutDate])
   @@index([createdAt])
-  @@index([updatedAt])
-  @@index([deletedAt])
 }

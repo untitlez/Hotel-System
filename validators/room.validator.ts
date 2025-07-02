@@ -19,7 +19,7 @@ export const RoomFormSchema = RoomSchema.pick({
   type: true,
   description: true,
   pricePerNight: true,
-});
+}).partial();
 export type RoomFormType = z.infer<typeof RoomFormSchema>;
 
 export function validateRoom(data: unknown) {
