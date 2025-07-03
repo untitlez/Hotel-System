@@ -38,19 +38,15 @@ interface SidebarAccountProfileProps {
     profile: ProfileType;
     booking: BookingType;
   };
-  session: SessionType;
 }
 
-export const SidebarAccountProfile = ({
-  data,
-  session,
-}: SidebarAccountProfileProps) => {
+export const SidebarAccountProfile = ({ data }: SidebarAccountProfileProps) => {
   const { isMobile } = useSidebar();
 
   const handleLogOut = () => {
     signOut({ callbackUrl: Routes.auth.login });
   };
-
+  console.log("data", data);
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -97,7 +93,7 @@ export const SidebarAccountProfile = ({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              {session && (
+              {data.role === "ADMIN" && (
                 <DropdownMenuItem asChild className="cursor-pointer">
                   <Link href={menuItems.dashboard.path}>
                     <menuItems.dashboard.icon />

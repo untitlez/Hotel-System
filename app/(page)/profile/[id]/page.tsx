@@ -1,7 +1,6 @@
-import { DeleteButton } from "@/components/delete-button";
-import { EditProfile } from "@/components/pages/profile/edit-profile";
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
+import AppSidebarProfile from "@/components/pages/profile/app-sidebar";
 
 export default async function EditProfilePage({
   params,
@@ -11,11 +10,5 @@ export default async function EditProfilePage({
   const { id } = await params;
   const res = await fetch(Config.API_URL + Endpoints.users + id);
   const data = await res.json();
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="w-full sm:max-w-xl">
-        <EditProfile data={data.profile} id={id} />
-      </div>
-    </div>
-  );
+  return <AppSidebarProfile data={data} />;
 }

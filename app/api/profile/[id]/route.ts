@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { validateProfile } from "@/validators/profile.validator";
+import { validateUpdateProfile } from "@/validators/profile.validator";
 import { removeProfile, updateProfile } from "@/services/profile.services";
 
 export async function PUT(
@@ -10,7 +10,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await req.json();
-    const parsed = validateProfile(body);
+    const parsed = validateUpdateProfile(body);
     const payload = await updateProfile(id, parsed);
     return NextResponse.json(
       {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { validateRoom } from "@/validators/room.validator";
+import { validateUpdateRoom } from "@/validators/room.validator";
 import { listRoom, removeRoom, updateRoom } from "@/services/room.services";
 
 export async function GET(
@@ -26,7 +26,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await req.json();
-    const parsed = validateRoom(body);
+    const parsed = validateUpdateRoom(body);
     const payload = await updateRoom(id, parsed);
     return NextResponse.json(
       {
@@ -53,10 +53,7 @@ export async function DELETE(
   try {
     const { id } = await params;
     await removeRoom(id);
-    return NextResponse.json(
-      { message: "Delete successfully" },
-      
-    );
+    return NextResponse.json({ message: "Delete successfully" });
   } catch (error: any) {
     if (error.code === "P2025") {
       return NextResponse.json({ error: "Not found" }, { status: 404 });

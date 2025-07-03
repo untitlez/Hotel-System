@@ -10,9 +10,8 @@ import {
   User,
 } from "lucide-react";
 
-import { ProfileType } from "@/validators/profile.validator";
-import { BookingType } from "@/validators/booking.validator";
-import { SessionType } from "@/validators/session.validator ";
+import { ResponseProfileType } from "@/validators/profile.validator";
+import { ResponseBookingType } from "@/validators/booking.validator";
 
 import { EditProfile } from "./edit-profile";
 import { SidebarAccountProfile } from "./sidebar-account";
@@ -46,16 +45,12 @@ interface AppSidebarProfileProps {
   data: {
     email: string;
     role: "ADMIN" | "MEMBER";
-    profile: ProfileType;
-    booking: BookingType;
+    profile: ResponseProfileType;
+    booking: ResponseBookingType;
   };
-  session: SessionType;
 }
 
-export default function AppSidebarProfile({
-  data,
-  session,
-}: AppSidebarProfileProps) {
+export default function AppSidebarProfile({ data }: AppSidebarProfileProps) {
   const sidebarItems = [
     {
       name: "Name",
@@ -67,7 +62,7 @@ export default function AppSidebarProfile({
     {
       name: "Birthday",
       icon: Calendar1Icon,
-      label: new Date(data?.profile.birthday).toLocaleDateString(),
+      label: data?.profile.birthday,
     },
     {
       name: "Address",
@@ -84,11 +79,12 @@ export default function AppSidebarProfile({
         <SidebarHeader className="p-3 space-y-1">
           <AspectRatio ratio={4 / 3} className="bg-muted rounded-lg">
             <Image
-              fill
               src="/shiba.jpg"
               alt="Profile Image"
               className="rounded-lg object-cover"
-              sizes="100vw"
+              sizes="(max-width: 640px) 100vw"
+              priority={true}
+              fill
             />
           </AspectRatio>
         </SidebarHeader>
@@ -116,14 +112,14 @@ export default function AppSidebarProfile({
           <SidebarGroup className="mt-auto">
             <SidebarGroupContent>
               <SidebarMenu>
-                <EditProfile />
+                <EditProfile data={data} />
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
         {/* Sidebar Account */}
         <SidebarFooter>
-          <SidebarAccountProfile data={data} session={session} />
+          <SidebarAccountProfile data={data} />
         </SidebarFooter>
       </Sidebar>
 

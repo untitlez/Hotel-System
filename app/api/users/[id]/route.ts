@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { auth } from "@/lib/auth";
-import { validateUser } from "@/validators/user.validator";
+import { validateUpdateUser } from "@/validators/user.validator";
 import { listUser, removeUser, updateUser } from "@/services/user.services";
 
 export async function GET(
@@ -27,7 +27,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await req.json();
-    const parsed = validateUser(body);
+    const parsed = validateUpdateUser(body);
 
     const session = await auth();
     const data =
@@ -59,10 +59,7 @@ export async function DELETE(
   try {
     const { id } = await params;
     await removeUser(id);
-    return NextResponse.json(
-      { message: "Delete successfully" },
-      
-    );
+    return NextResponse.json({ message: "Delete successfully" });
   } catch (error: any) {
     if (error.code === "P2025") {
       return NextResponse.json({ error: "Not found" }, { status: 404 });

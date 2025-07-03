@@ -2,28 +2,45 @@ import { z } from "zod";
 
 export const RoomSchema = z.object({
   id: z.string().cuid(),
-  roomNumber: z.string().min(1, "โปรดเพิ่มหมายเลขห้อง"),
-  location: z.string().min(1, "โปรดเพิ่มสถานที่"),
-  type: z.coerce.string().optional(),
-  description: z.string().optional(),
+  roomNumber: z.string().min(1, "โปรดเพิ่มหมายเลขห้อง").trim(),
+  location: z.string().min(1, "โปรดเพิ่มสถานที่").trim(),
+  type: z.coerce.string(),
+  description: z.string().trim(),
   pricePerNight: z.coerce.number().positive("ราคาต่อคืนต้องเป็นบวก"),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
-  deletedAt: z.coerce.date().nullable(),
 });
-export type RoomType = z.infer<typeof RoomSchema>;
 
-export const RoomFormSchema = RoomSchema.pick({
-  roomNumber: true,
-  location: true,
-  type: true,
-  description: true,
-  pricePerNight: true,
-}).partial();
-export type RoomFormType = z.infer<typeof RoomFormSchema>;
+export const CreateRoomSchema = RoomSchema.omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
 
-export function validateRoom(data: unknown) {
-  const parsed = RoomFormSchema.safeParse(data);
+export const UpdateRoomSchema = CreateRoomSchema.partial();
+export const ResponseRoomSchema = RoomSchema.extend({
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
+//
+// Type
+//
+export type CreateRoomType = z.infer<typeof CreateRoomSchema>;
+export type UpdateRoomType = z.infer<typeof UpdateRoomSchema>;
+export type ResponseRoomType = z.infer<typeof ResponseRoomSchema>;
+
+//
+// Validate
+//
+export function validateCreateRoom(data: unknown) {
+  const parsed = CreateRoomSchema.safeParse(data);
+  if (!parsed.success) throw parsed.error;
+  return parsed.data;
+}
+
+export function validateUpdateRoom(data: unknown) {
+  const parsed = UpdateRoomSchema.safeParse(data);
   if (!parsed.success) throw parsed.error;
   return parsed.data;
 }

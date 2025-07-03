@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const ProfileSchema = z.object({
-  userId: z.string().cuid().trim(),
+  userId: z.string().cuid(),
   fullName: z.string().trim(),
   gender: z.string().trim(),
   birthday: z.coerce.date(),
@@ -15,19 +15,24 @@ export const ProfileSchema = z.object({
   status: z.enum(["ACTIVE", "DISABLED"]).default("ACTIVE"),
   updatedAt: z.coerce.date(),
 });
-export type ProfileType = z.infer<typeof ProfileSchema>;
 
-export const ProfileFormSchema = ProfileSchema.pick({
-  fullName: true,
-  gender: true,
-  birthday: true,
-  address: true,
-  phone: true,
-}).partial();
-export type ProfileFormType = z.infer<typeof ProfileFormSchema>;
+export const UpdateProfileSchema = ProfileSchema.partial();
+export const ResponseProfileSchema = ProfileSchema.extend({
+  birthday: z.string(),
+  updatedAt: z.string(),
+});
 
-export function validateProfile(data: unknown) {
-  const parsed = ProfileFormSchema.safeParse(data);
+//
+// Type
+//
+export type UpdateProfileType = z.infer<typeof UpdateProfileSchema>;
+export type ResponseProfileType = z.infer<typeof ResponseProfileSchema>;
+
+//
+// Validate
+//
+export function validateUpdateProfile(data: unknown) {
+  const parsed = UpdateProfileSchema.safeParse(data);
   if (!parsed.success) throw parsed.error;
   return parsed.data;
 }

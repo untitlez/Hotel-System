@@ -1,4 +1,6 @@
+import { format } from "date-fns";
 import { prisma } from "@/lib/prisma";
+import { UpdateUserType } from "@/validators/user.validator";
 
 //
 // GET
@@ -37,13 +39,22 @@ export const listUser = async (paramsId: string) => {
     },
   });
 
-  return services;
+  const formatDate = services?.profile?.birthday
+    ? format(services.profile.birthday, "dd/MM/yyyy")
+    : null;
+  return {
+    ...services,
+    profile: {
+      ...services?.profile,
+      birthday: formatDate,
+    },
+  };
 };
 
 //
 // PUT
 //
-export const updateUser = async (paramsId: string, parsed: any) => {
+export const updateUser = async (paramsId: string, parsed: UpdateUserType) => {
   const services = await prisma.user.update({
     where: {
       id: paramsId,

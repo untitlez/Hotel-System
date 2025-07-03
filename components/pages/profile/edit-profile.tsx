@@ -13,6 +13,7 @@ import { Endpoints } from "@/lib/endpoints";
 import {
   ProfileFormSchema,
   ProfileFormType,
+  ProfileType,
 } from "@/validators/profile.validator";
 
 import { Button } from "@/components/ui/button";
@@ -44,6 +45,7 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { BookingType } from "@/validators/booking.validator";
 
 const inputItems = {
   fullName: {
@@ -78,32 +80,37 @@ const inputItems = {
 } as const;
 
 interface EditProfileProps {
-  data?: ProfileFormType;
-  id?: string;
+  data: {
+    email: string;
+    role: "ADMIN" | "MEMBER";
+    profile: ProfileType;
+    booking: BookingType;
+  };
 }
 
-export const EditProfile = ({ data, id }: EditProfileProps) => {
+export const EditProfile = ({ data }: EditProfileProps) => {
   const form = useForm<ProfileFormType>({
     resolver: zodResolver(ProfileFormSchema),
     defaultValues: {
-      fullName: data?.fullName ?? "",
-      gender: data?.gender ?? "",
-      birthday: data?.birthday ? new Date(data.birthday) : undefined,
-      address: data?.address ?? "",
-      phone: data?.phone ?? "",
+      fullName: data?.profile?.fullName ?? "",
+      gender: data?.profile?.gender ?? "",
+      birthday: data?.profile?.birthday ?? undefined,
+      address: data?.profile?.address ?? "",
+      phone: data?.profile?.phone ?? "",
     },
     mode: "onBlur",
   });
 
   const { control, handleSubmit, formState } = form;
   const router = useRouter();
+  const id = data.profile.userId;
 
   const onSubmit = async (newData: ProfileFormType) => {
     try {
       await axios.put(Config.API_URL + Endpoints.profile + id, newData);
       toast.success("Changes saved successfully.");
       console.log("Form Data", newData);
-      router.push(Routes.pages.profile);
+      router.push(Routes.pages.profile + id);
     } catch (error: unknown) {
       console.error("Error", error);
       toast.error("Failed to Edit Room Info!");
@@ -114,7 +121,7 @@ export const EditProfile = ({ data, id }: EditProfileProps) => {
     try {
       await axios.delete(Config.API_URL + Endpoints.users + id);
       toast.success("Account has been deleted.");
-      router.push(Routes.pages.profile);
+      router.push(Routes.pages.profile + id);
     } catch (error: unknown) {
       console.error("Error", error);
       toast.error("Failed to Delete!");

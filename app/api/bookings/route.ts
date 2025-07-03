@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { validateBooking } from "@/validators/booking.validator";
+import { validateCreateBooking } from "@/validators/booking.validator";
 import { allBooking, createBooking } from "@/services/booking.services";
 
 export async function GET(req: NextRequest) {
@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const parsed = validateBooking(body);
+    const parsed = validateCreateBooking(body);
     const payload = await createBooking(parsed);
     return NextResponse.json(
       {
