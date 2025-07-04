@@ -7,20 +7,17 @@ export const BookingSchema = z.object({
   checkInDate: z.coerce.date(),
   checkOutDate: z.coerce.date(),
   createdAt: z.coerce.date(),
-  updatedAt: z.coerce.date(),
 });
 
 export const CreateBookingSchema = BookingSchema.omit({
   id: true,
   createdAt: true,
-  updatedAt: true,
 });
 
 export const ResponseBookingSchema = BookingSchema.extend({
   checkInDate: z.string(),
   checkOutDate: z.string(),
   createdAt: z.string(),
-  updatedAt: z.string(),
 });
 
 //

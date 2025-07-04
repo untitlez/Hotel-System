@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { BookingType } from "@/validators/booking.validator";
+import { CreateBookingType } from "@/validators/booking.validator";
 
 //
 // GET
@@ -9,7 +9,7 @@ export const allBooking = async () => await prisma.booking.findMany();
 //
 // POST
 //
-export const createBooking = async (parsed: BookingType) => {
+export const createBooking = async (parsed: CreateBookingType) => {
   const services = await prisma.booking.create({
     data: parsed,
   });

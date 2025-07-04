@@ -38,17 +38,7 @@ export const listUser = async (paramsId: string) => {
       bookings: true,
     },
   });
-
-  const formatDate = services?.profile?.birthday
-    ? format(services.profile.birthday, "dd/MM/yyyy")
-    : null;
-  return {
-    ...services,
-    profile: {
-      ...services?.profile,
-      birthday: formatDate,
-    },
-  };
+  return services;
 };
 
 //

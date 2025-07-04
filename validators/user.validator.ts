@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { ProfileSchema, ResponseProfileSchema } from "./profile.validator";
+import { BookingSchema, ResponseBookingSchema } from "./booking.validator";
 
 export const UserSchema = z.object({
   id: z.string().cuid(),
@@ -20,11 +22,12 @@ export const CreateUserSchema = UserSchema.omit({
 });
 
 export const UpdateUserSchema = CreateUserSchema.partial();
-export const ResponseUserSchema = UserSchema.omit({
-  password: true,
+export const ResponseUserSchema = UserSchema.pick({
+  email: true,
+  role: true,
 }).extend({
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  profile: ResponseProfileSchema,
+  bookings: z.array(ResponseBookingSchema),
 });
 
 //

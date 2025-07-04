@@ -1,15 +1,22 @@
 "use client";
 
 import Link from "next/link";
+import { useTheme } from "next-themes";
 import { signOut } from "next-auth/react";
-import { Activity, ChevronsUpDown, Home, LogOut, TentTree } from "lucide-react";
+import {
+  Activity,
+  ChevronsUpDown,
+  Home,
+  LogOut,
+  TentTree,
+  Moon,
+  Sun,
+} from "lucide-react";
 
 import { Routes } from "@/lib/routes";
-import { ProfileType } from "@/validators/profile.validator";
-import { BookingType } from "@/validators/booking.validator";
-import { SessionType } from "@/validators/session.validator ";
+import { ResponseUserType } from "@/validators/user.validator";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,32 +38,30 @@ const menuItems = {
   dashboard: { name: "Dashboard", icon: Activity, path: Routes.dashboardBase },
 };
 
-interface SidebarAccountProfileProps {
-  data: {
-    email: string;
-    role: "ADMIN" | "MEMBER";
-    profile: ProfileType;
-    booking: BookingType;
-  };
+interface SidebarAccountProps {
+  data: ResponseUserType;
 }
 
-export const SidebarAccountProfile = ({ data }: SidebarAccountProfileProps) => {
+export const SidebarAccount = ({ data }: SidebarAccountProps) => {
   const { isMobile } = useSidebar();
-
+  const { theme, setTheme } = useTheme();
+  const isDark = theme === "dark";
+  console.log("data", data);
   const handleLogOut = () => {
     signOut({ callbackUrl: Routes.auth.login });
   };
-  console.log("data", data);
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
+            {/* Main  */}
             <SidebarMenuButton
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
             >
               <Avatar className="size-8 rounded-lg">
+                {/* <AvatarImage src={data?.image} alt="Profile Image" /> */}
                 <AvatarFallback className="bg-sidebar-primary text-sidebar-primary-foreground rounded-lg">
                   <TentTree className="size-4" />
                 </AvatarFallback>
@@ -70,18 +75,25 @@ export const SidebarAccountProfile = ({ data }: SidebarAccountProfileProps) => {
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
           >
+            {/* Sub Menu */}
+            {/* Account  */}
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="size-8 rounded-lg">
+                  {/* {data.role === "ADMIN" ? (
+                    <AvatarImage src={data.profile.image} alt="Profile Image" />
+                  ) : ( */}
                   <AvatarFallback className="bg-sidebar-primary text-sidebar-primary-foreground rounded-lg">
                     <TentTree className="size-4" />
                   </AvatarFallback>
+                  {/* )} */}
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">
@@ -92,6 +104,8 @@ export const SidebarAccountProfile = ({ data }: SidebarAccountProfileProps) => {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
+
+            {/* Menu 1 */}
             <DropdownMenuGroup>
               {data.role === "ADMIN" && (
                 <DropdownMenuItem asChild className="cursor-pointer">
@@ -101,13 +115,35 @@ export const SidebarAccountProfile = ({ data }: SidebarAccountProfileProps) => {
                   </Link>
                 </DropdownMenuItem>
               )}
+
+              {/* Menu 2 */}
               <DropdownMenuItem asChild className="cursor-pointer">
                 <Link href={menuItems.home.path}>
                   <menuItems.home.icon />
                   <span>{menuItems.home.name}</span>
                 </Link>
               </DropdownMenuItem>
+
+              {/* Menu 3 */}
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => setTheme(isDark ? "light" : "dark")}
+              >
+                {isDark ? (
+                  <>
+                    <Sun className="size-4" />
+                    <span>Light Mode</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon className="size-4" />
+                    <span>Dark Mode</span>
+                  </>
+                )}
+              </DropdownMenuItem>
             </DropdownMenuGroup>
+
+            {/* Log out  */}
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer" onClick={handleLogOut}>
               <LogOut />

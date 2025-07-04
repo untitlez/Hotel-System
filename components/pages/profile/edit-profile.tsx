@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, Edit, Loader2 } from "lucide-react";
+import { format } from "date-fns";
 import { toast } from "sonner";
 import axios from "axios";
 
@@ -11,10 +12,10 @@ import { Config } from "@/lib/config";
 import { Routes } from "@/lib/routes";
 import { Endpoints } from "@/lib/endpoints";
 import {
-  ProfileFormSchema,
-  ProfileFormType,
-  ProfileType,
+  UpdateProfileSchema,
+  UpdateProfileType,
 } from "@/validators/profile.validator";
+import { ResponseUserType } from "@/validators/user.validator";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,7 +46,6 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { BookingType } from "@/validators/booking.validator";
 
 const inputItems = {
   fullName: {
@@ -80,32 +80,26 @@ const inputItems = {
 } as const;
 
 interface EditProfileProps {
-  data: {
-    email: string;
-    role: "ADMIN" | "MEMBER";
-    profile: ProfileType;
-    booking: BookingType;
-  };
+  data: ResponseUserType;
 }
 
 export const EditProfile = ({ data }: EditProfileProps) => {
-  const form = useForm<ProfileFormType>({
-    resolver: zodResolver(ProfileFormSchema),
+  const form = useForm<UpdateProfileType>({
+    resolver: zodResolver(UpdateProfileSchema),
     defaultValues: {
-      fullName: data?.profile?.fullName ?? "",
-      gender: data?.profile?.gender ?? "",
-      birthday: data?.profile?.birthday ?? undefined,
-      address: data?.profile?.address ?? "",
-      phone: data?.profile?.phone ?? "",
+      fullName: data.profile.fullName ?? "",
+      gender: data.profile.gender ?? "",
+      birthday: new Date(data.profile.birthday),
+      address: data.profile.address ?? "",
+      phone: data.profile.phone ?? "",
     },
     mode: "onBlur",
   });
-
   const { control, handleSubmit, formState } = form;
   const router = useRouter();
   const id = data.profile.userId;
 
-  const onSubmit = async (newData: ProfileFormType) => {
+  const onSubmit = async (newData: UpdateProfileType) => {
     try {
       await axios.put(Config.API_URL + Endpoints.profile + id, newData);
       toast.success("Changes saved successfully.");
@@ -213,7 +207,7 @@ export const EditProfile = ({ data }: EditProfileProps) => {
                           className="w-full justify-between"
                         >
                           {field.value
-                            ? field.value.toLocaleDateString()
+                            ? format(field.value, "dd MMM yyyy")
                             : "Select date"}
                           <CalendarIcon className="ml-2 h-4 w-4 opacity-50" />
                         </Button>
