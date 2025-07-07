@@ -175,7 +175,7 @@ export default function PropertyPage() {
     <div>
       <div className="flex justify-between items-center my-12">
         <div>
-          <h2 className="text-2xl font-bold">Residence in Yogyakarta</h2>
+          <h2 className="text-2xl font-bold">Residence in Australia</h2>
           <p className=" mt-1">
             We found<span className="font-medium text-primary"> 242 </span>
             properties

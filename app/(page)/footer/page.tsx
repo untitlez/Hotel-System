@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Facebook, Github, Instagram, Linkedin, TentTree } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Routes } from "@/lib/routes";
 
 const footerItems = {
   brand: {
@@ -19,12 +20,11 @@ const footerItems = {
   quickLinks: {
     title: "Quick Links",
     button: [
-      { label: "Home", link: "#" },
-      { label: "Propertie", link: "#property" },
-      { label: "Our Proje", link: "#" },
-      { label: "About Us", link: "#" },
-      { label: "Contact", link: "#" },
-      { label: "FAQs", link: "#" },
+      { label: "Search", link: Routes.pages.id.hero },
+      { label: "Properties", link: Routes.pages.id.property },
+      { label: "Review", link: Routes.pages.id.review },
+      { label: "FAQs", link: Routes.pages.id.fqa },
+      { label: "Contact", link: Routes.pages.id.footer },
     ],
   },
   locations: {

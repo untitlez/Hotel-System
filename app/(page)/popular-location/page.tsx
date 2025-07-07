@@ -104,7 +104,7 @@ export default function PopularLocationPage() {
       <div className="text-center space-y-3">
         <h2 className="text-3xl font-bold">Popular Locations</h2>
         <p className="text-muted-foreground">
-          Explore properties in Indonesia's most sought-after cities and
+          Explore properties in Australia's most sought-after cities and
           regions.
         </p>
       </div>
@@ -133,6 +133,7 @@ export default function PopularLocationPage() {
                   src={val.image}
                   alt={val.location}
                   className="object-cover rounded-xl dark:brightness-75"
+                  sizes="33vw"
                   fill
                 />
                 <div className="absolute inset-0 p-6 flex flex-col justify-between items-end">

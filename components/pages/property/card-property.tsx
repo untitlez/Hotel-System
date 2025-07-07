@@ -27,6 +27,7 @@ export const CardProperty = ({ propertyItem }: CardPropertyListProps) => {
               src={item.image}
               alt={item.name}
               className="object-cover rounded-xl"
+              sizes="33vw"
               fill
             />
           </div>

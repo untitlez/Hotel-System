@@ -127,7 +127,7 @@ export const SearchBox = () => {
 
         <Button className="w-full">
           <Search />
-          <span className="hidden sm:block">Search</span>
+          <span className="hidden md:block">Search</span>
         </Button>
       </div>
     </div>

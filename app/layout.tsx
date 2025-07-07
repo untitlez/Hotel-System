@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import { Quicksand } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
+
+import { auth } from "@/lib/auth";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import "./globals.css";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -15,11 +18,12 @@ export const metadata: Metadata = {
   description: "Practice Web Services",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={quicksand.className}>
@@ -29,7 +33,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="w-full flex flex-col items-center">{children}</main>
+          <SessionProvider session={session}>
+            <main>{children}</main>
+          </SessionProvider>
           <Toaster position="top-center" expand={true} richColors />
         </ThemeProvider>
       </body>

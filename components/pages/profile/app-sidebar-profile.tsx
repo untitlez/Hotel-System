@@ -33,6 +33,7 @@ export default function AppSidebarProfile({ data }: AppSidebarProfileProps) {
               src="/shiba.jpg"
               alt="Profile Image"
               className="rounded-lg object-cover"
+              sizes="100vw"
               priority={true}
               fill
             />

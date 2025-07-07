@@ -10,7 +10,7 @@ export default function HeroPage() {
   return (
     <div className="overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-2 my-24 gap-16 lg:gap-0">
-        <div className="w-2/3">
+        <div className="max-w-md">
           <h1 className="scroll-m-20 text-6xl font-extrabold tracking-tight text-balance">
             Find Your Dream Home in Australia
           </h1>
