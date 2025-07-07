@@ -29,7 +29,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main>{children}</main>
+          <main className="w-full flex flex-col items-center">{children}</main>
           <Toaster position="top-center" expand={true} richColors />
         </ThemeProvider>
       </body>

@@ -118,7 +118,7 @@ const App: React.FC = () => {
           <div className="flex items-center md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
             <a href="#" className="flex items-center">
               <i className="fas fa-home text-2xl mr-2 text-blue-600"></i>
-              <span className="text-xl font-bold">Aruna</span>
+              <span className="text-xl font-bold">Aurora</span>
             </a>
           </div>
 
@@ -173,7 +173,7 @@ const App: React.FC = () => {
       </header>
 
       {/* Promo Banner */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white py-2.5 px-4 text-center text-sm font-medium">
+      <div className="bg-gradient-to-r from-blue-600 to-emerald-500 text-white py-2.5 px-4 text-center text-sm font-medium">
         Lock in Your New Home with Flexible Payment Plans and Special Discounts!{" "}
         <a href="#" className="underline ml-1 font-semibold cursor-pointer">
           Learn More
@@ -653,7 +653,7 @@ const App: React.FC = () => {
             <div className="relative">
               <img
                 src={faqImage}
-                alt="Aruna Real Estate"
+                alt="Aurora Real Estate"
                 className="w-full rounded-xl shadow-lg"
               />
               <div className="absolute -bottom-8 -left-8 bg-white p-6 rounded-xl shadow-lg">
@@ -680,7 +680,7 @@ const App: React.FC = () => {
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Hear from our satisfied clients about their experience finding their
-            dream homes with Aruna.
+            dream homes with Aurora.
           </p>
         </div>
 
@@ -705,7 +705,7 @@ const App: React.FC = () => {
               name: "Michael Thompson",
               role: "Homeowner in Jakarta",
               testimonial:
-                "Working with Aruna was a seamless experience from start to finish. Their team's expertise and attention to detail made finding our dream home a pleasure.",
+                "Working with Aurora was a seamless experience from start to finish. Their team's expertise and attention to detail made finding our dream home a pleasure.",
               avatar:
                 "https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20person%20in%20business%20attire%20with%20neutral%20background%2C%20high%20quality%20portrait%20photography%20with%20soft%20lighting%2C%20corporate%20style%2C%20ultra%20high%20definition&width=100&height=100&seq=15&orientation=squarish",
             },
@@ -713,7 +713,7 @@ const App: React.FC = () => {
               name: "Sarah Johnson",
               role: "Property Investor",
               testimonial:
-                "As an international investor, I needed a team I could trust. Aruna exceeded my expectations with their market knowledge and personalized service.",
+                "As an international investor, I needed a team I could trust. Aurora exceeded my expectations with their market knowledge and personalized service.",
               avatar:
                 "https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20person%20with%20confident%20expression%2C%20business%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait%20photography%20with%20soft%20lighting%2C%20ultra%20high%20definition&width=100&height=100&seq=16&orientation=squarish",
             },
@@ -721,7 +721,7 @@ const App: React.FC = () => {
               name: "David Chen",
               role: "First-time Buyer",
               testimonial:
-                "Being a first-time homebuyer was intimidating, but Aruna guided me through every step of the process with patience and expertise. Highly recommended!",
+                "Being a first-time homebuyer was intimidating, but Aurora guided me through every step of the process with patience and expertise. Highly recommended!",
               avatar:
                 "https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20person%20smiling%2C%20casual%20smart%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait%20photography%20with%20soft%20lighting%2C%20friendly%20expression%2C%20ultra%20high%20definition&width=100&height=100&seq=17&orientation=squarish",
             },
@@ -729,7 +729,7 @@ const App: React.FC = () => {
               name: "Emma Wilson",
               role: "Luxury Villa Owner",
               testimonial:
-                "Aruna helped me find a stunning beachfront property that exceeded all my expectations. Their attention to my specific requirements was impressive.",
+                "Aurora helped me find a stunning beachfront property that exceeded all my expectations. Their attention to my specific requirements was impressive.",
               avatar:
                 "https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20person%20with%20elegant%20appearance%2C%20business%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait%20photography%20with%20soft%20lighting%2C%20sophisticated%20look%2C%20ultra%20high%20definition&width=100&height=100&seq=18&orientation=squarish",
             },
@@ -802,7 +802,7 @@ const App: React.FC = () => {
             <div>
               <div className="flex items-center mb-8">
                 <i className="fas fa-home text-2xl mr-2 text-blue-400"></i>
-                <span className="text-xl font-bold">Aruna</span>
+                <span className="text-xl font-bold">Aurora</span>
               </div>
               <p className="text-gray-400 mb-8 leading-relaxed">
                 Premium real estate solutions across Indonesia, connecting
@@ -974,7 +974,7 @@ const App: React.FC = () => {
                 <li className="flex items-center">
                   <i className="fas fa-envelope mr-3 text-blue-400"></i>
                   <span className="text-gray-400">
-                    info@aruna-realestate.com
+                    info@Aurora-realestate.com
                   </span>
                 </li>
                 <li className="flex items-center">
@@ -993,7 +993,7 @@ const App: React.FC = () => {
 
           <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2025 Aruna Real Estate. All rights reserved.
+              © 2025 Aurora Real Estate. All rights reserved.
             </p>
             <div className="flex items-center space-x-6">
               <a

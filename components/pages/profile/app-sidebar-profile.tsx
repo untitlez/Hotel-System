@@ -7,7 +7,6 @@ import { ResponseUserType } from "@/validators/user.validator";
 import { SidebarMenuProfile } from "./sidebar-menu-profile";
 import { SidebarAccount } from "../../sidebar-account";
 import { SidebarBreadcrumb } from "../../sidebar-breadcrumb";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Separator } from "@/components/ui/separator";
 import {
   Sidebar,
@@ -29,16 +28,15 @@ export default function AppSidebarProfile({ data }: AppSidebarProfileProps) {
       {/* Profile Image */}
       <Sidebar variant="floating">
         <SidebarHeader className="p-3 space-y-1">
-          <AspectRatio ratio={4 / 3} className="bg-muted rounded-lg">
+          <div className="relative aspect-4/3">
             <Image
               src="/shiba.jpg"
               alt="Profile Image"
               className="rounded-lg object-cover"
-              sizes="(max-width: 640px) 100vw"
               priority={true}
               fill
             />
-          </AspectRatio>
+          </div>
         </SidebarHeader>
 
         {/* Sidebar Menu */}
