@@ -37,7 +37,7 @@ const sidebarItems = {
   menu1: [
     {
       title: "Dashboard",
-      url: Routes.dashboardBase,
+      url: Routes.dashboard.base,
       icon: LayoutDashboard,
     },
     {

@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { ProfileSchema, ResponseProfileSchema } from "./profile.validator";
-import { BookingSchema, ResponseBookingSchema } from "./booking.validator";
+import { ResponseProfileSchema } from "./profile.validator";
+import { ResponseBookingSchema } from "./booking.validator";
 
 export const UserSchema = z.object({
   id: z.string().cuid(),

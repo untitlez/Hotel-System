@@ -1,14 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
+import { BedDouble, Blocks, Search, UsersIcon } from "lucide-react";
 
-import { Search } from "lucide-react";
-
+import { Config } from "@/lib/config";
 import { Routes } from "@/lib/routes";
-import { RoomType } from "@/validators/room.validator";
+import { Endpoints } from "@/lib/endpoints";
+import { ResponseRoomType } from "@/validators/room.validator";
 
+import { toast } from "sonner";
+import { TooltipRoomTable } from "./tooltip-room-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -19,35 +24,36 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import axios from "axios";
-import { Endpoints } from "@/lib/endpoints";
-import { Config } from "@/lib/config";
-import { toast } from "sonner";
 
 const tableHeader = [
-  "Room Number",
-  "Image",
-  "Location",
-  "Room Type",
-  "Description",
-  "Price",
+  "No",
+  "image",
+  "name",
+  "location",
+  "type",
+  <TooltipRoomTable Icon={UsersIcon} text="Max Guests" />,
+  <TooltipRoomTable Icon={Blocks} text="Room Size" />,
+  <TooltipRoomTable Icon={BedDouble} text="Bed Size" />,
+  "amenities",
+  "price / Night",
 ];
 
 interface DashboardRoomTableProps {
-  data: RoomType[];
+  data: ResponseRoomType[];
 }
 
 export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
   const [searchInput, setSearchInput] = useState("");
-  const [rooms, setRooms] = useState<RoomType[]>(data);
+  const [rooms, setRooms] = useState<ResponseRoomType[]>(data);
 
   const onSearch = async () => {
     try {
-      const { data } = await axios.get(Config.API_URL + Endpoints.rooms, {
+      const { data } = await axios.get(Config.API_URL + Endpoints.rooms.admin, {
         params: { search: searchInput },
       });
       setRooms(data);
-      toast.info(`Found ${data.length} results for "${searchInput}"`);
+      if (!searchInput) return;
+      toast(`Found ${data.length} results for "${searchInput}"`);
     } catch (error: unknown) {
       console.error("Error", error);
       toast.warning("Search failed. Please try again.");
@@ -69,7 +75,7 @@ export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
             placeholder="Search the table..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && onSearch()}
+            onKeyUp={(e) => e.key === "Enter" && onSearch()}
           />
         </div>
         <Button asChild>
@@ -78,9 +84,11 @@ export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
       </div>
       <Table className="border">
         <TableHeader>
-          <TableRow className="bg-muted">
+          <TableRow className="bg-secondary">
             {tableHeader.map((item, i) => (
-              <TableHead key={i}>{item}</TableHead>
+              <TableHead key={i} className="capitalize">
+                {item}
+              </TableHead>
             ))}
           </TableRow>
         </TableHeader>
@@ -91,12 +99,32 @@ export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
               onClick={() => handleView(item.id)}
               className="cursor-pointer"
             >
-              <TableCell>{item.roomNumber}</TableCell>
-              <TableCell>Image.jpg</TableCell>
+              <TableCell>{i + 1}</TableCell>
+              <TableCell>
+                <div className="relative aspect-video h-20 m-1">
+                  <Image
+                    src={item.image ?? ""}
+                    alt={item.name}
+                    className="object-cover rounded-md"
+                    sizes="25vw"
+                    fill
+                  />
+                </div>
+              </TableCell>
+              <TableCell>{item.name}</TableCell>
               <TableCell>{item.location}</TableCell>
               <TableCell>{item.type}</TableCell>
-              <TableCell>{item.description}</TableCell>
-              <TableCell>{item.pricePerNight}</TableCell>
+              <TableCell>{item.maxGuests}</TableCell>
+              <TableCell>{item.roomSize}</TableCell>
+              <TableCell>{item.beds}</TableCell>
+              <TableCell className="flex flex-wrap gap-1 w-80">
+                {item.amenities.map((amenity, i) => (
+                  <Button key={i} variant="outline" size="sm">
+                    {amenity}
+                  </Button>
+                ))}
+              </TableCell>
+              <TableCell>$ {item.pricePerNight.toLocaleString()}</TableCell>
             </TableRow>
           ))}
         </TableBody>

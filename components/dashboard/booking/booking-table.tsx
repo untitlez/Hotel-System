@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Routes } from "@/lib/routes";
 import { Search } from "lucide-react";
 
-import { BookingType } from "@/validators/booking.validator";
+import { ResponseBookingType } from "@/validators/booking.validator";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -28,7 +28,7 @@ const tableHeader = [
 ];
 
 interface DashboardBookingTableProps {
-  data: BookingType[];
+  data: ResponseBookingType[];
 }
 
 export const DashboardBookingTable = ({ data }: DashboardBookingTableProps) => {

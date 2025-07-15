@@ -24,37 +24,38 @@ const navHome = {
     title: "Aurora",
     description: "Find Your Dream Home in Australia",
   },
+
   contents: [
     {
       title: "Looking For",
-      href: Routes.pages.id.hero,
+      href: `#${Routes.id.hero}`,
       description: "What to look for ?",
     },
     {
       title: "Properties",
-      href: Routes.pages.id.property,
+      href: `#${Routes.id.property}`,
       description: "Residence in Australia",
     },
     {
       title: "Review",
-      href: Routes.pages.id.review,
+      href: `#${Routes.id.review}`,
       description: "Would you like to share your feedback about this project?",
     },
     {
       title: "Popular Locations",
-      href: Routes.pages.id.location,
+      href: "#",
       description:
         "Explore properties in Australia's most sought-after cities and regions.",
     },
     {
       title: "FQAs",
-      href: Routes.pages.id.fqa,
+      href: `#${Routes.id.fqa}`,
       description:
         "Find quick answers to common questions about our properties, services, and booking process.",
     },
     {
       title: "CTA",
-      href: Routes.pages.id.footer,
+      href: `#${Routes.id.cta}`,
       description: "Not Thing",
     },
   ],
@@ -127,7 +128,10 @@ const navLocation = {
 };
 
 const navProfile = { title: "Profile", href: Routes.pages.profile };
-const navDashboard = { title: "Dashboard", href: Routes.dashboardBase };
+const navDashboard = {
+  title: "Dashboard",
+  href: Routes.dashboard.base,
+};
 const navAuth = { title: "Login", href: Routes.auth.login };
 
 export const Navbar = () => {
@@ -136,7 +140,7 @@ export const Navbar = () => {
 
   return (
     <>
-      <NavigationMenu viewport={isMobile ? true : false}>
+      <NavigationMenu viewport={isMobile ? true : false} className="z-50">
         <NavigationMenuList>
           {!isMobile && (
             <>

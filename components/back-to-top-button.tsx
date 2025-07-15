@@ -15,7 +15,7 @@ export const BackToTopButton = () => {
         <Button
           size="icon"
           variant="secondary"
-          className="fixed bottom-8 right-8 rounded-full shadow-lg cursor-pointer transition"
+          className="fixed bottom-8 right-8 rounded-full border shadow-lg cursor-pointer transition"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <ChevronUp />

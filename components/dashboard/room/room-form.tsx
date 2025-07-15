@@ -6,12 +6,19 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronLeft, Loader2Icon } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronUp,
+  Loader2Icon,
+  Minus,
+  Plus,
+} from "lucide-react";
 
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
 import { Routes } from "@/lib/routes";
-import { RoomFormSchema, RoomFormType } from "@/validators/room.validator";
+import { UpdateRoomSchema, UpdateRoomType } from "@/validators/room.validator";
 
 import { toast } from "sonner";
 import { DeleteButton } from "@/components/delete-button";
@@ -21,6 +28,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -39,64 +47,104 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import Image from "next/image";
 
 const inputItems = [
   {
-    name: "roomNumber",
-    label: "Room Number",
+    name: "image",
+    label: "Images",
+    type: "file",
+    placeholder: "เช่น Img.jpg",
+  },
+  {
+    name: "name",
+    label: "Room Name",
     type: "text",
     placeholder: "เช่น A101",
-    required: true,
   },
   {
     name: "location",
     label: "Location",
     type: "text",
     placeholder: "เช่น เชียงใหม่, ประเทศไทย",
-    required: true,
   },
   {
     name: "type",
     label: "Room Type",
     type: "select",
     placeholder: "เลือกประเภทห้อง",
-    options: [
-      { value: "Single Room", label: "Single Room" },
-      { value: "Twin Room", label: "Twin Room" },
-      { value: "Deluxe Room", label: "Deluxe Room" },
-      { value: "Suite", label: "Suite" },
-    ],
-    required: false,
-  },
-  {
-    name: "description",
-    label: "Description",
-    type: "text",
-    placeholder: "รายละเอียดเพิ่มเติม",
-    required: false,
+    options: [{ value: "Hotel" }, { value: "Resort" }, { value: "Villa" }],
   },
   {
     name: "pricePerNight",
     label: "Price",
     type: "number",
     placeholder: "เช่น 1000",
-    required: true,
+  },
+  {
+    name: "maxGuests",
+    label: "Max Guests",
+    type: "number",
+    placeholder: "รายละเอียดเพิ่มเติม",
+  },
+  {
+    name: "roomSize",
+    label: "Room Size",
+    type: "number",
+    placeholder: "รายละเอียดเพิ่มเติม",
+  },
+  {
+    name: "beds",
+    label: "Beds",
+    type: "select",
+    options: [
+      { value: "1 King Bed" },
+      { value: "1 Queen Bed" },
+      { value: "2 Twin Beds" },
+      { value: "1 Bunk Bed" },
+    ],
+
+    placeholder: "รายละเอียดเพิ่มเติม",
+  },
+  {
+    name: "amenities",
+    label: "Amenities",
+    type: "checkbox",
+    value: [
+      { id: "Solar Panels" },
+      { id: "Air Conditioning" },
+      { id: "Security System" },
+      { id: "Pool" },
+      { id: "Smart Home" },
+      { id: "Garden" },
+      { id: "Wi-Fi" },
+      { id: "Balcony" },
+      { id: "Garage" },
+    ],
   },
 ];
 
 interface DashboardRoomFormProps {
-  data?: RoomFormType;
+  data?: UpdateRoomType;
 }
 
 export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
-  const form = useForm<RoomFormType>({
-    resolver: zodResolver(RoomFormSchema),
+  const [isShowForm, setIsShowForm] = useState(false);
+  const form = useForm<UpdateRoomType>({
+    resolver: zodResolver(UpdateRoomSchema),
     defaultValues: {
-      roomNumber: data?.roomNumber ?? "",
+      name: data?.name ?? "",
       location: data?.location ?? "",
       type: data?.type ?? "",
-      description: data?.description ?? "",
       pricePerNight: data?.pricePerNight ?? undefined,
+      maxGuests: data?.maxGuests ?? undefined,
+      roomSize: data?.roomSize ?? undefined,
+      beds: data?.beds ?? "",
+      amenities: data?.amenities ?? [],
+      image: data?.image ?? "",
     },
     mode: "onBlur",
   });
@@ -105,10 +153,13 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
   const router = useRouter();
   const paramsId = useParams().id;
 
-  const onSubmit = async (newData: RoomFormType) => {
+  const onSubmit = async (newData: UpdateRoomType) => {
     if (data) {
       try {
-        await axios.put(Config.API_URL + Endpoints.rooms + paramsId, newData);
+        await axios.put(
+          Config.API_URL + Endpoints.rooms.baseRooms + paramsId,
+          newData
+        );
         toast.success("Changes saved successfully.");
         console.log("Form Data", newData);
         router.push(Routes.dashboard.room);
@@ -118,7 +169,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
       }
     } else {
       try {
-        await axios.post(Config.API_URL + Endpoints.rooms, newData);
+        await axios.post(Config.API_URL + Endpoints.rooms.baseRooms, newData);
         toast.success("Room created successfully!");
         console.log("Form Data", newData);
         reset();
@@ -133,7 +184,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
   const onDelete = async () => {
     if (!paramsId) return;
     try {
-      await axios.delete(Config.API_URL + Endpoints.rooms + paramsId);
+      await axios.delete(Config.API_URL + Endpoints.rooms.baseRooms + paramsId);
       toast.success("Item has been deleted.");
       router.push(Routes.dashboard.room);
     } catch (error: unknown) {
@@ -142,23 +193,17 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
     }
   };
   return (
-    <Card>
+    <Card className="w-full max-w-screen-sm xl:max-w-screen-xl">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">
           {data ? (
-            <div className="text-start">Room Info: {data?.roomNumber}</div>
+            <div className="text-start">Room Info: {data?.name}</div>
           ) : (
             "Create Room"
           )}
         </CardTitle>
         <CardDescription>
-          {data ? (
-            <>
-              <div className="bg-muted/50 aspect-video rounded-xl" />
-            </>
-          ) : (
-            "Please fill out the form to create a new room."
-          )}
+          {!data && "Please fill out the form to create a new room."}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -168,64 +213,211 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
               <FormField
                 key={item.name}
                 control={control}
-                name={item.name as keyof RoomFormType}
+                name={item.name as keyof UpdateRoomType}
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {item.label}
-                      {item.required && <span className="text-primary">*</span>}
-                    </FormLabel>
-                    <FormControl>
-                      {item.type === "select" ? (
-                        <Select
-                          defaultValue={field.value?.toString()}
-                          onValueChange={field.onChange}
-                        >
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder={item.placeholder} />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {item.options?.map((opt) => (
-                              <SelectItem key={opt.value} value={opt.value}>
-                                {opt.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      ) : (
-                        <Input
-                          {...field}
-                          type={item.type}
-                          placeholder={item.placeholder}
-                          value={field.value ?? ""}
-                        />
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+                  <>
+                    {item.name === "image" && (
+                      <FormItem>
+                        <FormControl>
+                          <div>
+                            <div className="relative aspect-video border rounded-lg shadow-lg">
+                              {data && (
+                                <Image
+                                  src={String(field.value)}
+                                  alt={item.name}
+                                  className="object-cover rounded-lg"
+                                  sizes="50vw"
+                                  fill
+                                />
+                              )}
+                            </div>
+                            <Input
+                              className="cursor-pointer mt-1.5 z-10"
+                              type={item.type}
+                              onChange={field.onChange}
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+
+                    {item.type === "select" && (
+                      <FormItem>
+                        <FormLabel>
+                          {item.label}
+                          <span className="text-primary">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Select
+                            defaultValue={field.value?.toString()}
+                            onValueChange={field.onChange}
+                          >
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder={item.placeholder} />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {item.options?.map((opt) => (
+                                <SelectItem key={opt.value} value={opt.value}>
+                                  {opt.value}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+
+                    {item.type === "text" && (
+                      <FormItem>
+                        <FormLabel>
+                          {item.label}
+                          <span className="text-primary">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input placeholder={item.placeholder} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+
+                    {item.name === "pricePerNight" && (
+                      <FormItem>
+                        <FormLabel>
+                          {item.label}
+                          <span className="text-primary">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder={item.placeholder}
+                            type={item.type}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+
+                    {isShowForm && (
+                      <div>
+                        {item.name !== "pricePerNight" &&
+                          item.type === "number" && (
+                            <FormItem>
+                              <FormLabel>{item.label}</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder={item.placeholder}
+                                  type={item.type}
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+
+                        {item.type === "checkbox" && (
+                          <div className="grid grid-cols-3 gap-4 border p-4 rounded-lg bg-secondary">
+                            {item.value?.map((val, i) => {
+                              const selected = Array.isArray(field.value)
+                                ? field.value
+                                : [];
+                              return (
+                                <FormItem
+                                  key={i}
+                                  className="flex items-center gap-2"
+                                >
+                                  <FormControl>
+                                    <Checkbox
+                                      className="cursor-pointer"
+                                      id={val.id}
+                                      checked={selected.includes(val.id)}
+                                      onCheckedChange={(checked: boolean) => {
+                                        const updated = checked
+                                          ? [...selected, val.id]
+                                          : selected.filter(
+                                              (v) => v !== val.id
+                                            );
+
+                                        field.onChange(updated);
+                                      }}
+                                    />
+                                  </FormControl>
+                                  <FormLabel
+                                    htmlFor={val.id}
+                                    className="cursor-pointer"
+                                  >
+                                    {val.id}
+                                  </FormLabel>
+                                </FormItem>
+                              );
+                            })}
+                          </div>
+                        )}
+
+                        {item.name === "beds" && (
+                          <FormItem>
+                            <FormLabel>
+                              {item.label}
+                              <span className="text-primary">*</span>
+                            </FormLabel>
+                            <FormControl>
+                              <Select
+                                defaultValue={field.value?.toString()}
+                                onValueChange={field.onChange}
+                              >
+                                <SelectTrigger className="w-full">
+                                  <SelectValue placeholder={item.placeholder} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  {item.options?.map((opt) => (
+                                    <SelectItem
+                                      key={opt.value}
+                                      value={opt.value}
+                                    >
+                                      {opt.value}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      </div>
+                    )}
+                  </>
                 )}
               />
             ))}
-            <div className="flex justify-between gap-2">
-              <Button
-                asChild
-                type="button"
-                variant={"outline"}
-                className="cursor-pointer"
-              >
-                <Link href={Routes.dashboard.room}>
-                  {formState.isDirty ? (
-                    <ChevronLeft />
-                  ) : (
-                    <>
-                      <ChevronLeft />
-                      Back
-                    </>
-                  )}
-                </Link>
-              </Button>
 
-              {formState.isDirty && (
+            {/* Button Submit */}
+            <div className="flex justify-between gap-2">
+              {formState.isDirty ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="cursor-pointer"
+                  onClick={() => setIsShowForm(!isShowForm)}
+                >
+                  {isShowForm ? <ChevronUp /> : <ChevronDown />}
+                  More
+                </Button>
+              ) : (
+                <Button
+                  asChild
+                  type="button"
+                  variant={"outline"}
+                  className="cursor-pointer"
+                >
+                  <Link href={Routes.dashboard.room}>
+                    <ChevronLeft />
+                    Back
+                  </Link>
+                </Button>
+              )}
+
+              {formState.isDirty ? (
                 <Button
                   type="submit"
                   disabled={formState.isSubmitting}
@@ -239,6 +431,16 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
                   ) : (
                     "Submit"
                   )}
+                </Button>
+              ) : (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="cursor-pointer flex-1"
+                  onClick={() => setIsShowForm(!isShowForm)}
+                >
+                  {isShowForm ? <ChevronUp /> : <ChevronDown />}
+                  More
                 </Button>
               )}
 

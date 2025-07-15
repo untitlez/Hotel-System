@@ -61,7 +61,7 @@ export const LoginForm = () => {
       email: loginForm.email,
       password: loginForm.password,
       redirect: false,
-      callbackUrl: Routes.dashboardBase,
+      callbackUrl: Routes.dashboard.base,
     });
     if (res?.error) {
       toast.error("Invalid email or password");
@@ -69,7 +69,7 @@ export const LoginForm = () => {
       form.setError("password", { message: "" });
       return;
     }
-    router.push(Routes.dashboardBase);
+    router.push(Routes.dashboard.base);
   };
 
   const onFill = () => {

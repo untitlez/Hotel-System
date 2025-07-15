@@ -1,56 +1,66 @@
-import { Button } from "@/components/ui/button";
-import { Bath, BedDouble, Blocks } from "lucide-react";
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Routes } from "@/lib/routes";
+import { ResponseRoomType } from "@/validators/room.validator";
 
-interface PropertyItem {
-  id: number;
-  name: string;
-  price: number;
-  location: string;
-  bedrooms: number;
-  bathrooms: number;
-  area: number;
-  image: string;
+import { AmenityCardProperty } from "./amenity-card-property";
+import { Badge } from "@/components/ui/badge";
+
+interface CardPropertyProps {
+  data: ResponseRoomType[];
 }
 
-interface CardPropertyListProps {
-  propertyItem: PropertyItem[];
-}
+export const CardProperty = ({ data }: CardPropertyProps) => {
+  const router = useRouter();
+  const handleView = (id: string) => {
+    router.push(Routes.dashboard.room + id);
+  };
 
-export const CardProperty = ({ propertyItem }: CardPropertyListProps) => {
   return (
     <>
-      {propertyItem.map((item) => (
+      {data.map((item) => (
         <div key={item.id} className="grid gap-6 w-full">
           <div className="relative aspect-3/2">
+            {item.type === "Villa" && (
+              <Badge className="absolute z-10 m-4 font-semibold text-sm shadow-md bg-chart-1">
+                {item.type}
+              </Badge>
+            )}
+            {item.type === "Hotel" && (
+              <Badge className="absolute z-10 m-4 font-semibold text-sm shadow-md bg-chart-2">
+                {item.type}
+              </Badge>
+            )}
+            {item.type === "Resort" && (
+              <Badge className="absolute z-10 m-4 font-semibold text-sm shadow-md bg-chart-3">
+                {item.type}
+              </Badge>
+            )}
             <Image
-              src={item.image}
+              src={item.image ?? ""}
               alt={item.name}
-              className="object-cover rounded-xl"
+              className="object-cover rounded-xl hover:scale-105 transform duration-700 cursor-pointer"
               sizes="33vw"
               fill
+              onClick={() => handleView(item.id)}
             />
           </div>
           <div>
             <div className="flex justify-between">
               <h3 className="text-lg font-bold">{item.name}</h3>
               <span className="font-bold text-lg text-primary">
-                $ {item.price.toLocaleString()}
+                $ {item.pricePerNight}
               </span>
             </div>
             <p className="text-muted-foreground">{item.location}</p>
           </div>
-          <div className="flex flex-wrap gap-1.5 items-end">
-            <Button size="sm" variant="outline">
-              <BedDouble /> {item.bedrooms}
-            </Button>
-            <Button size="sm" variant="outline">
-              <Bath /> {item.bathrooms}
-            </Button>
-            <Button size="sm" variant="outline">
-              <Blocks /> {item.area}
-            </Button>
-          </div>
+          <AmenityCardProperty
+            beds={item.beds}
+            maxGuests={item.maxGuests}
+            amenities={item.amenities}
+          />
         </div>
       ))}
     </>

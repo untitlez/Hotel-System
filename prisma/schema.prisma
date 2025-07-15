@@ -46,15 +46,20 @@ model Profile {
 }
 
 model Room {
-  id            String    @id @default(cuid())
-  roomNumber    String?   @unique
-  location      String?
-  type          String?
-  description   String?
-  pricePerNight Int?
-  bookings      Booking[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id             String     @id @default(cuid())
+  name           String?
+  type           String?
+  location       String?
+  pricePerNight  Int?
+  maxGuests      Int?
+  roomSize       Int?
+  beds           String?
+  amenities      String[]
+  image          String?
+  availableDates DateTime[]
+  bookings       Booking[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 
   @@index([type, location])
   @@index([pricePerNight])

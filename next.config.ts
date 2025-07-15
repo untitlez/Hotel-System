@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "readdy.ai",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "source.unsplash.com",
+        pathname: "**",
+      },
     ],
   },
 };

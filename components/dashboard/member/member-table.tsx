@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Routes } from "@/lib/routes";
 import { Search } from "lucide-react";
 
-import { ProfileType } from "@/validators/profile.validator";
+import { ResponseProfileType } from "@/validators/profile.validator";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -31,7 +31,7 @@ const tableHeader = [
 ];
 
 interface DashboardMemberTableProps {
-  data: ProfileType[];
+  data: ResponseProfileType[];
 }
 
 export const DashboardMemberTable = ({ data }: DashboardMemberTableProps) => {

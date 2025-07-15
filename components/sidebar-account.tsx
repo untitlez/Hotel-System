@@ -35,7 +35,7 @@ import {
 
 const menuItems = {
   home: { name: "Home Page", icon: Home, path: Routes.pages.home },
-  dashboard: { name: "Dashboard", icon: Activity, path: Routes.dashboardBase },
+  dashboard: { name: "Dashboard", icon: Activity, path: Routes.dashboard.base },
 };
 
 interface SidebarAccountProps {
@@ -46,7 +46,7 @@ export const SidebarAccount = ({ data }: SidebarAccountProps) => {
   const { isMobile } = useSidebar();
   const { theme, setTheme } = useTheme();
   const isDark = theme === "dark";
-  console.log("data", data);
+
   const handleLogOut = () => {
     signOut({ callbackUrl: Routes.auth.login });
   };

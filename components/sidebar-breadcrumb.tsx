@@ -1,9 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { ResponseUserType } from "@/validators/user.validator";
-
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Breadcrumb,
   BreadcrumbItem,

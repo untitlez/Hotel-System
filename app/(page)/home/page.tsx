@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -13,18 +13,12 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import { Pagination, Autoplay } from "swiper/modules";
-// import "swiper/css";
-// import "swiper/css/pagination";
-
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("Residence in Yogyakarta");
   const [priceRange, setPriceRange] = useState([1000, 500000]);
   const [selectedType, setSelectedType] = useState("Residence");
   const [selectedLocation, setSelectedLocation] = useState("Indonesia");
   const [favoriteProperties, setFavoriteProperties] = useState<number[]>([]);
-
   const toggleFavorite = (id: number) => {
     if (favoriteProperties.includes(id)) {
       setFavoriteProperties(
@@ -34,7 +28,6 @@ const App: React.FC = () => {
       setFavoriteProperties([...favoriteProperties, id]);
     }
   };
-
   const properties = [
     {
       id: 1,
@@ -102,14 +95,275 @@ const App: React.FC = () => {
       image:
         "https://readdy.ai/api/search-image?query=Luxury%20beachfront%20villa%20with%20wooden%20deck%2C%20outdoor%20furniture%2C%20ocean%20view%2C%20modern%20architectural%20design%20with%20large%20windows%20and%20wooden%20elements%2C%20sunset%20lighting%2C%20professional%20real%20estate%20photography&width=600&height=400&seq=6&orientation=landscape",
     },
+    {
+      id: 7,
+      name: "Azure Sky Apartments",
+      price: 180000,
+      location: "Denpasar, Bali",
+      bedrooms: 3,
+      bathrooms: 2,
+      area: 150,
+      image:
+        "https://readdy.ai/api/search-image?query=Modern%20apartment%20complex%20with%20glass%20balconies%20and%20sleek%20design%2C%20tropical%20landscaping%2C%20infinity%20pool%2C%20contemporary%20architecture%20with%20clean%20lines%2C%20professional%20real%20estate%20photography%20in%20perfect%20lighting&width=600&height=400&seq=24&orientation=landscape",
+    },
+    {
+      id: 8,
+      name: "Mountain View Retreat",
+      price: 420000,
+      location: "Bandung, Utara",
+      bedrooms: 5,
+      bathrooms: 4,
+      area: 380,
+      image:
+        "https://readdy.ai/api/search-image?query=Luxury%20mountain%20home%20with%20panoramic%20windows%2C%20modern%20architecture%20blending%20with%20natural%20surroundings%2C%20wooden%20elements%2C%20expansive%20deck%2C%20professional%20real%20estate%20photography%20with%20mountain%20backdrop&width=600&height=400&seq=25&orientation=landscape",
+    },
+    {
+      id: 9,
+      name: "Tropical Paradise Villa",
+      price: 550000,
+      location: "Ubud, Bali",
+      bedrooms: 6,
+      bathrooms: 5.5,
+      area: 450,
+      image:
+        "https://readdy.ai/api/search-image?query=Balinese%20style%20luxury%20villa%20with%20modern%20elements%2C%20infinity%20pool%20overlooking%20tropical%20forest%2C%20indoor%20outdoor%20living%20spaces%2C%20traditional%20architecture%20with%20contemporary%20touches&width=600&height=400&seq=26&orientation=landscape",
+    },
+    {
+      id: 10,
+      name: "Urban Oasis Lofts",
+      price: 320000,
+      location: "Jakarta, Pusat",
+      bedrooms: 2,
+      bathrooms: 2,
+      area: 120,
+      image:
+        "https://readdy.ai/api/search-image?query=Modern%20urban%20loft%20building%20with%20industrial%20elements%2C%20floor%20to%20ceiling%20windows%2C%20rooftop%20garden%2C%20contemporary%20city%20architecture%2C%20professional%20real%20estate%20photography&width=600&height=400&seq=27&orientation=landscape",
+    },
+    {
+      id: 11,
+      name: "Riverside Manor",
+      price: 680000,
+      location: "Yogyakarta, Tengah",
+      bedrooms: 7,
+      bathrooms: 6,
+      area: 520,
+      image:
+        "https://readdy.ai/api/search-image?query=Luxury%20riverside%20mansion%20with%20modern%20architecture%2C%20expansive%20windows%2C%20private%20dock%2C%20landscaped%20gardens%2C%20professional%20real%20estate%20photography%20with%20water%20views&width=600&height=400&seq=28&orientation=landscape",
+    },
+    {
+      id: 12,
+      name: "Harmony Gardens Estate",
+      price: 450000,
+      location: "Malang, Timur",
+      bedrooms: 5,
+      bathrooms: 4.5,
+      area: 400,
+      image:
+        "https://readdy.ai/api/search-image?query=Modern%20estate%20with%20extensive%20gardens%2C%20contemporary%20architecture%2C%20outdoor%20entertainment%20areas%2C%20swimming%20pool%2C%20professional%20real%20estate%20photography%20with%20garden%20focus&width=600&height=400&seq=29&orientation=landscape",
+    },
+    {
+      id: 13,
+      name: "Ocean Breeze Villas",
+      price: 890000,
+      location: "Nusa Dua, Bali",
+      bedrooms: 6,
+      bathrooms: 7,
+      area: 600,
+      image:
+        "https://readdy.ai/api/search-image?query=Luxury%20beachfront%20villa%20with%20infinity%20pool%2C%20modern%20tropical%20architecture%2C%20panoramic%20ocean%20views%2C%20private%20beach%20access%2C%20professional%20real%20estate%20photography%20at%20sunset&width=600&height=400&seq=30&orientation=landscape",
+    },
+    {
+      id: 14,
+      name: "City Lights Penthouse",
+      price: 750000,
+      location: "Jakarta, Utara",
+      bedrooms: 4,
+      bathrooms: 4.5,
+      area: 350,
+      image:
+        "https://readdy.ai/api/search-image?query=Modern%20penthouse%20with%20floor%20to%20ceiling%20windows%2C%20contemporary%20luxury%20interior%2C%20city%20skyline%20views%2C%20rooftop%20terrace%2C%20professional%20real%20estate%20photography%20at%20dusk&width=600&height=400&seq=31&orientation=landscape",
+    },
+    {
+      id: 15,
+      name: "Forest Haven Retreat",
+      price: 480000,
+      location: "Bogor, Barat",
+      bedrooms: 5,
+      bathrooms: 4,
+      area: 420,
+      image:
+        "https://readdy.ai/api/search-image?query=Modern%20forest%20home%20with%20glass%20walls%2C%20contemporary%20wooden%20architecture%2C%20surrounded%20by%20tall%20trees%2C%20outdoor%20living%20spaces%2C%20professional%20real%20estate%20photography%20in%20natural%20light&width=600&height=400&seq=32&orientation=landscape",
+    },
+    {
+      id: 16,
+      name: "Heritage Manor",
+      price: 920000,
+      location: "Surabaya, Pusat",
+      bedrooms: 8,
+      bathrooms: 7.5,
+      area: 750,
+      image:
+        "https://readdy.ai/api/search-image?query=Luxury%20colonial%20style%20mansion%20with%20modern%20amenities%2C%20grand%20entrance%2C%20manicured%20gardens%2C%20swimming%20pool%2C%20professional%20real%20estate%20photography%20with%20architectural%20focus&width=600&height=400&seq=33&orientation=landscape",
+    },
+    {
+      id: 17,
+      name: "Sunset Bay Residence",
+      price: 670000,
+      location: "Lombok, Barat",
+      bedrooms: 5,
+      bathrooms: 5,
+      area: 480,
+      image:
+        "https://readdy.ai/api/search-image?query=Modern%20coastal%20home%20with%20infinity%20pool%2C%20contemporary%20beach%20house%20architecture%2C%20ocean%20views%2C%20outdoor%20entertainment%20area%2C%20professional%20real%20estate%20photography%20at%20golden%20hour&width=600&height=400&seq=34&orientation=landscape",
+    },
+    {
+      id: 18,
+      name: "Valley View Estate",
+      price: 580000,
+      location: "Bandung, Selatan",
+      bedrooms: 6,
+      bathrooms: 5.5,
+      area: 520,
+      image:
+        "https://readdy.ai/api/search-image?query=Modern%20hillside%20mansion%20with%20panoramic%20valley%20views%2C%20contemporary%20architecture%2C%20infinity%20pool%2C%20expansive%20terraces%2C%20professional%20real%20estate%20photography%20with%20mountain%20backdrop&width=600&height=400&seq=35&orientation=landscape",
+    },
+    {
+      id: 19,
+      name: "Rice Terrace Villa",
+      price: 430000,
+      location: "Ubud, Bali",
+      bedrooms: 4,
+      bathrooms: 4,
+      area: 380,
+      image:
+        "https://readdy.ai/api/search-image?query=Modern%20villa%20overlooking%20rice%20terraces%2C%20contemporary%20Balinese%20architecture%2C%20infinity%20pool%2C%20indoor%20outdoor%20living%2C%20professional%20real%20estate%20photography%20with%20scenic%20backdrop&width=600&height=400&seq=36&orientation=landscape",
+    },
+    {
+      id: 20,
+      name: "Sky Garden Penthouse",
+      price: 850000,
+      location: "Jakarta, Barat",
+      bedrooms: 5,
+      bathrooms: 5,
+      area: 420,
+      image:
+        "https://readdy.ai/api/search-image?query=Luxury%20penthouse%20with%20rooftop%20garden%2C%20modern%20architecture%2C%20city%20views%2C%20outdoor%20entertainment%20area%2C%20professional%20real%20estate%20photography%20at%20blue%20hour&width=600&height=400&seq=37&orientation=landscape",
+    },
+    {
+      id: 21,
+      name: "Lakeside Manor",
+      price: 720000,
+      location: "Yogyakarta, Utara",
+      bedrooms: 7,
+      bathrooms: 6.5,
+      area: 580,
+      image:
+        "https://readdy.ai/api/search-image?query=Modern%20lakefront%20mansion%20with%20contemporary%20architecture%2C%20private%20dock%2C%20infinity%20pool%2C%20landscaped%20gardens%2C%20professional%20real%20estate%20photography%20with%20water%20views&width=600&height=400&seq=38&orientation=landscape",
+    },
+    {
+      id: 22,
+      name: "Mountain Lodge",
+      price: 490000,
+      location: "Malang, Utara",
+      bedrooms: 5,
+      bathrooms: 4,
+      area: 420,
+      image:
+        "https://readdy.ai/api/search-image?query=Modern%20mountain%20lodge%20with%20glass%20walls%2C%20contemporary%20wooden%20architecture%2C%20outdoor%20fireplace%2C%20scenic%20views%2C%20professional%20real%20estate%20photography%20in%20natural%20setting&width=600&height=400&seq=39&orientation=landscape",
+    },
+    {
+      id: 23,
+      name: "Beachfront Paradise",
+      price: 980000,
+      location: "Nusa Dua, Bali",
+      bedrooms: 6,
+      bathrooms: 7,
+      area: 650,
+      image:
+        "https://readdy.ai/api/search-image?query=Luxury%20beachfront%20estate%20with%20modern%20tropical%20architecture%2C%20multiple%20pools%2C%20private%20beach%20access%2C%20outdoor%20pavilions%2C%20professional%20real%20estate%20photography%20at%20sunset&width=600&height=400&seq=40&orientation=landscape",
+    },
+    {
+      id: 24,
+      name: "Urban Sanctuary",
+      price: 620000,
+      location: "Jakarta, Timur",
+      bedrooms: 4,
+      bathrooms: 4.5,
+      area: 380,
+      image:
+        "https://readdy.ai/api/search-image?query=Modern%20city%20home%20with%20courtyard%20garden%2C%20contemporary%20architecture%2C%20rooftop%20terrace%2C%20private%20pool%2C%20professional%20real%20estate%20photography%20with%20urban%20backdrop&width=600&height=400&seq=41&orientation=landscape",
+    },
+    {
+      id: 25,
+      name: "Hillside Haven",
+      price: 540000,
+      location: "Bandung, Barat",
+      bedrooms: 5,
+      bathrooms: 4.5,
+      area: 450,
+      image:
+        "https://readdy.ai/api/search-image?query=Modern%20hillside%20home%20with%20panoramic%20views%2C%20contemporary%20architecture%2C%20infinity%20pool%2C%20outdoor%20living%20spaces%2C%20professional%20real%20estate%20photography%20with%20scenic%20backdrop&width=600&height=400&seq=42&orientation=landscape",
+    },
+    {
+      id: 26,
+      name: "Royal Palm Estate",
+      price: 890000,
+      location: "Surabaya, Barat",
+      bedrooms: 8,
+      bathrooms: 7.5,
+      area: 720,
+      image:
+        "https://readdy.ai/api/search-image?query=Luxury%20modern%20mansion%20with%20palm%20lined%20driveway%2C%20grand%20architecture%2C%20multiple%20pools%2C%20manicured%20gardens%2C%20professional%20real%20estate%20photography%20with%20dramatic%20lighting&width=600&height=400&seq=43&orientation=landscape",
+    },
+    {
+      id: 27,
+      name: "Tropical Modern Villa",
+      price: 460000,
+      location: "Lombok, Timur",
+      bedrooms: 4,
+      bathrooms: 4,
+      area: 380,
+      image:
+        "https://readdy.ai/api/search-image?query=Contemporary%20tropical%20villa%20with%20modern%20design%2C%20infinity%20pool%2C%20indoor%20outdoor%20living%2C%20lush%20gardens%2C%20professional%20real%20estate%20photography%20in%20natural%20light&width=600&height=400&seq=44&orientation=landscape",
+    },
+    {
+      id: 28,
+      name: "River Estate",
+      price: 750000,
+      location: "Yogyakarta, Barat",
+      bedrooms: 6,
+      bathrooms: 5.5,
+      area: 520,
+      image:
+        "https://readdy.ai/api/search-image?query=Modern%20riverside%20estate%20with%20contemporary%20architecture%2C%20private%20dock%2C%20infinity%20pool%2C%20landscaped%20gardens%2C%20professional%20real%20estate%20photography%20with%20water%20views&width=600&height=400&seq=45&orientation=landscape",
+    },
+    {
+      id: 29,
+      name: "Forest Retreat",
+      price: 520000,
+      location: "Bogor, Timur",
+      bedrooms: 5,
+      bathrooms: 4.5,
+      area: 420,
+      image:
+        "https://readdy.ai/api/search-image?query=Modern%20forest%20home%20with%20glass%20facades%2C%20contemporary%20wooden%20architecture%2C%20outdoor%20living%20spaces%2C%20surrounded%20by%20nature%2C%20professional%20real%20estate%20photography%20in%20natural%20setting&width=600&height=400&seq=46&orientation=landscape",
+    },
+    {
+      id: 30,
+      name: "Ocean View Manor",
+      price: 920000,
+      location: "Nusa Dua, Bali",
+      bedrooms: 7,
+      bathrooms: 6.5,
+      area: 680,
+      image:
+        "https://readdy.ai/api/search-image?query=Luxury%20oceanfront%20mansion%20with%20modern%20tropical%20architecture%2C%20infinity%20pools%2C%20private%20beach%20access%2C%20expansive%20terraces%2C%20professional%20real%20estate%20photography%20at%20golden%20hour&width=600&height=400&seq=47&orientation=landscape",
+    },
   ];
-
   const heroImage =
     "https://readdy.ai/api/search-image?query=Stunning%20modern%20luxury%20villa%20with%20large%20glass%20windows%20and%20wooden%20elements%2C%20infinity%20pool%20overlooking%20natural%20landscape%2C%20architectural%20masterpiece%20with%20clean%20lines%20and%20open%20concept%20design%2C%20professional%20twilight%20photography%20with%20perfect%20gradient%20lighting%2C%20dramatic%20sky%20with%20soft%20clouds%2C%20ultra%20high%20definition&width=1440&height=600&seq=7&orientation=landscape";
-
   const faqImage =
     "https://readdy.ai/api/search-image?query=Modern%20minimalist%20architectural%20logo%20or%20symbol%20with%20clean%20lines%20and%20geometric%20shapes%2C%20representing%20luxury%20real%20estate%2C%20professional%20branding%20design%20with%20elegant%20typography%2C%20neutral%20background%20with%20subtle%20texture%2C%20high%20contrast%20lighting%2C%20professional%20product%20photography&width=800&height=600&seq=8&orientation=landscape";
-
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -118,10 +372,9 @@ const App: React.FC = () => {
           <div className="flex items-center md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
             <a href="#" className="flex items-center">
               <i className="fas fa-home text-2xl mr-2 text-blue-600"></i>
-              <span className="text-xl font-bold">Aurora</span>
+              <span className="text-xl font-bold">Aruna</span>
             </a>
           </div>
-
           <nav className="hidden md:flex items-center space-x-8">
             <a
               href="#"
@@ -154,7 +407,6 @@ const App: React.FC = () => {
               About Us
             </a>
           </nav>
-
           <div className="flex items-center space-x-4">
             <a
               href="#"
@@ -171,15 +423,13 @@ const App: React.FC = () => {
           </div>
         </div>
       </header>
-
       {/* Promo Banner */}
-      <div className="bg-gradient-to-r from-blue-600 to-emerald-500 text-white py-2.5 px-4 text-center text-sm font-medium">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white py-2.5 px-4 text-center text-sm font-medium">
         Lock in Your New Home with Flexible Payment Plans and Special Discounts!{" "}
         <a href="#" className="underline ml-1 font-semibold cursor-pointer">
           Learn More
         </a>
       </div>
-
       {/* Hero Section */}
       <div className="relative h-[600px] overflow-hidden">
         <div
@@ -210,7 +460,6 @@ const App: React.FC = () => {
           </div>
         </div>
       </div>
-
       {/* Search Section */}
       <div className="container mx-auto px-4 py-8">
         <div className="bg-white rounded-xl shadow-lg p-8 -mt-24 relative z-20 border border-gray-100">
@@ -226,7 +475,6 @@ const App: React.FC = () => {
                 className="w-full border-gray-200 focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
-
             <div>
               <p className="text-sm font-medium mb-2 text-gray-700">Type</p>
               <Select value={selectedType} onValueChange={setSelectedType}>
@@ -241,7 +489,6 @@ const App: React.FC = () => {
                 </SelectContent>
               </Select>
             </div>
-
             <div>
               <p className="text-sm font-medium mb-2 text-gray-700">Price</p>
               <Select
@@ -268,7 +515,6 @@ const App: React.FC = () => {
                 </SelectContent>
               </Select>
             </div>
-
             <div>
               <p className="text-sm font-medium mb-2 text-gray-700">Location</p>
               <div className="relative">
@@ -281,7 +527,6 @@ const App: React.FC = () => {
                 <i className="fas fa-map-marker-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
               </div>
             </div>
-
             <div>
               <p className="text-sm font-medium mb-2 text-gray-700">
                 Find Specific Property
@@ -306,14 +551,13 @@ const App: React.FC = () => {
           </div>
         </div>
       </div>
-
       {/* Property Listings */}
       <div className="container mx-auto px-4 py-16">
         <div className="flex justify-between items-center mb-10">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">{searchTerm}</h2>
             <p className="text-gray-500 mt-1">
-              We found <span className="font-medium text-blue-600">242</span>{" "}
+              We found <span className="font-medium text-blue-600">30</span>{" "}
               properties
             </p>
           </div>
@@ -332,7 +576,6 @@ const App: React.FC = () => {
             </Select>
           </div>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {properties.map((property) => (
             <Card
@@ -390,14 +633,12 @@ const App: React.FC = () => {
             </Card>
           ))}
         </div>
-
         <div className="flex justify-center mt-12">
           <Button className="!rounded-button whitespace-nowrap cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-8 py-6">
             Load More Properties
           </Button>
         </div>
       </div>
-
       {/* Featured Categories */}
       <div className="bg-gray-50 py-20">
         <div className="container mx-auto px-4">
@@ -410,7 +651,6 @@ const App: React.FC = () => {
               for your lifestyle and preferences.
             </p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
@@ -474,7 +714,6 @@ const App: React.FC = () => {
           </div>
         </div>
       </div>
-
       {/* Featured Cities */}
       <div className="py-20 container mx-auto px-4">
         <div className="text-center mb-16">
@@ -486,7 +725,6 @@ const App: React.FC = () => {
             regions.
           </p>
         </div>
-
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-5 mb-12 bg-gray-100 p-1">
             <TabsTrigger
@@ -520,7 +758,6 @@ const App: React.FC = () => {
               Surabaya
             </TabsTrigger>
           </TabsList>
-
           <TabsContent value="all" className="mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
@@ -591,14 +828,12 @@ const App: React.FC = () => {
               ))}
             </div>
           </TabsContent>
-
           {/* Other tab contents would be similar */}
           <TabsContent value="jakarta" className="mt-0">
             {/* Jakarta specific content */}
           </TabsContent>
         </Tabs>
       </div>
-
       {/* FAQ Section */}
       <div className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -607,7 +842,6 @@ const App: React.FC = () => {
               <h2 className="text-3xl font-bold mb-10 text-gray-900">
                 Frequently Asked Questions
               </h2>
-
               <div className="space-y-6">
                 {[
                   {
@@ -644,16 +878,14 @@ const App: React.FC = () => {
                   </div>
                 ))}
               </div>
-
               <Button className="mt-10 !rounded-button whitespace-nowrap cursor-pointer bg-blue-600 hover:bg-blue-700 text-white">
                 View All FAQs
               </Button>
             </div>
-
             <div className="relative">
               <img
                 src={faqImage}
-                alt="Aurora Real Estate"
+                alt="Aruna Real Estate"
                 className="w-full rounded-xl shadow-lg"
               />
               <div className="absolute -bottom-8 -left-8 bg-white p-6 rounded-xl shadow-lg">
@@ -671,7 +903,6 @@ const App: React.FC = () => {
           </div>
         </div>
       </div>
-
       {/* Testimonials */}
       <div className="py-20 container mx-auto px-4">
         <div className="text-center mb-16">
@@ -680,32 +911,16 @@ const App: React.FC = () => {
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Hear from our satisfied clients about their experience finding their
-            dream homes with Aurora.
+            dream homes with Aruna.
           </p>
         </div>
-
-        {/* <Swiper
-          slidesPerView={1}
-          spaceBetween={30}
-          pagination={{ clickable: true }}
-          breakpoints={{
-            640: {
-              slidesPerView: 2,
-            },
-            1024: {
-              slidesPerView: 3,
-            },
-          }}
-          modules={[Pagination, Autoplay]}
-          autoplay={{ delay: 5000 }}
-          className="testimonial-swiper pb-14"
-        >
+        <div className="testimonial-swiper pb-14">
           {[
             {
               name: "Michael Thompson",
               role: "Homeowner in Jakarta",
               testimonial:
-                "Working with Aurora was a seamless experience from start to finish. Their team's expertise and attention to detail made finding our dream home a pleasure.",
+                "Working with Aruna was a seamless experience from start to finish. Their team's expertise and attention to detail made finding our dream home a pleasure.",
               avatar:
                 "https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20person%20in%20business%20attire%20with%20neutral%20background%2C%20high%20quality%20portrait%20photography%20with%20soft%20lighting%2C%20corporate%20style%2C%20ultra%20high%20definition&width=100&height=100&seq=15&orientation=squarish",
             },
@@ -713,7 +928,7 @@ const App: React.FC = () => {
               name: "Sarah Johnson",
               role: "Property Investor",
               testimonial:
-                "As an international investor, I needed a team I could trust. Aurora exceeded my expectations with their market knowledge and personalized service.",
+                "As an international investor, I needed a team I could trust. Aruna exceeded my expectations with their market knowledge and personalized service.",
               avatar:
                 "https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20person%20with%20confident%20expression%2C%20business%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait%20photography%20with%20soft%20lighting%2C%20ultra%20high%20definition&width=100&height=100&seq=16&orientation=squarish",
             },
@@ -721,7 +936,7 @@ const App: React.FC = () => {
               name: "David Chen",
               role: "First-time Buyer",
               testimonial:
-                "Being a first-time homebuyer was intimidating, but Aurora guided me through every step of the process with patience and expertise. Highly recommended!",
+                "Being a first-time homebuyer was intimidating, but Aruna guided me through every step of the process with patience and expertise. Highly recommended!",
               avatar:
                 "https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20person%20smiling%2C%20casual%20smart%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait%20photography%20with%20soft%20lighting%2C%20friendly%20expression%2C%20ultra%20high%20definition&width=100&height=100&seq=17&orientation=squarish",
             },
@@ -729,12 +944,12 @@ const App: React.FC = () => {
               name: "Emma Wilson",
               role: "Luxury Villa Owner",
               testimonial:
-                "Aurora helped me find a stunning beachfront property that exceeded all my expectations. Their attention to my specific requirements was impressive.",
+                "Aruna helped me find a stunning beachfront property that exceeded all my expectations. Their attention to my specific requirements was impressive.",
               avatar:
                 "https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20person%20with%20elegant%20appearance%2C%20business%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait%20photography%20with%20soft%20lighting%2C%20sophisticated%20look%2C%20ultra%20high%20definition&width=100&height=100&seq=18&orientation=squarish",
             },
           ].map((testimonial, index) => (
-            <SwiperSlide key={index}>
+            <div key={index}>
               <Card className="h-full border border-gray-200 shadow-sm hover:shadow-md transition-shadow rounded-xl p-1">
                 <CardContent className="p-6 flex flex-col h-full">
                   <div className="mb-6">
@@ -764,11 +979,10 @@ const App: React.FC = () => {
                   </div>
                 </CardContent>
               </Card>
-            </SwiperSlide>
+            </div>
           ))}
-        </Swiper> */}
+        </div>
       </div>
-
       {/* CTA Section */}
       <div className="bg-gradient-to-r from-blue-700 to-blue-500 py-20 text-white">
         <div className="container mx-auto px-4 text-center">
@@ -794,7 +1008,6 @@ const App: React.FC = () => {
           </div>
         </div>
       </div>
-
       {/* Footer */}
       <footer className="bg-gray-900 text-white pt-20 pb-8">
         <div className="container mx-auto px-4">
@@ -802,7 +1015,7 @@ const App: React.FC = () => {
             <div>
               <div className="flex items-center mb-8">
                 <i className="fas fa-home text-2xl mr-2 text-blue-400"></i>
-                <span className="text-xl font-bold">Aurora</span>
+                <span className="text-xl font-bold">Aruna</span>
               </div>
               <p className="text-gray-400 mb-8 leading-relaxed">
                 Premium real estate solutions across Indonesia, connecting
@@ -835,7 +1048,6 @@ const App: React.FC = () => {
                 </a>
               </div>
             </div>
-
             <div>
               <h3 className="text-lg font-bold mb-6 text-white">Quick Links</h3>
               <ul className="space-y-4">
@@ -895,7 +1107,6 @@ const App: React.FC = () => {
                 </li>
               </ul>
             </div>
-
             <div>
               <h3 className="text-lg font-bold mb-6 text-white">
                 Popular Locations
@@ -957,7 +1168,6 @@ const App: React.FC = () => {
                 </li>
               </ul>
             </div>
-
             <div>
               <h3 className="text-lg font-bold mb-6 text-white">Contact Us</h3>
               <ul className="space-y-4">
@@ -974,7 +1184,7 @@ const App: React.FC = () => {
                 <li className="flex items-center">
                   <i className="fas fa-envelope mr-3 text-blue-400"></i>
                   <span className="text-gray-400">
-                    info@Aurora-realestate.com
+                    info@aruna-realestate.com
                   </span>
                 </li>
                 <li className="flex items-center">
@@ -990,10 +1200,9 @@ const App: React.FC = () => {
               </Button>
             </div>
           </div>
-
           <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2025 Aurora Real Estate. All rights reserved.
+              © 2025 Aruna Real Estate. All rights reserved.
             </p>
             <div className="flex items-center space-x-6">
               <a
@@ -1020,5 +1229,4 @@ const App: React.FC = () => {
     </div>
   );
 };
-
 export default App;

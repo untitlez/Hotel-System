@@ -18,9 +18,9 @@ interface TooltipButtonProps extends React.ComponentProps<typeof Button> {
   tooltip?: string;
 }
 export const TooltipButton = ({
-  label = "Label",
+  href,
   icon: Icon,
-  href = "#",
+  label = "Label",
   side = "top",
   tooltip = "Tooltip",
   ...props
@@ -28,14 +28,15 @@ export const TooltipButton = ({
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button asChild {...props}>
-          <Link href={href}>
-            {Icon && <Icon className="size-4" />}
-            {label}
-          </Link>
-        </Button>
+        {href ? (
+          <Button asChild {...props}>
+            <Link href={href}>{Icon ? <Icon /> : <p>{label}</p>}</Link>
+          </Button>
+        ) : (
+          <Button {...props}>{Icon ? <Icon /> : <p>{label}</p>}</Button>
+        )}
       </TooltipTrigger>
-      <TooltipContent side={side}>
+      <TooltipContent side={side} className="font-medium">
         <p>{tooltip}</p>
       </TooltipContent>
     </Tooltip>

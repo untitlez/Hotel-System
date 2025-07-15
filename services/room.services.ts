@@ -1,14 +1,52 @@
 import { prisma } from "@/lib/prisma";
+import { QueryType } from "@/validators/query.validator";
 import { CreateRoomType, UpdateRoomType } from "@/validators/room.validator";
 
 //
-// GET
+// GET for Member
 //
-export const queryRoom = async (query: string) => {
+export const queryRoom = async (query: QueryType) => {
+  const skip = (query.page - 1) * query.limit;
+  const rooms = await prisma.room.findMany({
+    where: {
+      OR: [
+        { name: { contains: query.search, mode: "insensitive" } },
+        { location: { contains: query.search, mode: "insensitive" } },
+        { type: { contains: query.search, mode: "insensitive" } },
+      ],
+    },
+    orderBy: { pricePerNight: query.sort },
+    take: query.limit,
+    skip,
+  });
+
+  const total = await prisma.room.count({
+    where: {
+      OR: [
+        { name: { contains: query.search, mode: "insensitive" } },
+        { location: { contains: query.search, mode: "insensitive" } },
+        { type: { contains: query.search, mode: "insensitive" } },
+      ],
+    },
+  });
+  return {
+    rooms,
+    pagination: {
+      total,
+      page: query.page,
+      limit: query.limit,
+    },
+  };
+};
+
+//
+// GET for Admin
+//
+export const getAllRoom = async (query: string) => {
   const services = await prisma.room.findMany({
     where: {
       OR: [
-        { roomNumber: { contains: query, mode: "insensitive" } },
+        { name: { contains: query, mode: "insensitive" } },
         { location: { contains: query, mode: "insensitive" } },
         { type: { contains: query, mode: "insensitive" } },
       ],
@@ -36,11 +74,15 @@ export const listRoom = async (paramsId: string) => {
       id: paramsId,
     },
     select: {
-      roomNumber: true,
-      location: true,
+      name: true,
       type: true,
-      description: true,
+      location: true,
       pricePerNight: true,
+      maxGuests: true,
+      roomSize: true,
+      beds: true,
+      amenities: true,
+      image: true,
     },
   });
   return services;

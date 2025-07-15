@@ -1,6 +1,8 @@
+import { Routes } from "@/lib/routes";
+
 import { Navbar } from "@/components/navbar";
 import HeroPage from "./(page)/hero/page";
-import PropertyPage from "./(page)/property/page";
+import PropertyHomePage from "./(page)/property/property-home/page";
 import PopularLocationPage from "./(page)/popular-location/page";
 import ReviewPage from "./(page)/review/page";
 import FQAPage from "./(page)/fqa/page";
@@ -15,25 +17,25 @@ export default async function HomePage() {
         <Navbar />
       </nav>
       <div className="max-w-screen-xl space-y-24 mx-8 2xl:mx-0">
-        <section id="hero">
+        <section id={Routes.id.hero}>
           <HeroPage />
         </section>
-        <section id="property">
-          <PropertyPage />
+        <section id={Routes.id.property}>
+          <PropertyHomePage />
         </section>
-        {/* <div id="location">
+        {/* <div id={Routes.id.hero}>
           <PopularLocationPage />
         </div> */}
-        <section id="review">
+        <section id={Routes.id.review}>
           <ReviewPage />
         </section>
-        <section id="fqa">
+        <section id={Routes.id.fqa}>
           <FQAPage />
         </section>
-        <section id="cta">
+        <section id={Routes.id.cta}>
           <CTAPage />
         </section>
-        <footer id="footer">
+        <footer id={Routes.id.footer}>
           <FooterPage />
         </footer>
       </div>
