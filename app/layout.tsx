@@ -14,7 +14,7 @@ const quicksand = Quicksand({
 });
 
 export const metadata: Metadata = {
-  title: "E-Commerce",
+  title: "Hotel System",
   description: "Practice Web Services",
 };
 

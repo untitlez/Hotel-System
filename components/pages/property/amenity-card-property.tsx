@@ -1,6 +1,6 @@
 "use client";
 
-import { BedDouble, List, User2 } from "lucide-react";
+import { BedDouble, Grid2X2, List, User2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   HoverCard,
@@ -11,12 +11,14 @@ import {
 interface AmenityCardPropertyProps {
   beds?: string;
   maxGuests?: number;
+  roomSize?: number;
   amenities: string[];
 }
 
 export function AmenityCardProperty({
   beds,
   maxGuests,
+  roomSize,
   amenities,
 }: AmenityCardPropertyProps) {
   return (
@@ -26,6 +28,9 @@ export function AmenityCardProperty({
       </Button>
       <Button size="sm" variant="outline">
         <User2 /> {maxGuests}
+      </Button>
+      <Button size="sm" variant="outline">
+        <Grid2X2 /> {`${roomSize}m²`}
       </Button>
       <HoverCard>
         <HoverCardTrigger asChild>

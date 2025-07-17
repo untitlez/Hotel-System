@@ -2,7 +2,7 @@ import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
 
 import { SortProperty } from "@/components/pages/property/sort-property";
-import { CardProperty } from "@/components/pages/property/card-property";
+import { AppCardProperty } from "@/components/pages/property/app-card-property";
 import { NextPageProperty } from "@/components/pages/property/next-page-property";
 import { Navbar } from "@/components/navbar";
 
@@ -26,7 +26,7 @@ export default async function PropertyPage({
         <Navbar />
       </nav>
       <div className="w-full max-w-screen-xl justify-self-center">
-        <div className="flex justify-between items-center my-12">
+        <div className="flex flex-wrap justify-between items-center gap-6 my-12">
           <div>
             <h2 className="text-2xl font-bold">Residence in Australia</h2>
             <p className=" mt-1">
@@ -42,7 +42,7 @@ export default async function PropertyPage({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <CardProperty data={data.rooms} />
+          <AppCardProperty data={data.rooms} />
         </div>
 
         <div className="flex justify-center my-12">

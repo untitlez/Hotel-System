@@ -13,18 +13,19 @@ import {
 export const SortProperty = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const query = new URLSearchParams(searchParams.toString());
+  const query = new URLSearchParams(searchParams);
+  const value = searchParams.get("sort") || "";
 
   const handleSortChange = (value: string) => {
     query.set("sort", value);
-    router.push(`?${query.toString()}`);
+    router.push("?" + query);
   };
 
   return (
     <div className="flex items-center gap-2">
       <span className="text-sm ">Sort By:</span>
-      <Select onValueChange={handleSortChange}>
-        <SelectTrigger className="border-secondary-foreground cursor-pointer">
+      <Select value={value} onValueChange={handleSortChange}>
+        <SelectTrigger className="border-secondary-foreground/59 cursor-pointer">
           <SelectValue placeholder="Price" />
         </SelectTrigger>
         <SelectContent>

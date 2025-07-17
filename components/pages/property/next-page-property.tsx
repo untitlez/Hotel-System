@@ -27,7 +27,7 @@ export function NextPageProperty({ pagination }: NextPagePropertyProps) {
 
   const updatePage = (value: number) => {
     if (value < 1 || value > totalPages) return;
-    const query = new URLSearchParams(searchParams.toString());
+    const query = new URLSearchParams(searchParams);
     query.set("page", value.toString());
     router.push("?" + query);
   };
@@ -49,8 +49,9 @@ export function NextPageProperty({ pagination }: NextPagePropertyProps) {
           return (
             <PaginationItem key={pageNum}>
               <PaginationLink
+                className="cursor-pointer"
                 isActive={page === pageNum}
-                href={`?page=${pageNum}`}
+                onClick={() => updatePage(pageNum)}
               >
                 {pageNum}
               </PaginationLink>
