@@ -11,8 +11,8 @@ export const queryRoom = async (query: QueryType) => {
     where: {
       OR: [
         { name: { contains: query.search, mode: "insensitive" } },
-        { location: { contains: query.search, mode: "insensitive" } },
         { type: { contains: query.search, mode: "insensitive" } },
+        { location: { contains: query.search, mode: "insensitive" } },
       ],
     },
     orderBy: { pricePerNight: query.sort },
@@ -24,8 +24,8 @@ export const queryRoom = async (query: QueryType) => {
     where: {
       OR: [
         { name: { contains: query.search, mode: "insensitive" } },
-        { location: { contains: query.search, mode: "insensitive" } },
         { type: { contains: query.search, mode: "insensitive" } },
+        { location: { contains: query.search, mode: "insensitive" } },
       ],
     },
   });

@@ -1,8 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Loader2, Search } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
 import {
   Select,
   SelectContent,
@@ -10,15 +14,38 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search } from "lucide-react";
-import { useState } from "react";
-import { Label } from "@/components/ui/label";
 
 export const SearchBox = () => {
-  const [search, setSearch] = useState<string>("");
-  const [type, setType] = useState<string>("");
-  const [price, setPrice] = useState<number[]>([]);
-  const [location, setLocation] = useState<string>("");
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [type, setType] = useState("");
+  const [location, setLocation] = useState("");
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const query = new URLSearchParams(searchParams);
+
+  const handleSearch = () => {
+    if (search.trim()) {
+      setLoading(true);
+      query.set("search", search.toString());
+      router.push("property?" + query);
+    }
+  };
+
+  useEffect(() => {
+    if (!type) return;
+    setLoading(true);
+    query.set("search", type.toString().trim());
+    router.push("property?" + query);
+  }, [type]);
+
+  useEffect(() => {
+    if (!location) return;
+    setLoading(true);
+    query.set("search", location.toString().trim());
+    router.push("property?" + query);
+  }, [location]);
 
   const inputItems = {
     search: {
@@ -27,53 +54,49 @@ export const SearchBox = () => {
       value: search,
       onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
         setSearch(e.target.value),
+      onkeyup: (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") handleSearch();
+      },
     },
     type: {
       label: "Type",
       placeholder: "Property Type",
-      options: [
-        { value: "residence", label: "Residence" },
-        { value: "apartment", label: "Apartment" },
-        { value: "villa", label: "Villa" },
-        { value: "house", label: "House" },
-      ],
+      options: [{ value: "Villa" }, { value: "Hotel" }, { value: "Resort" }],
       value: type,
       onChange: setType,
-    },
-    price: {
-      label: "Price",
-      placeholder: "Price",
-      priceBar: {
-        defaultValue: [1000, 500000],
-        min: 1000,
-        max: 1000000,
-        step: 1000,
-      },
-      value: price,
-      onChange: (value: number[]) => setPrice(value),
     },
     location: {
       label: "Location",
       placeholder: "Australia",
+      options: [
+        { value: "Sydney" },
+        { value: "Melbourne" },
+        { value: "Brisbane" },
+        { value: "Perth" },
+        { value: "Adelaide," },
+        { value: "Gold Coast," },
+        { value: "Canberra" },
+        { value: "Hobart" },
+      ],
       value: location,
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-        setLocation(e.target.value),
+      onChange: setLocation,
     },
   };
 
   return (
     <div className="bg-background text-foreground dark:bg-secondary dark:text-secondary-foreground rounded-xl shadow-lg p-8 m-8 z-10">
-      <div className="grid grid-cols-5 gap-6 items-end">
-        <div className="hidden lg:block space-y-2">
+      <div className="grid grid-cols-3 lg:grid-cols-4 gap-6 items-end">
+        <div className="col-span-2 sm:col-span-1 space-y-2">
           <Label>{inputItems.search.label}</Label>
           <Input
             placeholder={inputItems.search.placeholder}
             value={inputItems.search.value}
             onChange={inputItems.search.onChange}
+            onKeyUp={inputItems.search.onkeyup}
           />
         </div>
 
-        <div className="hidden lg:block space-y-2">
+        <div className="hidden sm:block space-y-2">
           <Label>{inputItems.type.label}</Label>
           <Select
             value={inputItems.type.value}
@@ -85,49 +108,45 @@ export const SearchBox = () => {
             <SelectContent>
               {inputItems.type.options.map((opt, i) => (
                 <SelectItem key={i} value={opt.value}>
-                  {opt.label}
+                  {opt.value}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
         </div>
 
-        <div className="hidden sm:block col-span-2 lg:col-span-1 space-y-2">
-          <Label>{inputItems.price.label}</Label>
-          <Select>
+        <div className="hidden lg:block space-y-2">
+          <Label>{inputItems.location.label}</Label>
+          <Select
+            value={inputItems.location.value}
+            onValueChange={inputItems.location.onChange}
+          >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder={inputItems.price.placeholder} />
+              <SelectValue placeholder={inputItems.location.placeholder} />
             </SelectTrigger>
             <SelectContent>
-              <div className="p-4">
-                <Slider
-                  defaultValue={inputItems.price.priceBar.defaultValue}
-                  min={inputItems.price.priceBar.min}
-                  max={inputItems.price.priceBar.max}
-                  step={inputItems.price.priceBar.step}
-                  onValueChange={inputItems.price.onChange}
-                />
-                <div className="flex justify-between text-sm mt-4">
-                  <span>${inputItems.price.priceBar.min}</span>
-                  <span>${inputItems.price.priceBar.max}</span>
-                </div>
-              </div>
+              {inputItems.location.options.map((opt, i) => (
+                <SelectItem key={i} value={opt.value}>
+                  {opt.value}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
 
-        <div className="col-span-4 sm:col-span-2 lg:col-span-1 space-y-2">
-          <Label>{inputItems.location.label}</Label>
-          <Input
-            placeholder={inputItems.location.placeholder}
-            value={inputItems.location.value}
-            onChange={inputItems.location.onChange}
-          />
-        </div>
-
-        <Button className="w-full">
-          <Search />
-          <span className="hidden md:block">Search</span>
+        <Button
+          className="w-full cursor-pointer"
+          disabled={loading}
+          onClick={handleSearch}
+        >
+          {loading ? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            <>
+              <Search />
+              <span className="hidden sm:block">Search</span>
+            </>
+          )}
         </Button>
       </div>
     </div>

@@ -2,7 +2,9 @@ import { z } from "zod";
 
 export const QuerySchema = z.object({
   search: z.string().optional(),
-  sort: z.enum(["asc", "desc"]).default("desc").optional(),
+  type: z.string().optional(),
+  location: z.string().optional(),
+  sort: z.enum(["asc", "desc"]).default("desc"),
   page: z.coerce.number().min(1),
   limit: z.coerce.number().min(1).max(100),
 });
