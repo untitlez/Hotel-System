@@ -10,7 +10,7 @@ interface BookingPageProps {
 export default async function BookingPage({ params }: BookingPageProps) {
   const { id } = await params;
   const responseRoom = await fetch(
-    Config.API_URL + Endpoints.room.baseRooms + id
+    Config.API_URL + Endpoints.room.baseRoom + id
   );
   const roomData = await responseRoom.json();
 

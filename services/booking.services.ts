@@ -28,8 +28,11 @@ export const listBooking = async (paramsId: string) => {
       id: true,
       userId: true,
       roomId: true,
+      statusPaid: true,
+      request: true,
       checkInDate: true,
       checkOutDate: true,
+      createdAt: true,
     },
   });
   return services;

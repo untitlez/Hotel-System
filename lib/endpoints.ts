@@ -2,7 +2,7 @@ export const Endpoints = {
   users: "/api/users/",
   profile: "/api/profile/",
   room: {
-    baseRooms: "/api/room/",
+    baseRoom: "/api/room/",
     member: "/api/room/member",
     admin: "/api/room/admin/",
   },

@@ -8,12 +8,8 @@ export default async function DashboardRoomIdPage({
   params: { id: string };
 }) {
   const { id } = await params;
-  const res = await fetch(Config.API_URL + Endpoints.room.baseRooms + id);
+  const res = await fetch(Config.API_URL + Endpoints.room.baseRoom + id);
   const data = await res.json();
 
-  return (
-    <div className="flex flex-col xl:flex-row items-center justify-center">
-      <DashboardRoomForm data={data} />
-    </div>
-  );
+  return <DashboardRoomForm data={data} />;
 }

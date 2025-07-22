@@ -1,12 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { BedDouble, Cigarette, Mail, Search } from "lucide-react";
 
 import { Routes } from "@/lib/routes";
-import { Search } from "lucide-react";
-
 import { ResponseBookingType } from "@/validators/booking.validator";
 
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -18,13 +19,13 @@ import {
 } from "@/components/ui/table";
 
 const tableHeader = [
-  "id",
-  "userId",
-  "roomId",
-  "checkInDate",
-  "checkOutDate",
-  "createdAt",
-  "updatedAt",
+  "No.",
+  "Check In",
+  "Check Out",
+  "Special Requests",
+  "Status",
+  "Create At",
+  "",
 ];
 
 interface DashboardBookingTableProps {
@@ -33,7 +34,6 @@ interface DashboardBookingTableProps {
 
 export const DashboardBookingTable = ({ data }: DashboardBookingTableProps) => {
   const router = useRouter();
-
   const handleView = (id: string) => {
     router.push(Routes.dashboard.booking + id);
   };
@@ -61,15 +61,38 @@ export const DashboardBookingTable = ({ data }: DashboardBookingTableProps) => {
               onClick={() => handleView(item.id)}
               className="cursor-pointer"
             >
-              {/* <TableCell>{item.id}</TableCell>
-              <TableCell>{item.fullName}</TableCell>
-              <TableCell>{item.gender}</TableCell>
-              <TableCell>{item.birthday}</TableCell>
-              <TableCell>{item.address}</TableCell>
-              <TableCell>{item.phone}</TableCell>
-              <TableCell>{item.status}</TableCell>
-              <TableCell>{item.createdAt}</TableCell>
-              <TableCell>{item.updatedAt}</TableCell> */}
+              <TableCell>{i + 1}</TableCell>
+              <TableCell>
+                {new Date(item.checkInDate).toLocaleDateString()}
+              </TableCell>
+              <TableCell>
+                {new Date(item.checkOutDate).toLocaleDateString()}
+              </TableCell>
+              <TableCell className="flex flex-wrap gap-1">
+                {item.request?.bedType && (
+                  <Button variant="outline" size="icon">
+                    <BedDouble />
+                  </Button>
+                )}
+                {item.request?.roomType && (
+                  <Button variant="outline" size="icon">
+                    <Cigarette />
+                  </Button>
+                )}
+                {item.request?.note && (
+                  <Button variant="outline" size="icon">
+                    <Mail />
+                  </Button>
+                )}
+              </TableCell>
+              <TableCell>
+                <Badge className="bg-chart-3 text-secondary">
+                  {item.statusPaid}
+                </Badge>
+              </TableCell>
+              <TableCell>
+                {new Date(item.createdAt).toLocaleDateString()}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

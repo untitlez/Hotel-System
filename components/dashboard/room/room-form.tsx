@@ -8,12 +8,7 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  ChevronDown,
-  ChevronLeft,
-  ChevronUp,
-  Loader2Icon,
-} from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronUp, Loader2Icon } from "lucide-react";
 
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
@@ -47,7 +42,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 
 const inputItems = [
   {
@@ -154,7 +148,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
     if (data) {
       try {
         await axios.put(
-          Config.API_URL + Endpoints.room.baseRooms + paramsId,
+          Config.API_URL + Endpoints.room.baseRoom + paramsId,
           newData
         );
         toast.success("Changes saved successfully.");
@@ -166,7 +160,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
       }
     } else {
       try {
-        await axios.post(Config.API_URL + Endpoints.room.baseRooms, newData);
+        await axios.post(Config.API_URL + Endpoints.room.baseRoom, newData);
         toast.success("Room created successfully!");
         console.log("Form Data", newData);
         reset();
@@ -181,7 +175,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
   const onDelete = async () => {
     if (!paramsId) return;
     try {
-      await axios.delete(Config.API_URL + Endpoints.room.baseRooms + paramsId);
+      await axios.delete(Config.API_URL + Endpoints.room.baseRoom + paramsId);
       toast.success("Item has been deleted.");
       router.push(Routes.dashboard.room);
     } catch (error: unknown) {
@@ -190,9 +184,9 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
     }
   };
   return (
-    <Card className="w-full max-w-screen-sm xl:max-w-screen-xl">
+    <Card className="w-full max-w-xl mx-auto">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">
+        <CardTitle className="text-lg font-bold">
           {data ? (
             <div className="text-start">Room Info: {data?.name}</div>
           ) : (
