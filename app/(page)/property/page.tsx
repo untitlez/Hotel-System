@@ -16,7 +16,7 @@ export default async function PropertyPage({
   const params = await searchParams;
   const query = new URLSearchParams(params);
   const res = await fetch(
-    Config.API_URL + Endpoints.rooms.member + "?" + query
+    Config.API_URL + Endpoints.room.member + "?" + query
   );
   const data = await res.json();
 

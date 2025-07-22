@@ -4,6 +4,14 @@ export const BookingSchema = z.object({
   id: z.string().cuid(),
   userId: z.string().cuid(),
   roomId: z.string().cuid(),
+  statusPaid: z.enum(["PENDING", "CONFIRMED", "CANCELLED"]),
+  request: z
+    .object({
+      roomType: z.string().optional(),
+      bedType: z.string().optional(),
+      note: z.coerce.string().trim().optional(),
+    })
+    .optional(),
   checkInDate: z.coerce.date(),
   checkOutDate: z.coerce.date(),
   createdAt: z.coerce.date(),

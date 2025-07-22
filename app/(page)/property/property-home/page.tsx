@@ -1,15 +1,14 @@
+import Link from "next/link";
+
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
-
-import { SortProperty } from "@/components/pages/property/sort-property";
-import { AppCardProperty } from "@/components/pages/property/app-card-property";
-import { NextPageProperty } from "@/components/pages/property/next-page-property";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { Routes } from "@/lib/routes";
 
+import { AppCardProperty } from "@/components/pages/property/app-card-property";
+import { Button } from "@/components/ui/button";
+
 export default async function PropertyHomePage() {
-  const res = await fetch(Config.API_URL + Endpoints.rooms.member + "?limit=9");
+  const res = await fetch(Config.API_URL + Endpoints.room.member + "?limit=9");
   const data = await res.json();
 
   return (

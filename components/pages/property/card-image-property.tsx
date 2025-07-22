@@ -30,7 +30,7 @@ export const CardImageProperty = ({ item }: CardImagePropertyProps) => {
       <Image
         src={item.image ?? ""}
         alt={item.name}
-        className="object-cover rounded-xl hover:scale-105 transform duration-700 cursor-pointer"
+        className="object-cover rounded-xl md:hover:scale-105 transform duration-700 cursor-pointer"
         sizes="33vw"
         fill
       />

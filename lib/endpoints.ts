@@ -1,10 +1,10 @@
 export const Endpoints = {
   users: "/api/users/",
   profile: "/api/profile/",
-  rooms: {
-    baseRooms: "/api/rooms/",
-    member: "/api/rooms/member",
-    admin: "/api/rooms/admin/",
+  room: {
+    baseRooms: "/api/room/",
+    member: "/api/room/member",
+    admin: "/api/room/admin/",
   },
   booking: "/api/booking/",
 

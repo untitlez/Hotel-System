@@ -30,8 +30,12 @@ export const SortProperty = () => {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectItem value="asc">Price: Low to High</SelectItem>
-            <SelectItem value="desc">Price: High to Low</SelectItem>
+            <SelectItem value="asc" className="cursor-pointer">
+              Price: Low to High
+            </SelectItem>
+            <SelectItem value="desc" className="cursor-pointer">
+              Price: High to Low
+            </SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>

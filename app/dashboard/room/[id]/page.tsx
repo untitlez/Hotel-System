@@ -8,7 +8,7 @@ export default async function DashboardRoomIdPage({
   params: { id: string };
 }) {
   const { id } = await params;
-  const res = await fetch(Config.API_URL + Endpoints.rooms.baseRooms + id);
+  const res = await fetch(Config.API_URL + Endpoints.room.baseRooms + id);
   const data = await res.json();
 
   return (

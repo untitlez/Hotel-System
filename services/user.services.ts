@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import { prisma } from "@/lib/prisma";
 import { UpdateUserType } from "@/validators/user.validator";
 

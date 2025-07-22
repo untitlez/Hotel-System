@@ -17,6 +17,12 @@ enum UserStatus {
   DISABLED
 }
 
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
 model User {
   id        String    @id @default(cuid())
   email     String    @unique
@@ -68,14 +74,16 @@ model Room {
 }
 
 model Booking {
-  id           String   @id @default(cuid())
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String        @id @default(cuid())
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String
-  room         Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  room         Room          @relation(fields: [roomId], references: [id], onDelete: Cascade)
   roomId       String
+  statusPaid   BookingStatus
+  request      Json?
   checkInDate  DateTime
   checkOutDate DateTime
-  createdAt    DateTime @default(now())
+  createdAt    DateTime      @default(now())
 
   @@index([userId, checkInDate, checkOutDate])
   @@index([roomId, checkInDate])

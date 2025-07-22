@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
@@ -11,8 +13,6 @@ import {
   ChevronLeft,
   ChevronUp,
   Loader2Icon,
-  Minus,
-  Plus,
 } from "lucide-react";
 
 import { Config } from "@/lib/config";
@@ -22,13 +22,13 @@ import { UpdateRoomSchema, UpdateRoomType } from "@/validators/room.validator";
 
 import { toast } from "sonner";
 import { DeleteButton } from "@/components/delete-button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -47,10 +47,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import Image from "next/image";
+
 
 const inputItems = [
   {
@@ -157,7 +154,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
     if (data) {
       try {
         await axios.put(
-          Config.API_URL + Endpoints.rooms.baseRooms + paramsId,
+          Config.API_URL + Endpoints.room.baseRooms + paramsId,
           newData
         );
         toast.success("Changes saved successfully.");
@@ -169,7 +166,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
       }
     } else {
       try {
-        await axios.post(Config.API_URL + Endpoints.rooms.baseRooms, newData);
+        await axios.post(Config.API_URL + Endpoints.room.baseRooms, newData);
         toast.success("Room created successfully!");
         console.log("Form Data", newData);
         reset();
@@ -184,7 +181,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
   const onDelete = async () => {
     if (!paramsId) return;
     try {
-      await axios.delete(Config.API_URL + Endpoints.rooms.baseRooms + paramsId);
+      await axios.delete(Config.API_URL + Endpoints.room.baseRooms + paramsId);
       toast.success("Item has been deleted.");
       router.push(Routes.dashboard.room);
     } catch (error: unknown) {

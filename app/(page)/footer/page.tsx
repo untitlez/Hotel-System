@@ -20,11 +20,11 @@ const footerItems = {
   quickLinks: {
     title: "Quick Links",
     button: [
-      { label: "Search", link: `#${Routes.id.hero}` },
-      { label: "Properties", link: `#${Routes.id.property}` },
-      { label: "Review", link: `#${Routes.id.review}` },
-      { label: "FAQs", link: `#${Routes.id.fqa}` },
-      { label: "Contact", link: `#${Routes.id.footer}` },
+      { label: "Search", link: `#${Routes.navbar.id.hero}` },
+      { label: "Properties", link: `#${Routes.navbar.id.property}` },
+      { label: "Review", link: `#${Routes.navbar.id.review}` },
+      { label: "FAQs", link: `#${Routes.navbar.id.fqa}` },
+      { label: "Contact", link: `#${Routes.navbar.id.footer}` },
     ],
   },
   locations: {

@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Routes } from "@/lib/routes";
 
 interface AppCardPropertyProps {
   data: ResponseRoomType[];
@@ -38,7 +39,9 @@ export const AppCardProperty = ({ data }: AppCardPropertyProps) => {
               <CardInfoProperty item={item} />
               <SheetFooter>
                 <Button asChild>
-                  <Link href="">Booking Now...</Link>
+                  <Link href={Routes.pages.booking + item.id}>
+                    Booking Now...
+                  </Link>
                 </Button>
               </SheetFooter>
             </SheetContent>

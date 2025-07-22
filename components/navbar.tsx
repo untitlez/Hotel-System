@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { TentTree } from "lucide-react";
+import { Menu, TentTree } from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Routes } from "@/lib/routes";
 
+import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -16,6 +17,18 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navHome = {
   trigger: "Home",
@@ -28,17 +41,17 @@ const navHome = {
   contents: [
     {
       title: "Looking For",
-      href: `#${Routes.id.hero}`,
+      href: `#${Routes.navbar.id.hero}`,
       description: "What to look for ?",
     },
     {
       title: "Properties",
-      href: `#${Routes.id.property}`,
+      href: `#${Routes.navbar.id.property}`,
       description: "Residence in Australia",
     },
     {
       title: "Review",
-      href: `#${Routes.id.review}`,
+      href: `#${Routes.navbar.id.review}`,
       description: "Would you like to share your feedback about this project?",
     },
     {
@@ -49,13 +62,13 @@ const navHome = {
     },
     {
       title: "FQAs",
-      href: `#${Routes.id.fqa}`,
+      href: `#${Routes.navbar.id.fqa}`,
       description:
         "Find quick answers to common questions about our properties, services, and booking process.",
     },
     {
       title: "CTA",
-      href: `#${Routes.id.cta}`,
+      href: `#${Routes.navbar.id.cta}`,
       description: "Not Thing",
     },
   ],
@@ -65,40 +78,22 @@ const navProperty = {
   trigger: "Property",
   contents: [
     {
-      title: "Introduction",
-      href: "/",
+      title: "Villa",
+      href: Routes.navbar.property.villa,
       description:
-        "Re-usable components built using Radix UI and Tailwind CSS.",
+        "Discover luxurious villas with private pools and stunning views.",
     },
     {
-      title: "Introduction",
-      href: "/",
+      title: "Hotel",
+      href: Routes.navbar.property.hotel,
       description:
-        "Re-usable components built using Radix UI and Tailwind CSS.",
+        "Find comfortable hotels with top-rated amenities and locations.",
     },
     {
-      title: "Introduction",
-      href: "/",
+      title: "Resort",
+      href: Routes.navbar.property.resort,
       description:
-        "Re-usable components built using Radix UI and Tailwind CSS.",
-    },
-    {
-      title: "Introduction",
-      href: "/",
-      description:
-        "Re-usable components built using Radix UI and Tailwind CSS.",
-    },
-    {
-      title: "Introduction",
-      href: "/",
-      description:
-        "Re-usable components built using Radix UI and Tailwind CSS.",
-    },
-    {
-      title: "Introduction",
-      href: "/",
-      description:
-        "Re-usable components built using Radix UI and Tailwind CSS.",
+        "Explore full-service resorts perfect for relaxation and holidays.",
     },
   ],
 };
@@ -107,22 +102,51 @@ const navLocation = {
   trigger: "Location",
   contents: [
     {
-      title: "Introduction",
-      href: "/",
+      title: "Sydney",
+      href: Routes.navbar.location.sydney,
       description:
-        "Re-usable components built using Radix UI and Tailwind CSS.",
+        "Browse stays in Sydney, from beachside apartments to city hotels.",
     },
     {
-      title: "Introduction",
-      href: "/",
+      title: "Melbourne",
+      href: Routes.navbar.location.melbourne,
       description:
-        "Re-usable components built using Radix UI and Tailwind CSS.",
+        "Stay in Melbourne's vibrant neighborhoods and cultural hotspots.",
     },
     {
-      title: "Introduction",
-      href: "/",
+      title: "Brisbane",
+      href: Routes.navbar.location.brisbane,
       description:
-        "Re-usable components built using Radix UI and Tailwind CSS.",
+        "Discover warm-weather getaways and modern stays in Brisbane.",
+    },
+    {
+      title: "Perth",
+      href: Routes.navbar.location.perth,
+      description:
+        "Explore accommodations in Perth's peaceful and scenic suburbs.",
+    },
+    {
+      title: "Adelaide",
+      href: Routes.navbar.location.adelaide,
+      description:
+        "Find cozy places to stay near Adelaide's wine and arts scene.",
+    },
+    {
+      title: "GoldCoast",
+      href: Routes.navbar.location.goldCoast,
+      description:
+        "Book beachside escapes and family-friendly resorts on the Gold Coast.",
+    },
+    {
+      title: "Canberra",
+      href: Routes.navbar.location.canberra,
+      description:
+        "Stay near Canberra's national museums and quiet neighborhoods.",
+    },
+    {
+      title: "Hobart",
+      href: Routes.navbar.location.hobart,
+      description: "Choose from charming lodges to boutique hotels in Hobart.",
     },
   ],
 };
@@ -139,148 +163,233 @@ export const Navbar = () => {
   const isMobile = useIsMobile();
 
   return (
-    <>
-      <NavigationMenu viewport={isMobile ? true : false} className="z-50">
-        <NavigationMenuList>
-          {!isMobile && (
-            <>
-              {/* Nav Home */}
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>{navHome.trigger}</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid gap-2 grid-cols-2 md:grid-cols-3 w-[300px] md:w-[500px]">
-                    <li className="row-span-2 md:row-span-3">
-                      <NavigationMenuLink asChild>
-                        <Link
-                          className="bg-secondary flex h-full w-full flex-col justify-end p-6 rounded-md no-underline outline-hidden select-none focus:shadow-md"
-                          href={Routes.pages.home}
-                        >
-                          <navHome.headerContent.icon className="size-8" />
-                          <div className="mt-4 mb-1 text-lg font-medium">
-                            {navHome.headerContent.title}
-                          </div>
-                          <p className="text-muted-foreground text-sm leading-tight">
-                            {navHome.headerContent.description}
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-
-                    {navHome.contents.map((content, i) => (
-                      <NavigationMenuLink asChild key={i}>
-                        <Link href={content.href}>
-                          <div className="text-sm leading-none font-medium">
-                            {content.title}
-                          </div>
-                          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-                            {content.description}
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              {/* Nav Property */}
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>
-                  {navProperty.trigger}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid gap-2 grid-cols-2 md:grid-cols-3 w-[500px]">
-                    {navProperty.contents.map((content, i) => (
-                      <NavigationMenuLink asChild key={i}>
-                        <Link href={content.href}>
-                          <div className="text-sm leading-none font-medium">
-                            {content.title}
-                          </div>
-                          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-                            {content.description}
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              {/* Nav Location */}
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>
-                  {navLocation.trigger}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul>
-                    <li>
-                      {navLocation.contents.map((content, i) => (
-                        <NavigationMenuLink asChild key={i}>
-                          <Link href={content.href}>
-                            <div className="font-medium">{content.title}</div>
-                          </Link>
-                        </NavigationMenuLink>
+    <NavigationMenu viewport={isMobile ? true : false} className="z-50">
+      <NavigationMenuList>
+        {/* Mobile */}
+        {isMobile ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="cursor-pointer">
+                <Menu />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start">
+              <DropdownMenuGroup>
+                {/* Nav Home */}
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>Home</DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      {navHome.contents.map((content, i) => (
+                        <DropdownMenuItem asChild key={i}>
+                          <Link href={content.href}>{content.title}</Link>
+                        </DropdownMenuItem>
                       ))}
-                    </li>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </>
-          )}
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
 
-          {/* Nav Profile */}
-          {session.data?.user ? (
-            <>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  asChild
-                  className={navigationMenuTriggerStyle()}
-                >
-                  <Link
-                    href={navProfile.href}
-                    className="font-medium border border-secondary md:border-none"
-                  >
-                    {navProfile.title}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
+                {/* Nav Property */}
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>Property</DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      {navProperty.contents.map((content, i) => (
+                        <DropdownMenuItem asChild key={i}>
+                          <Link href={content.href}>{content.title}</Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
 
-              {/* Nav Dashboard */}
-              {session.data?.user.role === "ADMIN" && (
+                {/* Nav Location */}
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>Location</DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      {navLocation.contents.map((content, i) => (
+                        <DropdownMenuItem asChild key={i}>
+                          <Link href={content.href}>{content.title}</Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+
+              <DropdownMenuGroup>
+                {session.data?.user ? (
+                  <>
+                    {/* Nav Profile */}
+                    <DropdownMenuItem>
+                      <Link href={navProfile.href}>{navProfile.title}</Link>
+                    </DropdownMenuItem>
+
+                    {/* Nav Dashboard */}
+                    {session.data?.user.role === "ADMIN" && (
+                      <DropdownMenuItem>
+                        <Link href={navDashboard.href}>
+                          {navDashboard.title}
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {/* Nav Login */}
+                    <DropdownMenuItem>
+                      <Link href={navAuth.href}>{navAuth.title}</Link>
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <>
+            {/* Nav Home */}
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>{navHome.trigger}</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-2 grid-cols-2 md:grid-cols-3 w-[300px] md:w-[500px]">
+                  <li className="row-span-2 md:row-span-3">
+                    <NavigationMenuLink asChild>
+                      <Link
+                        className="bg-secondary flex h-full w-full flex-col justify-end p-6 rounded-md no-underline outline-hidden select-none focus:shadow-md"
+                        href={Routes.pages.home}
+                      >
+                        <navHome.headerContent.icon className="size-8" />
+                        <div className="mt-4 mb-1 text-lg font-medium">
+                          {navHome.headerContent.title}
+                        </div>
+                        <p className="text-muted-foreground text-sm leading-tight">
+                          {navHome.headerContent.description}
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+
+                  {navHome.contents.map((content, i) => (
+                    <NavigationMenuLink asChild key={i}>
+                      <Link href={content.href}>
+                        <div className="text-sm leading-none font-medium">
+                          {content.title}
+                        </div>
+                        <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+                          {content.description}
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            {/* Nav Property */}
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>
+                {navProperty.trigger}
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-2 grid-cols-3 w-[400px]">
+                  {navProperty.contents.map((content, i) => (
+                    <NavigationMenuLink asChild key={i}>
+                      <Link href={content.href}>
+                        <div className="text-sm leading-none font-medium">
+                          {content.title}
+                        </div>
+                        <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+                          {content.description}
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            {/* Nav Location */}
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>
+                {navLocation.trigger}
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-2 grid-cols-3 w-[400px]">
+                  {navLocation.contents.map((content, i) => (
+                    <NavigationMenuLink asChild key={i}>
+                      <Link href={content.href}>
+                        <div className="text-sm leading-none font-medium">
+                          {content.title}
+                        </div>
+                        <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+                          {content.description}
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            {/* Nav Profile */}
+            {session.data?.user ? (
+              <>
                 <NavigationMenuItem>
                   <NavigationMenuLink
                     asChild
                     className={navigationMenuTriggerStyle()}
                   >
                     <Link
-                      href={navDashboard.href}
+                      href={navProfile.href}
                       className="font-medium border border-secondary md:border-none"
                     >
-                      {navDashboard.title}
+                      {navProfile.title}
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
-              )}
-            </>
-          ) : (
-            <>
-              {/* Nav Login */}
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  asChild
-                  className={navigationMenuTriggerStyle()}
-                >
-                  <Link
-                    href={navAuth.href}
-                    className="font-medium border border-secondary md:border-none"
+
+                {/* Nav Dashboard */}
+                {session.data?.user.role === "ADMIN" && (
+                  <NavigationMenuItem>
+                    <NavigationMenuLink
+                      asChild
+                      className={navigationMenuTriggerStyle()}
+                    >
+                      <Link
+                        href={navDashboard.href}
+                        className="font-medium border border-secondary md:border-none"
+                      >
+                        {navDashboard.title}
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                )}
+              </>
+            ) : (
+              <>
+                {/* Desktop */}
+
+                {/* Nav Login */}
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    asChild
+                    className={navigationMenuTriggerStyle()}
                   >
-                    {navAuth.title}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            </>
-          )}
-        </NavigationMenuList>
-      </NavigationMenu>
-    </>
+                    <Link
+                      href={navAuth.href}
+                      className="font-medium border border-secondary md:border-none"
+                    >
+                      {navAuth.title}
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              </>
+            )}
+          </>
+        )}
+      </NavigationMenuList>
+    </NavigationMenu>
   );
 };

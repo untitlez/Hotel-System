@@ -45,8 +45,8 @@ export const CardInfoProperty = ({ item }: CardInfoPropertyProps) => {
 
       <Separator />
       <div className="flex flex-wrap justify-center gap-2">
-        {item.amenities.map((amenity) => (
-          <Button size="sm" variant="outline">
+        {item.amenities.map((amenity, i) => (
+          <Button key={i} size="sm" variant="outline">
             {amenity}
           </Button>
         ))}

@@ -48,7 +48,7 @@ export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
 
   const onSearch = async () => {
     try {
-      const { data } = await axios.get(Config.API_URL + Endpoints.rooms.admin, {
+      const { data } = await axios.get(Config.API_URL + Endpoints.room.admin, {
         params: { search: searchInput },
       });
       setRooms(data);
