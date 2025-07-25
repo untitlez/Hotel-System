@@ -25,7 +25,9 @@ export const CardInfoProperty = ({ item }: CardInfoPropertyProps) => {
 
   return (
     <div className="flex flex-col gap-6 px-4">
-      <CardImageProperty item={item} />
+      <div className="pointer-events-none">
+        <CardImageProperty item={item} />
+      </div>
       <Separator />
 
       <div className="space-y-2">

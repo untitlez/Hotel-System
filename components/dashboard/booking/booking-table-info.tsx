@@ -20,11 +20,11 @@ import {
 } from "@/components/ui/popover";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
-interface TableInfoProps {
+interface BookingTableInfoProps {
   booking: ResponseBookingType;
 }
 
-export const TableInfo = ({ booking }: TableInfoProps) => {
+export const BookingTableInfo = ({ booking }: BookingTableInfoProps) => {
   const [user, setUser] = useState<ResponseUserType>();
   const [room, setRoom] = useState<ResponseRoomType>();
   const getTime =
@@ -54,12 +54,12 @@ export const TableInfo = ({ booking }: TableInfoProps) => {
   }, [booking.userId, booking.roomId]);
 
   return (
-    <Card className="max-w-xl mx-auto">
+    <Card className="max-w-screen-sm mx-auto">
       <CardHeader>
         <CardTitle className="text-lg font-bold">Booking Info :</CardTitle>
       </CardHeader>
       <CardContent className="text-sm">
-        <div className="relative aspect-video bg-muted rounded-md overflow-hidden mb-6">
+        <div className="relative aspect-video bg-muted rounded-md overflow-hidden shadow-lg mb-6">
           {room && (
             <Image
               src={room.image ?? ""}

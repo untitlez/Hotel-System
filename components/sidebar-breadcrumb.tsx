@@ -13,6 +13,7 @@ import {
 export const SidebarBreadcrumb = () => {
   const pathName = usePathname();
   const segments = pathName.split("/");
+  const checkId = (value: string) => /^c[a-z0-9]{24,}$/.test(value);
 
   return (
     <Breadcrumb>
@@ -22,15 +23,23 @@ export const SidebarBreadcrumb = () => {
             <BreadcrumbItem>
               {index === segments.length - 1 ? (
                 // Current Page
-                <BreadcrumbPage>{segment}</BreadcrumbPage>
+                checkId(segment) ? (
+                  <BreadcrumbPage>
+                    {segments[index - 1] + " info"}
+                  </BreadcrumbPage>
+                ) : (
+                  <BreadcrumbPage>{segment}</BreadcrumbPage>
+                )
               ) : (
                 // Previous Page
-                <BreadcrumbLink href={`/${segment}`}>
+                <BreadcrumbLink
+                  href={`/${segments.slice(1, index + 1).join("/")}`}
+                >
                   {index === 0 ? "Home" : segment}
                 </BreadcrumbLink>
               )}
             </BreadcrumbItem>
-            {!(index === segments.length - 1) && <BreadcrumbSeparator />}
+            {index !== segments.length - 1 && <BreadcrumbSeparator />}
           </span>
         ))}
       </BreadcrumbList>

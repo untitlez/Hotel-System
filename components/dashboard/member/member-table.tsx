@@ -1,11 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-
-import { Routes } from "@/lib/routes";
+import { format } from "date-fns";
 import { Search } from "lucide-react";
 
-import { ResponseProfileType } from "@/validators/profile.validator";
+import { Routes } from "@/lib/routes";
+import { ResponseUserType } from "@/validators/user.validator";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -16,27 +16,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-const tableHeader = [
-  "Id",
-  "Image",
-  "Full Name",
-  "Gender",
-  "Birthday",
-  "Address",
-  "Phone",
-  "Status",
-  "CreatedAt",
-  "UpdatedAt",
-];
+import { Badge } from "@/components/ui/badge";
 
 interface DashboardMemberTableProps {
-  data: ResponseProfileType[];
+  data: ResponseUserType[];
 }
 
 export const DashboardMemberTable = ({ data }: DashboardMemberTableProps) => {
   const router = useRouter();
-
   const handleView = (id: string) => {
     router.push(Routes.dashboard.member + id);
   };
@@ -51,29 +38,41 @@ export const DashboardMemberTable = ({ data }: DashboardMemberTableProps) => {
       <Table className="border">
         <TableHeader>
           <TableRow className="bg-muted">
-            {tableHeader.map((item, i) => (
-              <TableHead key={i}>{item}</TableHead>
-            ))}
+            <TableHead>No.</TableHead>
+            <TableHead>Full Name</TableHead>
+            <TableHead>Gender</TableHead>
+            <TableHead>Birthday</TableHead>
+            <TableHead>Address</TableHead>
+            <TableHead>Phone</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Updated Date</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {/* {data.map((item, i) => (
+          {data.map((item, i) => (
             <TableRow
               key={i}
-              onClick={() => handleView(item.id)}
+              onClick={() => handleView(item.profile.userId)}
               className="cursor-pointer"
             >
-              <TableCell>{item.id}</TableCell>
-              <TableCell>{item.fullName}</TableCell>
-              <TableCell>{item.gender}</TableCell>
-              <TableCell>{item.birthday}</TableCell>
-              <TableCell>{item.address}</TableCell>
-              <TableCell>{item.phone}</TableCell>
-              <TableCell>{item.status}</TableCell>
-              <TableCell>{item.createdAt}</TableCell>
-              <TableCell>{item.updatedAt}</TableCell>
+              <TableCell>{i + 1}</TableCell>
+              <TableCell>{item.profile.fullName}</TableCell>
+              <TableCell>{item.profile.gender}</TableCell>
+              <TableCell>
+                {format(item.profile.birthday, "dd MMM yyyy")}
+              </TableCell>
+              <TableCell>{item.profile.address}</TableCell>
+              <TableCell>{item.profile.phone}</TableCell>
+              <TableCell>{item.email}</TableCell>
+              <TableCell>
+                <Badge className="bg-chart-1">{item.profile.status}</Badge>
+              </TableCell>
+              <TableCell>
+                {format(item.profile.updatedAt, "dd MM yyyy")}
+              </TableCell>
             </TableRow>
-          ))} */}
+          ))}
         </TableBody>
       </Table>
     </div>

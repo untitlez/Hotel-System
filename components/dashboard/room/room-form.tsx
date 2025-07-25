@@ -1,25 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-
-import axios from "axios";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronDown, ChevronLeft, ChevronUp, Loader2Icon } from "lucide-react";
+import axios from "axios";
+import { toast } from "sonner";
 
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Routes } from "@/lib/routes";
 import { UpdateRoomSchema, UpdateRoomType } from "@/validators/room.validator";
 
-import { toast } from "sonner";
-import { DeleteButton } from "@/components/delete-button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { RoomFormFile } from "./room-form-file";
+import { RoomFormInput } from "./room-form-input";
+import { RoomFormSelect } from "./room-form-select";
+import { RoomFormCheckbox } from "./room-form-checkbox";
+import { RoomFormSubmit } from "./room-form-submit";
+import { Form } from "@/components/ui/form";
 import {
   Card,
   CardContent,
@@ -27,21 +26,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 const inputItems = [
   {
@@ -82,12 +66,6 @@ const inputItems = [
     placeholder: "รายละเอียดเพิ่มเติม",
   },
   {
-    name: "roomSize",
-    label: "Room Size",
-    type: "number",
-    placeholder: "รายละเอียดเพิ่มเติม",
-  },
-  {
     name: "beds",
     label: "Beds",
     type: "select",
@@ -124,6 +102,10 @@ interface DashboardRoomFormProps {
 
 export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
   const [isShowForm, setIsShowForm] = useState(false);
+  const router = useRouter();
+  const paramsId = useParams().id;
+  const isMobile = useIsMobile();
+
   const form = useForm<UpdateRoomType>({
     resolver: zodResolver(UpdateRoomSchema),
     defaultValues: {
@@ -139,10 +121,6 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
     },
     mode: "onBlur",
   });
-
-  const { handleSubmit, reset, formState, control } = form;
-  const router = useRouter();
-  const paramsId = useParams().id;
 
   const onSubmit = async (newData: UpdateRoomType) => {
     if (data) {
@@ -163,7 +141,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
         await axios.post(Config.API_URL + Endpoints.room.baseRoom, newData);
         toast.success("Room created successfully!");
         console.log("Form Data", newData);
-        reset();
+        form.reset();
         router.push(Routes.dashboard.room);
       } catch (error: unknown) {
         console.error("Error", error);
@@ -184,14 +162,10 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
     }
   };
   return (
-    <Card className="w-full max-w-xl mx-auto">
-      <CardHeader className="text-center">
+    <Card className="max-w-screen-sm mx-auto">
+      <CardHeader>
         <CardTitle className="text-lg font-bold">
-          {data ? (
-            <div className="text-start">Room Info: {data?.name}</div>
-          ) : (
-            "Create Room"
-          )}
+          {data ? "Room Info :" : "Create Room"}
         </CardTitle>
         <CardDescription>
           {!data && "Please fill out the form to create a new room."}
@@ -199,255 +173,35 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
             {inputItems.map((item) => (
-              <FormField
-                key={item.name}
-                control={control}
-                name={item.name as keyof UpdateRoomType}
-                render={({ field }) => (
+              <div key={item.name}>
+                {item.name === "image" && (
+                  <RoomFormFile item={item} data={data} />
+                )}
+                {item.name === "location" && <RoomFormInput item={item} />}
+                {item.name === "type" && <RoomFormSelect item={item} />}
+                {item.name === "pricePerNight" && <RoomFormInput item={item} />}
+
+                {isShowForm && (
                   <>
-                    {item.name === "image" && (
-                      <FormItem>
-                        <FormControl>
-                          <div>
-                            <div className="relative aspect-video border rounded-lg shadow-lg">
-                              {data && (
-                                <Image
-                                  src={String(field.value)}
-                                  alt={item.name}
-                                  className="object-cover rounded-lg"
-                                  sizes="50vw"
-                                  fill
-                                />
-                              )}
-                            </div>
-                            <Input
-                              className="cursor-pointer mt-1.5 z-10"
-                              type={item.type}
-                              onChange={field.onChange}
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-
-                    {item.type === "select" && (
-                      <FormItem>
-                        <FormLabel>
-                          {item.label}
-                          <span className="text-primary">*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Select
-                            defaultValue={field.value?.toString()}
-                            onValueChange={field.onChange}
-                          >
-                            <SelectTrigger className="w-full">
-                              <SelectValue placeholder={item.placeholder} />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {item.options?.map((opt) => (
-                                <SelectItem key={opt.value} value={opt.value}>
-                                  {opt.value}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-
-                    {item.type === "text" && (
-                      <FormItem>
-                        <FormLabel>
-                          {item.label}
-                          <span className="text-primary">*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input placeholder={item.placeholder} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-
-                    {item.name === "pricePerNight" && (
-                      <FormItem>
-                        <FormLabel>
-                          {item.label}
-                          <span className="text-primary">*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder={item.placeholder}
-                            type={item.type}
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-
-                    {isShowForm && (
-                      <div>
-                        {item.name !== "pricePerNight" &&
-                          item.type === "number" && (
-                            <FormItem>
-                              <FormLabel>{item.label}</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder={item.placeholder}
-                                  type={item.type}
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-
-                        {item.type === "checkbox" && (
-                          <div className="grid grid-cols-3 gap-4 border p-4 rounded-lg bg-secondary">
-                            {item.value?.map((val, i) => {
-                              const selected = Array.isArray(field.value)
-                                ? field.value
-                                : [];
-                              return (
-                                <FormItem
-                                  key={i}
-                                  className="flex items-center gap-2"
-                                >
-                                  <FormControl>
-                                    <Checkbox
-                                      className="cursor-pointer"
-                                      id={val.id}
-                                      checked={selected.includes(val.id)}
-                                      onCheckedChange={(checked: boolean) => {
-                                        const updated = checked
-                                          ? [...selected, val.id]
-                                          : selected.filter(
-                                              (v) => v !== val.id
-                                            );
-
-                                        field.onChange(updated);
-                                      }}
-                                    />
-                                  </FormControl>
-                                  <FormLabel
-                                    htmlFor={val.id}
-                                    className="cursor-pointer"
-                                  >
-                                    {val.id}
-                                  </FormLabel>
-                                </FormItem>
-                              );
-                            })}
-                          </div>
-                        )}
-
-                        {item.name === "beds" && (
-                          <FormItem>
-                            <FormLabel>
-                              {item.label}
-                              <span className="text-primary">*</span>
-                            </FormLabel>
-                            <FormControl>
-                              <Select
-                                defaultValue={field.value?.toString()}
-                                onValueChange={field.onChange}
-                              >
-                                <SelectTrigger className="w-full">
-                                  <SelectValue placeholder={item.placeholder} />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {item.options?.map((opt) => (
-                                    <SelectItem
-                                      key={opt.value}
-                                      value={opt.value}
-                                    >
-                                      {opt.value}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      </div>
+                    {item.name == "maxGuests" && <RoomFormInput item={item} />}
+                    {item.name === "roomSize" && <RoomFormInput item={item} />}
+                    {item.name === "beds" && <RoomFormSelect item={item} />}
+                    {item.name === "amenities" && (
+                      <RoomFormCheckbox item={item} />
                     )}
                   </>
                 )}
-              />
+              </div>
             ))}
-
             {/* Button Submit */}
-            <div className="flex justify-between gap-2">
-              {formState.isDirty ? (
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="cursor-pointer"
-                  onClick={() => setIsShowForm(!isShowForm)}
-                >
-                  {isShowForm ? <ChevronUp /> : <ChevronDown />}
-                  More
-                </Button>
-              ) : (
-                <Button
-                  asChild
-                  type="button"
-                  variant={"outline"}
-                  className="cursor-pointer"
-                >
-                  <Link href={Routes.dashboard.room}>
-                    <ChevronLeft />
-                    Back
-                  </Link>
-                </Button>
-              )}
-
-              {formState.isDirty ? (
-                <Button
-                  type="submit"
-                  disabled={formState.isSubmitting}
-                  className="flex-1 cursor-pointer"
-                >
-                  {formState.isSubmitting ? (
-                    <>
-                      <Loader2Icon className="animate-spin" />
-                      Submitting...
-                    </>
-                  ) : (
-                    "Submit"
-                  )}
-                </Button>
-              ) : (
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="cursor-pointer flex-1"
-                  onClick={() => setIsShowForm(!isShowForm)}
-                >
-                  {isShowForm ? <ChevronUp /> : <ChevronDown />}
-                  More
-                </Button>
-              )}
-
-              {data && (
-                <DeleteButton
-                  type="button"
-                  label="Delete"
-                  variant="destructive"
-                  title="Confirm Delete"
-                  description="This will permanently remove the room from your list. Are you sure?"
-                  cancel="No, keep it"
-                  confirm="Yes, remove it"
-                  onClick={onDelete}
-                />
-              )}
-            </div>
+            <RoomFormSubmit
+              data={data}
+              isShowForm={isShowForm}
+              setIsShowForm={setIsShowForm}
+              onDelete={onDelete}
+            />
           </form>
         </Form>
       </CardContent>

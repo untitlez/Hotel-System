@@ -11,7 +11,7 @@ interface CardImagePropertyProps {
 
 export const CardImageProperty = ({ item }: CardImagePropertyProps) => {
   return (
-    <div className="relative aspect-3/2">
+    <div className="relative aspect-video bg-muted rounded-md overflow-hidden shadow-lg cursor-pointer">
       {item.type === "Villa" && (
         <Badge className="absolute left-0 z-10 m-4 font-semibold text-sm shadow-md bg-chart-1">
           {item.type}
@@ -30,7 +30,7 @@ export const CardImageProperty = ({ item }: CardImagePropertyProps) => {
       <Image
         src={item.image ?? ""}
         alt={item.name}
-        className="object-cover rounded-xl md:hover:scale-105 transform duration-700 cursor-pointer"
+        className="object-cover md:hover:scale-105 transform duration-700 delay-300"
         sizes="33vw"
         fill
       />

@@ -15,7 +15,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-
 interface DeleteButtonProps
   extends React.ComponentProps<typeof AlertDialogAction> {
   variant?:
@@ -25,6 +24,7 @@ interface DeleteButtonProps
     | "outline"
     | "secondary"
     | "ghost";
+  size?: "default" | "sm" | "lg" | "icon";
   label?: string;
   title?: string;
   description?: string;
@@ -34,6 +34,7 @@ interface DeleteButtonProps
 
 export const DeleteButton = ({
   variant = "destructive",
+  size,
   label,
   title = "Title",
   description = "Description",
@@ -44,7 +45,9 @@ export const DeleteButton = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild className="cursor-pointer">
-        <Button variant={variant}>{label ? label : <Trash2 />}</Button>
+        <Button variant={variant} size={size}>
+          {label ? label : <Trash2 />}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

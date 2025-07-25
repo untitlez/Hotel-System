@@ -1,10 +1,16 @@
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
+import { Loader2 } from "lucide-react";
+
+import { Routes } from "@/lib/routes";
 import { ResponseRoomType } from "@/validators/room.validator";
 
 import { CardImageProperty } from "./card-image-property";
 import { CardInfoProperty } from "./card-info-property";
 import { AmenityCardProperty } from "./amenity-card-property";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -14,15 +20,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { Routes } from "@/lib/routes";
 
 interface AppCardPropertyProps {
   data: ResponseRoomType[];
 }
 
 export const AppCardProperty = ({ data }: AppCardPropertyProps) => {
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <>
       {data.map((item) => (
@@ -38,9 +42,13 @@ export const AppCardProperty = ({ data }: AppCardPropertyProps) => {
               </SheetHeader>
               <CardInfoProperty item={item} />
               <SheetFooter>
-                <Button asChild>
+                <Button asChild onClick={() => setIsLoading(true)}>
                   <Link href={Routes.pages.booking + item.id}>
-                    Booking Now...
+                    {isLoading ? (
+                      <Loader2 className="animate-spin" />
+                    ) : (
+                      "Booking Now..."
+                    )}
                   </Link>
                 </Button>
               </SheetFooter>

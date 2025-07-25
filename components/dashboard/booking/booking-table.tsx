@@ -25,7 +25,6 @@ const tableHeader = [
   "Special Requests",
   "Status",
   "Create At",
-  "",
 ];
 
 interface DashboardBookingTableProps {

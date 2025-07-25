@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
-import { BedDouble, Blocks, Search, UsersIcon } from "lucide-react";
+import { BedDouble, Blocks, HousePlus, Search, UsersIcon } from "lucide-react";
 
 import { Config } from "@/lib/config";
 import { Routes } from "@/lib/routes";
@@ -13,7 +13,7 @@ import { Endpoints } from "@/lib/endpoints";
 import { ResponseRoomType } from "@/validators/room.validator";
 
 import { toast } from "sonner";
-import { TooltipRoomTable } from "./tooltip-room-table";
+import { RoomTablePopover } from "./room-table-popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -25,18 +25,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const tableHeader = [
-  "No",
-  "image",
-  "name",
-  "location",
-  "type",
-  <TooltipRoomTable Icon={UsersIcon} text="Max Guests" />,
-  <TooltipRoomTable Icon={Blocks} text="Room Size" />,
-  <TooltipRoomTable Icon={BedDouble} text="Bed Size" />,
-  "amenities",
-  "price / Night",
-];
+const tableHeader = [];
 
 interface DashboardRoomTableProps {
   data: ResponseRoomType[];
@@ -66,12 +55,12 @@ export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
   };
 
   return (
-    <div className="space-y-4 my-2">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4">
+      <div className="flex items-center justify-between gap-2">
         <div className="relative">
           <Search className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none" />
           <Input
-            className="w-100 pl-8"
+            className="pl-8"
             placeholder="Search the table..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
@@ -79,17 +68,32 @@ export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
           />
         </div>
         <Button asChild>
-          <Link href={Routes.dashboard.createRoom}>Create Room</Link>
+          <Link href={Routes.dashboard.createRoom}>
+          <span className="sm:hidden"><HousePlus/></span>
+          <span className="hidden sm:block">Create Room</span>
+          </Link>
         </Button>
       </div>
+
       <Table className="border">
         <TableHeader>
-          <TableRow className="bg-secondary">
-            {tableHeader.map((item, i) => (
-              <TableHead key={i} className="capitalize">
-                {item}
-              </TableHead>
-            ))}
+          <TableRow className="bg-secondary capitalize">
+            <TableHead>No</TableHead>
+            <TableHead>image</TableHead>
+            <TableHead>name</TableHead>
+            <TableHead>location</TableHead>
+            <TableHead>type</TableHead>
+            <TableHead>
+              <RoomTablePopover Icon={UsersIcon} text="Max Guests" />
+            </TableHead>
+            <TableHead>
+              <RoomTablePopover Icon={Blocks} text="Room Size" />
+            </TableHead>
+            <TableHead>
+              <RoomTablePopover Icon={BedDouble} text="Bed Size" />
+            </TableHead>
+            <TableHead>amenities</TableHead>
+            <TableHead>price / Night</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -115,7 +119,7 @@ export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
               <TableCell>{item.location}</TableCell>
               <TableCell>{item.type}</TableCell>
               <TableCell>{item.maxGuests}</TableCell>
-              <TableCell>{item.roomSize}</TableCell>
+              <TableCell>{item.roomSize} m²</TableCell>
               <TableCell>{item.beds}</TableCell>
               <TableCell className="flex flex-wrap gap-1 w-80">
                 {item.amenities.map((amenity, i) => (
@@ -124,7 +128,9 @@ export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
                   </Button>
                 ))}
               </TableCell>
-              <TableCell>$ {item.pricePerNight.toLocaleString()}</TableCell>
+              <TableCell>
+                $ {item.pricePerNight.toLocaleString()}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
