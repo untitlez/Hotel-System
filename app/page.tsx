@@ -23,21 +23,23 @@ export default async function HomePage() {
         <section id={Routes.navbar.id.property}>
           <PropertyHomePage />
         </section>
-        {/* <div id={Routes.navbar.id.hero}>
+        <section id={Routes.navbar.id.location}>
           <PopularLocationPage />
-        </div> */}
+        </section>
         <section id={Routes.navbar.id.review}>
           <ReviewPage />
         </section>
         <section id={Routes.navbar.id.fqa}>
           <FQAPage />
         </section>
-        <section id={Routes.navbar.id.cta}>
-          <CTAPage />
-        </section>
-        <footer id={Routes.navbar.id.footer}>
-          <FooterPage />
-        </footer>
+        <div>
+          <section id={Routes.navbar.id.cta}>
+            <CTAPage />
+          </section>
+          <footer id={Routes.navbar.id.footer}>
+            <FooterPage />
+          </footer>
+        </div>
       </div>
       <BackToTopButton />
     </div>

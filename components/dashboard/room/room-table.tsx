@@ -54,6 +54,8 @@ export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
     router.push(Routes.dashboard.room + id);
   };
 
+  const locations = data.map((i)=>i.location)
+console.log('data', locations)
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-2">

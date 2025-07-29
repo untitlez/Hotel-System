@@ -29,7 +29,7 @@ export default async function PropertyHomePage() {
         <AppCardProperty data={data.rooms} />
       </div>
 
-      <div className="flex justify-center my-12">
+      <div className="flex justify-center mt-12">
         <Button asChild>
           <Link href={Routes.pages.property}>See Properties More</Link>
         </Button>

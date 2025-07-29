@@ -34,8 +34,8 @@ const fqaItems = [
 
 export default function FQAPage() {
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-0">
-      <div className="space-y-8 w-2/3">
+    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-0 py-12">
+      <div className="space-y-8 max-w-sm">
         <h2 className="text-4xl font-bold">Frequently Asked Questions</h2>
         <p className="text-muted-foreground">
           Find quick answers to common questions about our properties, services,

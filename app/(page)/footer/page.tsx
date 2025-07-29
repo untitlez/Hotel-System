@@ -30,12 +30,14 @@ const footerItems = {
   locations: {
     title: "Popular Locations",
     button: [
-      { label: "Jakarta", link: "#" },
-      { label: "Bali", link: "#" },
-      { label: "Yogyakarta", link: "#" },
-      { label: "Surabaya", link: "#" },
-      { label: "Bandung", link: "#" },
-      { label: "Lombok", link: "#" },
+      { label: "Sydney", link: Routes.navbar.location.sydney },
+      { label: "Melbourne", link: Routes.navbar.location.melbourne },
+      { label: "Brisbane", link: Routes.navbar.location.brisbane },
+      { label: "Perth", link: Routes.navbar.location.perth },
+      { label: "Adelaide", link: Routes.navbar.location.adelaide },
+      { label: "GoldCoast", link: Routes.navbar.location.goldCoast },
+      { label: "Canberra", link: Routes.navbar.location.canberra },
+      { label: "Hobart", link: Routes.navbar.location.hobart },
     ],
   },
   legal: {
@@ -75,7 +77,7 @@ export default function FooterPage() {
             ))}
           </div>
         </div>
-        <div className="flex justify-between lg:justify-end gap-16">
+        <div className="flex items-start justify-between lg:justify-end gap-16">
           <div className="grid gap-8">
             <h3 className="text-lg font-bold">
               {footerItems.quickLinks.title}

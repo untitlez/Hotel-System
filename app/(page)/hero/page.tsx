@@ -12,13 +12,12 @@ export default function HeroPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 my-24 gap-16 lg:gap-0">
         <div className="max-w-md">
           <h1 className="text-6xl font-extrabold tracking-tight text-balance">
-            Find Your Dream Home in Australia
+            Find Your Perfect Escape in Australia
           </h1>
         </div>
         <div className="flex flex-col justify-between items-end text-end">
           <p className="leading-7">
-            © {new Date().getFullYear()} Aurora Real Estate. All rights
-            reserved.
+            © {new Date().getFullYear()} Aurora Retreats. All rights reserved.
           </p>
           <blockquote className="text-sm italic w-2/3">
             Discover premium properties with exceptional design and unparalleled
