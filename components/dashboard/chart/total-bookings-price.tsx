@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import { Star } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 
 import { ResponseRoomType } from "@/validators/room.validator";
@@ -21,44 +21,41 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-interface BookingsLocationTotalProps {
+interface TotalBookingsPriceProps {
   data: ResponseRoomType[];
 }
 
-export const BookingsLocationTotal = ({ data }: BookingsLocationTotalProps) => {
-  const totalLocations = data.length;
+export const TotalBookingsPrice = ({ data }: TotalBookingsPriceProps) => {
   const now = format(new Date(), "MMMM yyyy");
-  const locations = [
-    "Sydney, NSW",
-    "Melbourne, VIC",
-    "Brisbane, QLD",
-    "Perth, WA",
-    "Adelaide, SA",
-    "Gold Coast, QLD",
-    "Canberra, ACT",
-    "Hobart, TAS",
-  ];
-  const locationsData = locations.map((location) => ({
-    location,
-    count: data.filter((item) => item.location === location).length,
-  }));
-  const sortLocationData = locationsData.sort((a, b) => b.count - a.count);
-  const topLocation = sortLocationData[0];
-  const chartData = sortLocationData.map((item, index) => ({
-    location: item.location,
+
+  const roomsType = ["Villa", "Hotel", "Resort"];
+  const roomsData = roomsType.map((type) => {
+    const filtered = data.filter((item) => item.type === type);
+    return {
+      type,
+      count: filtered.length,
+      totalPrice: filtered.reduce((acc, item) => acc + item.pricePerNight, 0),
+    };
+  });
+  const totalAllPrice = roomsData.reduce(
+    (acc, item) => acc + item.totalPrice,
+    0
+  );
+  const sortedRoomsData = roomsData.sort((a, b) => b.count - a.count);
+
+  const chartData = sortedRoomsData.map((item, index) => ({
+    type: item.type,
     count: item.count,
+    totalPrice: item.totalPrice,
     fill: `var(--chart-${index + 1})`,
   }));
 
   const chartConfig = {
-    count: {
-      label: "Users",
-    },
     ...Object.fromEntries(
-      sortLocationData.map((item, index) => [
-        item.location,
+      sortedRoomsData.map((item, index) => [
+        item.type,
         {
-          label: item.location,
+          label: item.type,
           color: `var(--chart-${index + 1})`,
         },
       ])
@@ -68,7 +65,7 @@ export const BookingsLocationTotal = ({ data }: BookingsLocationTotalProps) => {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Bookings Location Total</CardTitle>
+        <CardTitle>Total Bookings Price</CardTitle>
         <CardDescription>January - {now}</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
@@ -84,7 +81,7 @@ export const BookingsLocationTotal = ({ data }: BookingsLocationTotalProps) => {
             <Pie
               data={chartData}
               dataKey="count"
-              nameKey="location"
+              nameKey="type"
               innerRadius={60}
               strokeWidth={5}
             >
@@ -101,16 +98,16 @@ export const BookingsLocationTotal = ({ data }: BookingsLocationTotalProps) => {
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-foreground text-3xl font-bold"
+                          className="fill-foreground text-2xl font-bold"
                         >
-                          {totalLocations.toLocaleString()}
+                          {totalAllPrice.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Places
+                          $
                         </tspan>
                       </text>
                     );
@@ -121,13 +118,13 @@ export const BookingsLocationTotal = ({ data }: BookingsLocationTotalProps) => {
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
+      <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
-          {topLocation.location} is the most booked location
-          <Star className="size-4 text-yellow-500" />
+          Total bookings in 2025
+          <TrendingUp className="size-4 text-green-500" />
         </div>
         <div className="text-muted-foreground leading-none">
-          Based on bookings in {new Date().getFullYear()}
+          Across all room types, January - {now}
         </div>
       </CardFooter>
     </Card>

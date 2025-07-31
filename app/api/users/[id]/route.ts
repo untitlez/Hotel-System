@@ -33,7 +33,7 @@ export async function PUT(
     const data =
       session?.user.role === "ADMIN" ? parsed : { ...parsed, role: undefined };
 
-    const payload = await updateUser(id, parsed);
+    const payload = await updateUser(id, data);
     return NextResponse.json(
       {
         message: "Update successfully",

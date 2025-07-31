@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import axios from "axios";
 import { format } from "date-fns";
@@ -9,6 +10,7 @@ import { BedDouble, Cigarette, Mail, User2 } from "lucide-react";
 
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
+import { Routes } from "@/lib/routes";
 import { ResponseUserType } from "@/validators/user.validator";
 import { ResponseRoomType } from "@/validators/room.validator";
 import { ResponseBookingType } from "@/validators/booking.validator";
@@ -22,8 +24,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useRouter } from "next/navigation";
-import { Routes } from "@/lib/routes";
 
 interface BookingListProfileProps {
   data: ResponseUserType;
@@ -83,7 +83,7 @@ export const BookingListProfile = ({ data }: BookingListProfileProps) => {
           </CardTitle>
           <CardContent className="flex flex-wrap justify-center gap-6 text-sm md:text-base">
             {/* Image */}
-            <div className="relative aspect-video w-full max-w-3xs">
+            <div className="relative aspect-video w-full max-w-3xs bg-muted">
               <Image
                 src={list.room.image ?? ""}
                 alt={list.room.name}

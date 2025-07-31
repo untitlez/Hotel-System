@@ -59,7 +59,7 @@ export const MemberCardInfo = ({ data }: MemberCardInfoProps) => {
               Booking ID : 000{i + 1}
             </p>
             {/* Image */}
-            <div className="relative aspect-video w-full">
+            <div className="relative aspect-video w-full bg-muted">
               <Image
                 src={list.room.image ?? ""}
                 alt={list.room.name}

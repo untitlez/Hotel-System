@@ -11,11 +11,11 @@ import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
 import { Routes } from "@/lib/routes";
 import { ResponseRoomType } from "@/validators/room.validator";
-
 import {
   CreateBookingSchema,
   CreateBookingType,
 } from "@/validators/booking.validator";
+
 import { BookingSummary } from "./booking-summary";
 import { BookingPayment } from "./booking-payment";
 import { BookingRequest } from "./booking-request";

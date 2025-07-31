@@ -33,7 +33,7 @@ export const RoomFormFile = ({ item, data }: RoomFormFileProps) => {
       name={item.name}
       render={({ field }) => (
         <FormItem>
-          <div className="relative aspect-video border rounded-md overflow-hidden shadow-lg">
+          <div className="relative aspect-video border rounded-md overflow-hidden shadow-lg bg-muted">
             {data && (
               <Image
                 src={data.image ?? ""}

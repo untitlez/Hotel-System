@@ -1,12 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon, Edit, Loader2 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import axios from "axios";
+import { CalendarIcon, Edit, Image, Loader2 } from "lucide-react";
 
 import { Config } from "@/lib/config";
 import { Routes } from "@/lib/routes";
@@ -48,6 +49,12 @@ import {
 } from "@/components/ui/form";
 
 const inputItems = {
+  image: {
+    name: "image",
+    label: "Profile Image",
+    type: "file",
+    placeholder: "Change profile Image",
+  },
   fullName: {
     name: "fullName",
     label: "Full Name",
@@ -84,12 +91,16 @@ interface EditProfileProps {
 }
 
 export const EditProfile = ({ data }: EditProfileProps) => {
+  const [open, setOpen] = useState(false);
   const form = useForm<UpdateProfileType>({
     resolver: zodResolver(UpdateProfileSchema),
     defaultValues: {
+      image: data.profile.image ?? undefined,
       fullName: data.profile.fullName ?? "",
       gender: data.profile.gender ?? "",
-      birthday: new Date(data.profile.birthday),
+      birthday: data.profile.birthday
+        ? new Date(data.profile.birthday)
+        : undefined,
       address: data.profile.address ?? "",
       phone: data.profile.phone ?? "",
     },
@@ -101,10 +112,24 @@ export const EditProfile = ({ data }: EditProfileProps) => {
 
   const onSubmit = async (newData: UpdateProfileType) => {
     try {
-      await axios.put(Config.API_URL + Endpoints.profile + id, newData);
+      let imageUrl = "";
+      if (newData.image instanceof File) {
+        const formData = new FormData();
+        formData.append("file", newData.image);
+        const { data } = await axios.post(
+          Config.API_URL + Endpoints.upload,
+          formData
+        );
+        imageUrl = data.url;
+      }
+
+      await axios.put(Config.API_URL + Endpoints.profile + id, {
+        ...newData,
+        image: imageUrl,
+      });
       toast.success("Changes saved successfully.");
       console.log("Form Data", newData);
-      router.push(Routes.pages.profile + id);
+      setOpen(false);
     } catch (error: unknown) {
       console.error("Error", error);
       toast.error("Failed to Edit Room Info!");
@@ -115,14 +140,14 @@ export const EditProfile = ({ data }: EditProfileProps) => {
     try {
       await axios.delete(Config.API_URL + Endpoints.users + id);
       toast.success("Account has been deleted.");
-      router.push(Routes.pages.profile + id);
+      router.push(Routes.auth.login);
     } catch (error: unknown) {
       console.error("Error", error);
       toast.error("Failed to Delete!");
     }
   };
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="ghost" className="flex justify-start cursor-pointer">
           <Edit />
@@ -142,6 +167,29 @@ export const EditProfile = ({ data }: EditProfileProps) => {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-6 px-4 py-4"
           >
+            {/* Profile Image */}
+            <FormField
+              control={control}
+              name={inputItems.image.name}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{inputItems.image.label}</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        className="cursor-pointer"
+                        type={inputItems.image.type}
+                        placeholder={inputItems.image.placeholder}
+                        onChange={(e) => field.onChange(e.target.files?.[0])}
+                      />
+                      <Image className="absolute right-2.5 top-2.5 size-4 text-muted-foreground" />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/* Full Name */}
             <FormField
               control={control}

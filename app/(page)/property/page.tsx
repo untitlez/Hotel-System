@@ -1,10 +1,10 @@
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
 
+import { Navbar } from "@/components/navbar";
 import { SortProperty } from "@/components/pages/property/sort-property";
 import { AppCardProperty } from "@/components/pages/property/app-card-property";
 import { NextPageProperty } from "@/components/pages/property/next-page-property";
-import { Navbar } from "@/components/navbar";
 
 interface PropertyPageProps {
   searchParams: { [key: string]: string };

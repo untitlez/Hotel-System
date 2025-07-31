@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import {
   Activity,
   ChevronsUpDown,
@@ -43,10 +43,11 @@ interface SidebarAccountProps {
 }
 
 export const SidebarAccount = ({ data }: SidebarAccountProps) => {
+  const session = useSession();
   const { isMobile } = useSidebar();
   const { theme, setTheme } = useTheme();
   const isDark = theme === "dark";
-
+  
   const handleLogOut = () => {
     signOut({ callbackUrl: Routes.auth.login });
   };
@@ -61,16 +62,24 @@ export const SidebarAccount = ({ data }: SidebarAccountProps) => {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
             >
               <Avatar className="size-8 rounded-lg">
-                {/* <AvatarImage src={data?.image} alt="Profile Image" /> */}
-                <AvatarFallback className="bg-sidebar-primary text-sidebar-primary-foreground rounded-lg">
-                  <TentTree className="size-4" />
-                </AvatarFallback>
+                {session.data?.user.role === "ADMIN" ? (
+                  <AvatarImage
+                    src={data?.profile.image ?? session.data?.user.image}
+                    alt="Profile Image"
+                  />
+                ) : (
+                  <AvatarFallback className="bg-sidebar-primary text-sidebar-primary-foreground rounded-lg">
+                    <TentTree className="size-4" />
+                  </AvatarFallback>
+                )}
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">
                   {data?.profile?.fullName}
                 </span>
-                <span className="truncate text-xs">{data?.email}</span>
+                <span className="truncate text-xs text-muted-foreground">
+                  {data?.email}
+                </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -87,19 +96,24 @@ export const SidebarAccount = ({ data }: SidebarAccountProps) => {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="size-8 rounded-lg">
-                  {/* {data.role === "ADMIN" ? (
-                    <AvatarImage src={data.profile.image} alt="Profile Image" />
-                  ) : ( */}
-                  <AvatarFallback className="bg-sidebar-primary text-sidebar-primary-foreground rounded-lg">
-                    <TentTree className="size-4" />
-                  </AvatarFallback>
-                  {/* )} */}
+                  {session.data?.user.role === "ADMIN" ? (
+                    <AvatarImage
+                      src={data?.profile.image ?? session.data?.user.image}
+                      alt="Profile Image"
+                    />
+                  ) : (
+                    <AvatarFallback className="bg-sidebar-primary text-sidebar-primary-foreground rounded-lg">
+                      <TentTree className="size-4" />
+                    </AvatarFallback>
+                  )}
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">
                     {data?.profile?.fullName}
                   </span>
-                  <span className="truncate text-xs">{data?.email}</span>
+                  <span className="truncate text-xs text-muted-foreground">
+                    {data?.email}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>

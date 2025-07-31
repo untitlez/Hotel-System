@@ -1,6 +1,6 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
+import { format } from "date-fns";
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts";
 
 import { ResponseRoomType } from "@/validators/room.validator";
@@ -19,35 +19,29 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { format } from "date-fns";
 
-interface BookingsPriceTotalProps {
+interface TotalBookingsTypeProps {
   data: ResponseRoomType[];
 }
 
-export const BookingsPriceTotal = ({ data }: BookingsPriceTotalProps) => {
+export const TotalBookingsType = ({ data }: TotalBookingsTypeProps) => {
   const now = format(new Date(), "MMMM yyyy");
   const roomsType = ["Villa", "Hotel", "Resort"];
-  const roomTypeData = roomsType.map((type) => {
-    const filtered = data.filter((item) => item.type === type);
-    return {
-      type,
-      count: filtered.length,
-      totalPrice: filtered.reduce((acc, item) => acc + item.pricePerNight, 0),
-    };
-  });
+  const roomTypeData = roomsType.map((type) => ({
+    type,
+    count: data.filter((item) => item.type === type).length,
+  }));
   const sortedRoomData = roomTypeData.sort((a, b) => b.count - a.count);
 
   const chartData = sortedRoomData.map((item, index) => ({
     type: item.type,
     count: item.count,
-    totalPrice: item.totalPrice,
     fill: `var(--chart-${index + 1})`,
   }));
 
   const chartConfig = {
-    totalPrice: {
-      label: "Total Price",
+    count: {
+      label: "Bookings",
     },
     ...Object.fromEntries(
       sortedRoomData.map((item, index) => [
@@ -59,14 +53,14 @@ export const BookingsPriceTotal = ({ data }: BookingsPriceTotalProps) => {
       ])
     ),
   } satisfies ChartConfig;
-
+  console.log("chartConfig", chartConfig);
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Bookings Price Total</CardTitle>
+        <CardTitle>Total Bookings Type</CardTitle>
         <CardDescription>January - {now}</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-1 flex-col justify-center">
         <ChartContainer config={chartConfig}>
           <BarChart
             accessibilityLayer
@@ -81,13 +75,12 @@ export const BookingsPriceTotal = ({ data }: BookingsPriceTotalProps) => {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
             />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="totalPrice" fill="var(--color-desktop)" radius={8}>
+            <Bar dataKey="count" fill="var(--color-type)" radius={8}>
               <LabelList
                 position="top"
                 offset={12}

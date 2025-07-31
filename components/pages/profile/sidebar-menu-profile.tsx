@@ -36,7 +36,9 @@ export const SidebarMenuProfile = ({ data }: SidebarMenuProfileProps) => {
     {
       name: "Birthdate",
       icon: Calendar1Icon,
-      label: format(new Date(data.profile.birthday), "dd MMM yyyy"),
+      label: data?.profile.birthday
+        ? format(new Date(data?.profile.birthday), "dd MMM yyyy")
+        : "",
     },
     {
       name: "Address",

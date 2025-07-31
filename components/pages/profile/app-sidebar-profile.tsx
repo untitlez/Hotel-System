@@ -7,6 +7,7 @@ import { ResponseUserType } from "@/validators/user.validator";
 import { SidebarMenuProfile } from "./sidebar-menu-profile";
 import { SidebarAccount } from "../../sidebar-account";
 import { SidebarBreadcrumb } from "../../sidebar-breadcrumb";
+import { BookingListProfile } from "./booking-list-profile";
 import { Separator } from "@/components/ui/separator";
 import {
   Sidebar,
@@ -17,25 +18,24 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { BookingListProfile } from "./booking-list-profile";
 
 interface AppSidebarProfileProps {
   data: ResponseUserType;
 }
 
 export default function AppSidebarProfile({ data }: AppSidebarProfileProps) {
+  
   return (
     <SidebarProvider>
       {/* Profile Image */}
       <Sidebar variant="floating">
         <SidebarHeader className="p-3 space-y-1">
-          <div className="relative aspect-4/3">
+          <div className="relative aspect-4/3 bg-muted rounded-lg">
             <Image
-              src="/shiba.jpg"
+              src={data.profile.image ?? "/shiba.jpg"}
               alt="Profile Image"
-              className="rounded-lg object-cover"
-              sizes="100vw"
-              priority={true}
+              className="object-cover rounded-lg"
+              sizes="30vw"
               fill
             />
           </div>
@@ -64,7 +64,7 @@ export default function AppSidebarProfile({ data }: AppSidebarProfileProps) {
           <SidebarBreadcrumb />
         </header>
         <div className="grid md:grid-cols-2 gap-4 px-4">
-          <BookingListProfile data={data}/>
+          <BookingListProfile data={data} />
         </div>
       </SidebarInset>
     </SidebarProvider>

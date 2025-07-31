@@ -1,6 +1,7 @@
 "use client";
 
 import { BedDouble, DollarSign, Grid2X2, User2 } from "lucide-react";
+
 import { ResponseRoomType } from "@/validators/room.validator";
 
 import { CardImageProperty } from "./card-image-property";

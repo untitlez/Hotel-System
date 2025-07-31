@@ -4,10 +4,44 @@ import { UpdateUserType } from "@/validators/user.validator";
 //
 // GET
 //
-export const allUser = async () => {
+export const allUser = async (query: string) => {
   const services = await prisma.user.findMany({
     where: {
       role: "MEMBER",
+      OR: [
+        {
+          profile: {
+            is: {
+              fullName: { contains: query, mode: "insensitive" },
+            },
+          },
+        },
+        {
+          profile: {
+            is: {
+              gender: { contains: query, mode: "insensitive" },
+            },
+          },
+        },
+        {
+          profile: {
+            is: {
+              address: { contains: query, mode: "insensitive" },
+            },
+          },
+        },
+        {
+          profile: {
+            is: {
+              phone: { contains: query, mode: "insensitive" },
+            },
+          },
+        },
+
+        {
+          email: { contains: query, mode: "insensitive" },
+        },
+      ],
     },
     select: {
       id: true,

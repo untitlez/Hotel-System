@@ -7,6 +7,7 @@ export const loginAccount = async ({ email, password }: LoginType) => {
     where: { email },
   });
   if (!services) return null;
+  if (!services.password) return null;
 
   const isMatch = await bcryptjs.compare(password, services.password);
   if (!isMatch) return null;

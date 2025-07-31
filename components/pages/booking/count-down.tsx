@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Routes } from "@/lib/routes";
-
 import {
   AlertDialog,
   AlertDialogAction,

@@ -13,12 +13,12 @@ import { ResponseBookingType } from "@/validators/booking.validator";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 interface BookingTableInfoProps {
   booking: ResponseBookingType;
@@ -152,7 +152,7 @@ export const BookingTableInfo = ({ booking }: BookingTableInfoProps) => {
               <Badge variant="secondary">{booking.request.roomType}</Badge>
             )}
             {booking.request?.note && (
-              <Badge variant="secondary">{booking.request.note}</Badge>
+              <Badge variant="secondary" className="whitespace-break-spaces">{booking.request.note}</Badge>
             )}
           </p>
         </div>

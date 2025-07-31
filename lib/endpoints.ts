@@ -7,6 +7,7 @@ export const Endpoints = {
     admin: "/api/room/admin/",
   },
   booking: "/api/booking/",
+  upload: "/api/upload/",
 
   auth: {
     login: "/api/auth/login",

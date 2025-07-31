@@ -1,6 +1,7 @@
 import "next-auth/jwt";
 import NextAuth, { type DefaultSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import { prisma } from "@/lib/prisma";
@@ -26,12 +27,25 @@ declare module "next-auth/jwt" {
   }
 }
 
-export const { handlers, auth } = NextAuth({
+export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   pages: { signIn: "/login" },
   session: { strategy: "jwt" },
   secret: process.env.AUTH_SECRET,
   providers: [
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      profile(profile) {
+        return {
+          id: profile.sub,
+          name: `${profile.given_name} ${profile.family_name}`,
+          email: profile.email,
+          image: profile.picture,
+          role: "MEMBER",
+        };
+      },
+    }),
     Credentials({
       name: "Credentials",
       credentials: {
@@ -41,6 +55,9 @@ export const { handlers, auth } = NextAuth({
       async authorize(credentials) {
         const validate = validateLogin(credentials);
         const user = await loginAccount(validate);
+        if (!user) {
+          throw new Error("Invalid credentials.");
+        }
         return user ?? null;
       },
     }),
@@ -50,6 +67,7 @@ export const { handlers, auth } = NextAuth({
       if (user?.id) {
         token.id = user.id;
         token.role = user.role;
+        token.picture = user.image;
       }
       return token;
     },
@@ -57,6 +75,7 @@ export const { handlers, auth } = NextAuth({
       if (session?.user && token?.id) {
         session.user.id = token.id;
         session.user.role = token.role;
+        session.user.image = token.picture;
       }
       return session;
     },

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+
 import { ResponseRoomType } from "@/validators/room.validator";
 
 import { Badge } from "@/components/ui/badge";

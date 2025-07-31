@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
+import { toast } from "sonner";
 import { BedDouble, Blocks, HousePlus, Search, UsersIcon } from "lucide-react";
 
 import { Config } from "@/lib/config";
@@ -12,7 +13,6 @@ import { Routes } from "@/lib/routes";
 import { Endpoints } from "@/lib/endpoints";
 import { ResponseRoomType } from "@/validators/room.validator";
 
-import { toast } from "sonner";
 import { RoomTablePopover } from "./room-table-popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,8 +24,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-const tableHeader = [];
 
 interface DashboardRoomTableProps {
   data: ResponseRoomType[];
@@ -54,8 +52,8 @@ export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
     router.push(Routes.dashboard.room + id);
   };
 
-  const locations = data.map((i)=>i.location)
-console.log('data', locations)
+  const locations = data.map((i) => i.location);
+  console.log("data", locations);
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-2">
@@ -69,12 +67,19 @@ console.log('data', locations)
             onKeyUp={(e) => e.key === "Enter" && onSearch()}
           />
         </div>
-        <Button asChild>
-          <Link href={Routes.dashboard.createRoom}>
-          <span className="sm:hidden"><HousePlus/></span>
-          <span className="hidden sm:block">Create Room</span>
-          </Link>
-        </Button>
+        <div className="space-x-2">
+          <Button variant="secondary" size="lg">
+            Total Rooms : {data.length}
+          </Button>
+          <Button asChild>
+            <Link href={Routes.dashboard.createRoom}>
+              <span className="sm:hidden">
+                <HousePlus />
+              </span>
+              <span className="hidden sm:block">Create Room</span>
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <Table className="border">
@@ -107,7 +112,7 @@ console.log('data', locations)
             >
               <TableCell>{i + 1}</TableCell>
               <TableCell>
-                <div className="relative aspect-video h-20 m-1">
+                <div className="relative aspect-video h-20 m-1 bg-muted">
                   <Image
                     src={item.image ?? ""}
                     alt={item.name}
@@ -130,9 +135,7 @@ console.log('data', locations)
                   </Button>
                 ))}
               </TableCell>
-              <TableCell>
-                $ {item.pricePerNight.toLocaleString()}
-              </TableCell>
+              <TableCell>$ {item.pricePerNight.toLocaleString()}</TableCell>
             </TableRow>
           ))}
         </TableBody>

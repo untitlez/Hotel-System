@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const ProfileSchema = z.object({
   userId: z.string().cuid(),
+  image: z.union([z.string().url(), z.instanceof(File)]),
   fullName: z.string().trim(),
   gender: z.string().trim(),
   birthday: z.coerce.date(),
@@ -18,6 +19,7 @@ export const ProfileSchema = z.object({
 
 export const UpdateProfileSchema = ProfileSchema.partial();
 export const ResponseProfileSchema = ProfileSchema.extend({
+  image: z.string().url(),
   birthday: z.string(),
   updatedAt: z.string(),
 });

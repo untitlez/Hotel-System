@@ -4,12 +4,11 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { toast } from "sonner";
+import axios from "axios";
 
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { Routes } from "@/lib/routes";
 import { UpdateRoomSchema, UpdateRoomType } from "@/validators/room.validator";
 
@@ -104,7 +103,6 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
   const [isShowForm, setIsShowForm] = useState(false);
   const router = useRouter();
   const paramsId = useParams().id;
-  const isMobile = useIsMobile();
 
   const form = useForm<UpdateRoomType>({
     resolver: zodResolver(UpdateRoomSchema),

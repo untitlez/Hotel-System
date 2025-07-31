@@ -93,7 +93,9 @@ export const SidebarMenuDashboard = ({ data }: SidebarMenuDashboardProps) => {
           </Avatar>
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate font-medium">{sidebarHeader.title}</span>
-            <span className="truncate text-xs">{sidebarHeader.subtitle}</span>
+            <span className="truncate text-xs text-muted-foreground">
+              {sidebarHeader.subtitle}
+            </span>
           </div>
         </SidebarMenuButton>
       </SidebarHeader>

@@ -146,7 +146,7 @@ export const BookingPayment = ({
 
       {payment === "QR Code" && (
         <div className="flex flex-wrap gap-8 items-center justify-center">
-          <div className="relative w-full max-w-xs aspect-square ">
+          <div className="relative w-full max-w-xs aspect-square bg-muted">
             <Image
               src={inputItems.QRCode.src}
               alt="QR Code"

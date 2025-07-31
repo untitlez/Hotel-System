@@ -35,7 +35,7 @@ export const BookingCardInfo = ({
     <Card>
       <CardHeader>
         <CardTitle className="pointer-events-none">
-          <div className="relative aspect-3/2">
+          <div className="relative aspect-3/2 bg-muted">
             <Image
               src={room.image ?? ""}
               alt={room.name}

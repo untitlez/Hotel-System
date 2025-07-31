@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 export default function CTAPage() {
   return (
-    <div className="relative aspect-video overflow-hidden w-full h-[50vh]">
+    <div className="relative aspect-video overflow-hidden w-full h-[50vh] bg-muted">
       <Image
         src="https://readdy.ai/api/search-image?query=breathtaking%20modern%20luxury%20villa%20with%20clean%20geometric%20lines%2C%20massive%20glass%20walls%2C%20infinity%20pool%20overlooking%20dramatic%20landscape%2C%20golden%20hour%20professional%20photography%2C%20architectural%20masterpiece%2C%20perfect%20symmetry&width=1440&height=500&seq=10&orientation=landscape"
         alt="Call to action"

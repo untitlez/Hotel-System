@@ -66,9 +66,9 @@
   );
 }
 
-.bg-sidebar {
+/* .bg-sidebar {
   @apply rounded-xl;
-}
+} */
 
 :root {
   --radius: 0.65rem;

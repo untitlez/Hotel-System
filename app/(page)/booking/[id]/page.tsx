@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
+
 import { AppBookingForm } from "@/components/pages/booking/app-booking-form";
 import { CountDown } from "@/components/pages/booking/count-down";
 import { BookingBack } from "@/components/pages/booking/booking-back";
