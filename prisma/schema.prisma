@@ -34,6 +34,7 @@ model User {
   accounts      Account[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  Review        Review[]
 
   @@index([createdAt])
   @@index([updatedAt])
@@ -95,6 +96,7 @@ model Booking {
 }
 
 model Account {
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId            String
   type              String
   provider          String
@@ -110,7 +112,19 @@ model Account {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   @@id([provider, providerAccountId])
+}
+
+model Review {
+  id     String  @id @default(cuid())
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String?
+  name   String?
+  email  String?
+  review String
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
 }

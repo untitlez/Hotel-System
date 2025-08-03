@@ -68,10 +68,8 @@ export const SignUpForm = () => {
     try {
       await axios.post(Config.API_URL + Endpoints.auth.signUp, formData);
       toast.success("Account created successfully!");
-      console.log("FormData", formData);
       router.push(Routes.auth.login);
     } catch (error: unknown) {
-      console.log("Error", error);
       toast.error("Failed to create account.");
     }
   };

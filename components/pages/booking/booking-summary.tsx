@@ -10,6 +10,7 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface BookingSummaryProps {
   checkIn: Date | undefined;
@@ -25,9 +26,11 @@ export const BookingSummary = ({
   setCheckOut,
 }: BookingSummaryProps) => {
   return (
-    <div className="bg-card p-6 rounded-xl space-y-4">
-      <p>Booking summary</p>
-      <div className="grid sm:grid-cols-2 gap-4">
+    <Card>
+      <CardHeader>
+        <CardTitle>Booking summary</CardTitle>
+      </CardHeader>
+      <CardContent className="grid sm:grid-cols-2 gap-4">
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline" className="cursor-pointer">
@@ -36,7 +39,7 @@ export const BookingSummary = ({
               <CalendarIcon className="ml-auto" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
+          <PopoverContent className="w-auto" align="start">
             <Calendar
               mode="single"
               selected={checkIn}
@@ -55,7 +58,7 @@ export const BookingSummary = ({
               <CalendarIcon className="ml-auto" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
+          <PopoverContent className="w-auto" align="start">
             <Calendar
               mode="single"
               selected={checkOut}
@@ -68,7 +71,7 @@ export const BookingSummary = ({
             />
           </PopoverContent>
         </Popover>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };

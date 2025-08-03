@@ -15,17 +15,17 @@ export default async function DashboardHomePage() {
   const bookings = await bookingRes.json();
   const currentBookings = bookings.filter(
     (booking: ResponseBookingType) =>
-      new Date(booking.checkInDate).getFullYear() === 2025
+      new Date(booking.checkInDate).getFullYear() === 2025,
   );
 
   const roomData = await Promise.all(
     currentBookings.map(async (booking: ResponseBookingType) => {
       const res = await fetch(
-        Config.API_URL + Endpoints.room.baseRoom + booking.roomId
+        Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
       );
       const data = await res.json();
       return data;
-    })
+    }),
   );
 
   return (

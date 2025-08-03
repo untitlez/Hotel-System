@@ -1,10 +1,10 @@
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
-import { DashboardBookingTable } from "@/components/dashboard/booking/booking-table";
+import { BookingTable } from "@/components/dashboard/booking/booking-table";
 
 export default async function DashboardBookingPage() {
   const res = await fetch(Config.API_URL + Endpoints.booking);
   const data = await res.json();
 
-  return <DashboardBookingTable data={data} />;
+  return <BookingTable data={data} />;
 }

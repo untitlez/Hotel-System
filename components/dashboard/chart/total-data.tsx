@@ -33,7 +33,8 @@ export const TotalData = ({ bookings, users }: BookingsTypeTotalProps) => {
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month <TrendingUp className="size-4" />
+            Trending up this month{" "}
+            <TrendingUp className="size-4 text-green-500" />
           </div>
           <div className="text-muted-foreground">
             Bookings for the last {lastMonth} months
@@ -50,7 +51,8 @@ export const TotalData = ({ bookings, users }: BookingsTypeTotalProps) => {
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month <TrendingUp className="size-4" />
+            Trending up this month{" "}
+            <TrendingUp className="size-4 text-green-500" />
           </div>
           <div className="text-muted-foreground">
             Visitors for the last {lastMonth} months

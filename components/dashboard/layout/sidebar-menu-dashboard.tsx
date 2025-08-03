@@ -6,7 +6,6 @@ import {
   BookOpen,
   LayoutDashboard,
   Send,
-  Settings,
   TentTree,
   User,
 } from "lucide-react";
@@ -57,22 +56,10 @@ const sidebarItems = {
     },
   ],
 
-  menu2: [
-    {
-      title: "Contact",
-      url: "#",
-      icon: Send,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings,
-    },
-  ],
-  navUser: {
-    name: "Shiba Inu",
-    email: "shiba@example.com",
-    avatar: "/shiba.jpg",
+  menu2: {
+    title: "Contact",
+    url: "mailto:supanatt.cs@gmail.com",
+    icon: Send,
   },
 };
 
@@ -120,16 +107,14 @@ export const SidebarMenuDashboard = ({ data }: SidebarMenuDashboardProps) => {
         {/* Sidebar Menu 2 */}
         <SidebarGroup className="mt-auto">
           <SidebarMenu>
-            {sidebarItems.menu2.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild size="sm">
-                  <Link href={item.url}>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild size="sm">
+                <a href={sidebarItems.menu2.url}>
+                  <sidebarItems.menu2.icon />
+                  <span>{sidebarItems.menu2.title}</span>
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>

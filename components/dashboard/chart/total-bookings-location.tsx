@@ -66,7 +66,7 @@ export const TotalBookingsLocation = ({ data }: TotalBookingsLocationProps) => {
           label: item.location,
           color: `var(--chart-${index + 1})`,
         },
-      ])
+      ]),
     ),
   } satisfies ChartConfig;
 
@@ -111,7 +111,7 @@ export const TotalBookingsLocation = ({ data }: TotalBookingsLocationProps) => {
                 dataKey="location"
                 position="insideLeft"
                 offset={8}
-                className="fill-(--color-label)"
+                className="fill-secondary dark:fill-secondary-foreground"
                 fontSize={12}
               />
               <LabelList

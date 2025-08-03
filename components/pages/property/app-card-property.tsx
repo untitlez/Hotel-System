@@ -7,9 +7,9 @@ import { Loader2 } from "lucide-react";
 import { Routes } from "@/lib/routes";
 import { ResponseRoomType } from "@/validators/room.validator";
 
-import { CardImageProperty } from "./card-image-property";
-import { CardInfoProperty } from "./card-info-property";
-import { AmenityCardProperty } from "./amenity-card-property";
+import { PropertyCardImage } from "./property-card-image";
+import { PropertyCardInfo } from "./property-card-info";
+import { PropertyAmenityCard } from "./property-amenity-card";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -33,14 +33,14 @@ export const AppCardProperty = ({ data }: AppCardPropertyProps) => {
         <div key={item.id} className="grid gap-6 w-full">
           <Sheet>
             <SheetTrigger>
-              <CardImageProperty item={item} />
+              <PropertyCardImage item={item} />
             </SheetTrigger>
             <SheetContent className="overflow-auto">
               <SheetHeader>
                 <SheetTitle>{item.name}</SheetTitle>
                 <SheetDescription>{item.location}</SheetDescription>
               </SheetHeader>
-              <CardInfoProperty item={item} />
+              <PropertyCardInfo item={item} />
               <SheetFooter>
                 <Button asChild onClick={() => setIsLoading(true)}>
                   <Link href={Routes.pages.booking + item.id}>
@@ -64,7 +64,7 @@ export const AppCardProperty = ({ data }: AppCardPropertyProps) => {
             </div>
             <p className="text-muted-foreground">{item.location}</p>
           </div>
-          <AmenityCardProperty
+          <PropertyAmenityCard
             beds={item.beds}
             maxGuests={item.maxGuests}
             amenities={item.amenities}

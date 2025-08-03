@@ -33,7 +33,7 @@ export default async function DashboardLayout({
           <SidebarMenuDashboard data={data} />
 
           {/* Sidebar Content */}
-          <SidebarInset>
+          <SidebarInset className="bg-secondary dark:bg-background">
             <SidebarContentHeader />
             <section className="mx-4">{children}</section>
           </SidebarInset>

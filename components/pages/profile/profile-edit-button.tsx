@@ -86,11 +86,11 @@ const inputItems = {
   },
 } as const;
 
-interface EditProfileProps {
+interface ProfileEditButtonProps {
   data: ResponseUserType;
 }
 
-export const EditProfile = ({ data }: EditProfileProps) => {
+export const ProfileEditButton = ({ data }: ProfileEditButtonProps) => {
   const [open, setOpen] = useState(false);
   const form = useForm<UpdateProfileType>({
     resolver: zodResolver(UpdateProfileSchema),
@@ -112,26 +112,24 @@ export const EditProfile = ({ data }: EditProfileProps) => {
 
   const onSubmit = async (newData: UpdateProfileType) => {
     try {
-      let imageUrl = "";
-      if (newData.image instanceof File) {
+      let imageUrl: string | undefined;
+
+      if (newData.image) {
         const formData = new FormData();
         formData.append("file", newData.image);
+
         const { data } = await axios.post(
           Config.API_URL + Endpoints.upload,
-          formData
+          formData,
         );
         imageUrl = data.url;
       }
 
-      await axios.put(Config.API_URL + Endpoints.profile + id, {
-        ...newData,
-        image: imageUrl,
-      });
+      const payload = { ...newData, image: imageUrl };
+      await axios.put(Config.API_URL + Endpoints.profile + id, payload);
       toast.success("Changes saved successfully.");
-      console.log("Form Data", newData);
       setOpen(false);
     } catch (error: unknown) {
-      console.error("Error", error);
       toast.error("Failed to Edit Room Info!");
     }
   };
@@ -142,7 +140,6 @@ export const EditProfile = ({ data }: EditProfileProps) => {
       toast.success("Account has been deleted.");
       router.push(Routes.auth.login);
     } catch (error: unknown) {
-      console.error("Error", error);
       toast.error("Failed to Delete!");
     }
   };

@@ -39,7 +39,7 @@ export const TotalBookingsPrice = ({ data }: TotalBookingsPriceProps) => {
   });
   const totalAllPrice = roomsData.reduce(
     (acc, item) => acc + item.totalPrice,
-    0
+    0,
   );
   const sortedRoomsData = roomsData.sort((a, b) => b.count - a.count);
 
@@ -58,7 +58,7 @@ export const TotalBookingsPrice = ({ data }: TotalBookingsPriceProps) => {
           label: item.type,
           color: `var(--chart-${index + 1})`,
         },
-      ])
+      ]),
     ),
   } satisfies ChartConfig;
 

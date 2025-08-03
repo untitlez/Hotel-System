@@ -47,7 +47,7 @@ export const SidebarAccount = ({ data }: SidebarAccountProps) => {
   const { isMobile } = useSidebar();
   const { theme, setTheme } = useTheme();
   const isDark = theme === "dark";
-  
+
   const handleLogOut = () => {
     signOut({ callbackUrl: Routes.auth.login });
   };

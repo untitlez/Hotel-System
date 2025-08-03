@@ -6,13 +6,13 @@ import { ResponseRoomType } from "@/validators/room.validator";
 
 import { Badge } from "@/components/ui/badge";
 
-interface CardImagePropertyProps {
+interface PropertyCardImageProps {
   item: ResponseRoomType;
 }
 
-export const CardImageProperty = ({ item }: CardImagePropertyProps) => {
+export const PropertyCardImage = ({ item }: PropertyCardImageProps) => {
   return (
-    <div className="relative aspect-video bg-muted rounded-md overflow-hidden shadow-lg cursor-pointer">
+    <div className="relative aspect-video bg-muted rounded-xl overflow-hidden shadow-lg cursor-pointer">
       {item.type === "Villa" && (
         <Badge className="absolute left-0 z-10 m-4 font-semibold text-sm shadow-md bg-chart-1">
           {item.type}
@@ -24,7 +24,7 @@ export const CardImageProperty = ({ item }: CardImagePropertyProps) => {
         </Badge>
       )}
       {item.type === "Resort" && (
-        <Badge className="absolute left-0 z-10 m-4 font-semibold text-sm shadow-md bg-chart-3">
+        <Badge className="absolute left-0 z-10 m-4 font-semibold text-sm shadow-md bg-chart-5 dark:bg-chart-3">
           {item.type}
         </Badge>
       )}

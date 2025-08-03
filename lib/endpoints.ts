@@ -8,6 +8,7 @@ export const Endpoints = {
   },
   booking: "/api/booking/",
   upload: "/api/upload/",
+  review: "/api/review/",
 
   auth: {
     login: "/api/auth/login",

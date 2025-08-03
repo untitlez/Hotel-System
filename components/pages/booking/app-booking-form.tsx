@@ -58,7 +58,7 @@ export const AppBookingForm = ({
   useEffect(() => {
     if (checkIn && checkOut) {
       const getDay = Math.ceil(
-        (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)
+        (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24),
       );
       setNight(getDay);
       form.setValue("checkInDate", checkIn);
@@ -70,18 +70,16 @@ export const AppBookingForm = ({
     try {
       await axios.post(Config.API_URL + Endpoints.booking, bookingData);
       toast.success("Your booking was successful!");
-      console.log("Booking Data", bookingData);
       router.push(Routes.pages.profile);
     } catch (error) {
-      console.error("Error", error);
       toast.error(
-        "Something went wrong. Please check your information and try again."
+        "Something went wrong. Please check your information and try again.",
       );
     }
   };
 
   return (
-    <div className=" grid grid-cols-3 gap-12">
+    <div className=" grid lg:grid-cols-3 gap-12">
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onConfirm)}
@@ -95,12 +93,12 @@ export const AppBookingForm = ({
           />
           <BookingPayment payment={payment} setPayment={setPayment} />
           <BookingRequest />
-          <BookingWarning />
+          <BookingWarning checkIn={checkIn} />
           <BookingConfirm pricePerNight={pricePerNight} />
         </form>
       </FormProvider>
 
-      <div className="hidden lg:block w-full">
+      <div className="col-span-3 lg:col-span-1">
         <BookingCardInfo
           room={room}
           night={night}

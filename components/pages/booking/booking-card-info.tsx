@@ -34,7 +34,7 @@ export const BookingCardInfo = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="pointer-events-none">
+        <CardTitle className="pointer-events-none hidden lg:block">
           <div className="relative aspect-3/2 bg-muted">
             <Image
               src={room.image ?? ""}
@@ -79,10 +79,10 @@ export const BookingCardInfo = ({
           form="booking-form"
           variant="secondary"
           size="lg"
-          className="flex justify-between font-semibold"
+          className="flex justify-between border font-semibold"
         >
           <p>Total</p>
-          <p>$ {totalPrice.toLocaleString()}</p>
+          <p className="text-primary">$ {totalPrice.toLocaleString()}</p>
         </Button>
       </CardFooter>
     </Card>

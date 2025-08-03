@@ -15,7 +15,6 @@ export const BackToTopButton = () => {
       <TooltipTrigger asChild>
         <Button
           size="icon"
-          variant="secondary"
           className="fixed bottom-8 right-8 rounded-full border shadow-lg cursor-pointer transition"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >

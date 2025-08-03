@@ -24,11 +24,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface DashboardMemberTableProps {
+interface MemberTableProps {
   data: ResponseUserType[];
 }
 
-export const DashboardMemberTable = ({ data }: DashboardMemberTableProps) => {
+export const MemberTable = ({ data }: MemberTableProps) => {
   const [searchInput, setSearchInput] = useState("");
   const [users, setUsers] = useState<ResponseUserType[]>(data);
 
@@ -41,7 +41,6 @@ export const DashboardMemberTable = ({ data }: DashboardMemberTableProps) => {
       if (!searchInput) return;
       toast(`Found ${data.length} results for "${searchInput}"`);
     } catch (error: unknown) {
-      console.error("Error", error);
       toast.warning("Search failed. Please try again.");
     }
   };
@@ -52,11 +51,11 @@ export const DashboardMemberTable = ({ data }: DashboardMemberTableProps) => {
   };
 
   return (
-    <div className="space-y-4 my-2">
+    <div className="space-y-6 my-4">
       <div className="flex items-center justify-between">
         <div className="relative">
           <Input
-            className="w-100 pl-8"
+            className="w-100 pl-8 bg-background shadow-md"
             placeholder="Search the table..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
@@ -64,13 +63,17 @@ export const DashboardMemberTable = ({ data }: DashboardMemberTableProps) => {
           />
           <Search className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none" />
         </div>
-        <Button variant="secondary" size="lg">
+        <Button
+          variant="secondary"
+          size="lg"
+          className="bg-background dark:bg-secondary shadow-md"
+        >
           Total Rooms : {data.length}
         </Button>
       </div>
-      <Table className="border">
-        <TableHeader>
-          <TableRow className="bg-muted">
+      <Table className="border bg-background">
+        <TableHeader className="bg-muted-foreground/50">
+          <TableRow>
             <TableHead>No.</TableHead>
             <TableHead>Full Name</TableHead>
             <TableHead>Gender</TableHead>

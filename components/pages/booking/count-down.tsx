@@ -49,7 +49,7 @@ export const CountDown = ({ minute }: CountDownProps) => {
   return (
     <AlertDialog open={open}>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">
+        <Button variant="destructive" className="shadow-lg">
           <Timer />
           Time Out
           {!open && (

@@ -25,11 +25,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface DashboardRoomTableProps {
+interface RoomTableProps {
   data: ResponseRoomType[];
 }
 
-export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
+export const RoomTable = ({ data }: RoomTableProps) => {
   const [searchInput, setSearchInput] = useState("");
   const [rooms, setRooms] = useState<ResponseRoomType[]>(data);
 
@@ -42,7 +42,6 @@ export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
       if (!searchInput) return;
       toast(`Found ${data.length} results for "${searchInput}"`);
     } catch (error: unknown) {
-      console.error("Error", error);
       toast.warning("Search failed. Please try again.");
     }
   };
@@ -52,15 +51,13 @@ export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
     router.push(Routes.dashboard.room + id);
   };
 
-  const locations = data.map((i) => i.location);
-  console.log("data", locations);
   return (
-    <div className="space-y-4">
+    <div className="space-y-6 my-4">
       <div className="flex items-center justify-between gap-2">
         <div className="relative">
           <Search className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none" />
           <Input
-            className="pl-8"
+            className="pl-8 bg-background"
             placeholder="Search the table..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
@@ -68,7 +65,11 @@ export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
           />
         </div>
         <div className="space-x-2">
-          <Button variant="secondary" size="lg">
+          <Button
+            variant="secondary"
+            size="lg"
+            className="bg-background dark:bg-secondary shadow-md"
+          >
             Total Rooms : {data.length}
           </Button>
           <Button asChild>
@@ -82,9 +83,9 @@ export const DashboardRoomTable = ({ data }: DashboardRoomTableProps) => {
         </div>
       </div>
 
-      <Table className="border">
-        <TableHeader>
-          <TableRow className="bg-secondary capitalize">
+      <Table className="border bg-background">
+        <TableHeader className="bg-muted-foreground/50">
+          <TableRow className="capitalize">
             <TableHead>No</TableHead>
             <TableHead>image</TableHead>
             <TableHead>name</TableHead>

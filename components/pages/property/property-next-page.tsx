@@ -11,7 +11,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-interface NextPagePropertyProps {
+interface PropertyNextPageProps {
   pagination: {
     limit: number;
     page: number;
@@ -19,7 +19,7 @@ interface NextPagePropertyProps {
   };
 }
 
-export function NextPageProperty({ pagination }: NextPagePropertyProps) {
+export function PropertyNextPage({ pagination }: PropertyNextPageProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 

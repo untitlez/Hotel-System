@@ -15,6 +15,6 @@ export const useSite = create<SiteState>()(
     }),
     {
       name: "site-storage",
-    }
-  )
+    },
+  ),
 );

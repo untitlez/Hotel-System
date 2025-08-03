@@ -4,15 +4,15 @@ import { BedDouble, DollarSign, Grid2X2, User2 } from "lucide-react";
 
 import { ResponseRoomType } from "@/validators/room.validator";
 
-import { CardImageProperty } from "./card-image-property";
+import { PropertyCardImage } from "./property-card-image";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-interface CardInfoPropertyProps {
+interface PropertyCardInfoProps {
   item: ResponseRoomType;
 }
 
-export const CardInfoProperty = ({ item }: CardInfoPropertyProps) => {
+export const PropertyCardInfo = ({ item }: PropertyCardInfoProps) => {
   const infoItems = [
     {
       icon: DollarSign,
@@ -27,7 +27,7 @@ export const CardInfoProperty = ({ item }: CardInfoPropertyProps) => {
   return (
     <div className="flex flex-col gap-6 px-4">
       <div className="pointer-events-none">
-        <CardImageProperty item={item} />
+        <PropertyCardImage item={item} />
       </div>
       <Separator />
 

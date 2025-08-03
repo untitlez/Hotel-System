@@ -12,12 +12,12 @@ export async function POST(req: NextRequest) {
         message: "Created successfully",
         payload,
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     return NextResponse.json(
       { message: "Something went wrong", error },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

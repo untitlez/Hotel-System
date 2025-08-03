@@ -114,7 +114,7 @@ export default function PopularLocationPage() {
         {locations.map((location, i) => (
           <div
             key={i}
-            className="relative aspect-3/4 bg-muted rounded-md overflow-hidden shadow-lg group"
+            className="relative aspect-3/4 bg-muted rounded-xl overflow-hidden border shadow-md group"
           >
             <Image
               src={location.image}
@@ -124,8 +124,8 @@ export default function PopularLocationPage() {
               fill
             />
 
-            <div className="absolute inset-0 z-0 flex flex-col text-end justify-end gap-3 p-6 bg-gradient-to-t from-black/50 to-transparent">
-              <h3 className="text-xl font-bold text-white whitespace-nowrap">
+            <div className="absolute inset-0 z-0 flex flex-col justify-end text-end text-secondary dark:text-secondary-foreground gap-3 p-6 bg-gradient-to-t from-black/50 to-transparent">
+              <h3 className="text-xl font-bold whitespace-nowrap">
                 {location.name}
               </h3>
               <p className="text-sm">{location.description}</p>

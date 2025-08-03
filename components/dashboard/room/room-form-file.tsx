@@ -25,7 +25,9 @@ interface RoomFormFileProps {
 }
 
 export const RoomFormFile = ({ item, data }: RoomFormFileProps) => {
-  const { control } = useFormContext();
+  const { watch, control } = useFormContext();
+  const imageValue = watch("image");
+
   return (
     <FormField
       key={item.name}
@@ -33,11 +35,15 @@ export const RoomFormFile = ({ item, data }: RoomFormFileProps) => {
       name={item.name}
       render={({ field }) => (
         <FormItem>
-          <div className="relative aspect-video border rounded-md overflow-hidden shadow-lg bg-muted">
-            {data && (
+          <div className="relative aspect-video border rounded-md overflow-hidden bg-muted-foreground/20">
+            {(data?.image || imageValue) && (
               <Image
-                src={data.image ?? ""}
-                alt={data.name ?? "Room image"}
+                src={
+                  imageValue instanceof File
+                    ? URL.createObjectURL(imageValue)
+                    : imageValue
+                }
+                alt="Room image"
                 className="object-cover rounded-lg"
                 sizes="50vw"
                 fill
@@ -48,7 +54,7 @@ export const RoomFormFile = ({ item, data }: RoomFormFileProps) => {
             <Input
               className="cursor-pointer"
               type={item.type}
-              onChange={field.onChange}
+              onChange={(e) => field.onChange(e.target.files?.[0])}
             />
           </FormControl>
           <FormMessage />

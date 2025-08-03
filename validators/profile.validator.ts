@@ -6,18 +6,23 @@ export const ProfileSchema = z.object({
   fullName: z.string().trim(),
   gender: z.string().trim(),
   birthday: z.coerce.date(),
-  address: z.string().trim().max(100, {
-    message: "ที่อยู่ต้องไม่เกิน 100 ตัวอักษร",
-  }),
+  address: z
+    .string()
+    .trim()
+    .max(100, { message: "Address must not exceed 100 characters." }),
   phone: z
     .string()
-    .regex(/^0[0-9]{9}$/, "เบอร์โทรไม่ถูกต้อง")
+    .regex(/^0[0-9]{9}$/, {
+      message: "Phone number must start with 0 and contain 10 digits.",
+    })
     .trim(),
   status: z.enum(["ACTIVE", "DISABLED"]).default("ACTIVE"),
   updatedAt: z.coerce.date(),
 });
 
-export const UpdateProfileSchema = ProfileSchema.partial();
+export const UpdateProfileSchema = ProfileSchema.partial().extend({
+  image: z.string().url(),
+});
 export const ResponseProfileSchema = ProfileSchema.extend({
   image: z.string().url(),
   birthday: z.string(),

@@ -38,12 +38,14 @@ const inputItems = [
     label: "Room Name",
     type: "text",
     placeholder: "เช่น A101",
+    required: true,
   },
   {
     name: "location",
     label: "Location",
     type: "text",
     placeholder: "เช่น เชียงใหม่, ประเทศไทย",
+    required: true,
   },
   {
     name: "type",
@@ -51,6 +53,7 @@ const inputItems = [
     type: "select",
     placeholder: "เลือกประเภทห้อง",
     options: [{ value: "Hotel" }, { value: "Resort" }, { value: "Villa" }],
+    required: true,
   },
   {
     name: "pricePerNight",
@@ -95,11 +98,11 @@ const inputItems = [
   },
 ];
 
-interface DashboardRoomFormProps {
+interface AppRoomFormProps {
   data?: UpdateRoomType;
 }
 
-export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
+export const AppRoomForm = ({ data }: AppRoomFormProps) => {
   const [isShowForm, setIsShowForm] = useState(false);
   const router = useRouter();
   const paramsId = useParams().id;
@@ -110,41 +113,50 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
       name: data?.name ?? "",
       location: data?.location ?? "",
       type: data?.type ?? "",
-      pricePerNight: data?.pricePerNight ?? undefined,
+      pricePerNight: data?.pricePerNight ?? 0,
       maxGuests: data?.maxGuests ?? undefined,
       roomSize: data?.roomSize ?? undefined,
       beds: data?.beds ?? "",
       amenities: data?.amenities ?? [],
-      image: data?.image ?? "",
+      image: data?.image ?? undefined,
     },
     mode: "onBlur",
   });
 
   const onSubmit = async (newData: UpdateRoomType) => {
-    if (data) {
-      try {
+    try {
+      let imageUrl: string | undefined;
+
+      if (newData.image) {
+        const formData = new FormData();
+        formData.append("file", newData.image);
+
+        const { data } = await axios.post(
+          Config.API_URL + Endpoints.upload,
+          formData,
+        );
+        imageUrl = data.url;
+      }
+
+      const payload = { ...newData, image: imageUrl };
+
+      if (data) {
         await axios.put(
           Config.API_URL + Endpoints.room.baseRoom + paramsId,
-          newData
+          payload,
         );
         toast.success("Changes saved successfully.");
-        console.log("Form Data", newData);
-        router.push(Routes.dashboard.room);
-      } catch (error: unknown) {
-        console.error("Error", error);
-        toast.error("Failed to Edit Room Info!");
-      }
-    } else {
-      try {
-        await axios.post(Config.API_URL + Endpoints.room.baseRoom, newData);
+      } else {
+        await axios.post(Config.API_URL + Endpoints.room.baseRoom, payload);
         toast.success("Room created successfully!");
-        console.log("Form Data", newData);
         form.reset();
-        router.push(Routes.dashboard.room);
-      } catch (error: unknown) {
-        console.error("Error", error);
-        toast.error("Failed to Create Room!");
       }
+
+      router.push(Routes.dashboard.room);
+    } catch (error: unknown) {
+      toast.error(
+        data ? "Failed to Edit Room Info!" : "Failed to Create Room!",
+      );
     }
   };
 
@@ -155,10 +167,10 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
       toast.success("Item has been deleted.");
       router.push(Routes.dashboard.room);
     } catch (error: unknown) {
-      console.error("Error", error);
       toast.error("Failed to Delete!");
     }
   };
+
   return (
     <Card className="max-w-screen-sm mx-auto">
       <CardHeader>
@@ -177,6 +189,7 @@ export const DashboardRoomForm = ({ data }: DashboardRoomFormProps) => {
                 {item.name === "image" && (
                   <RoomFormFile item={item} data={data} />
                 )}
+                {item.name === "name" && <RoomFormInput item={item} />}
                 {item.name === "location" && <RoomFormInput item={item} />}
                 {item.name === "type" && <RoomFormSelect item={item} />}
                 {item.name === "pricePerNight" && <RoomFormInput item={item} />}

@@ -12,11 +12,11 @@ import { BackToTopButton } from "@/components/back-to-top-button";
 
 export default async function HomePage() {
   return (
-    <div className="flex flex-col items-center">
-      <nav className="w-full md:justify-items-center py-4 px-4">
+    <div className="flex flex-col justify-self-center">
+      <nav className="w-full max-w-screen-2xl md:justify-items-center p-4 bg-background">
         <Navbar />
       </nav>
-      <div className="max-w-screen-xl space-y-24 mx-8 2xl:mx-0">
+      <div className="max-w-screen-2xl space-y-24 pb-24 px-4 md:px-8 xl:px-12 bg-background">
         <section id={Routes.navbar.id.hero}>
           <HeroPage />
         </section>
@@ -32,14 +32,14 @@ export default async function HomePage() {
         <section id={Routes.navbar.id.fqa}>
           <FQAPage />
         </section>
-        <div>
-          <section id={Routes.navbar.id.cta}>
-            <CTAPage />
-          </section>
-          <footer id={Routes.navbar.id.footer}>
-            <FooterPage />
-          </footer>
-        </div>
+      </div>
+      <div className="max-w-screen-2xl">
+        <section id={Routes.navbar.id.cta}>
+          <CTAPage />
+        </section>
+        <footer id={Routes.navbar.id.footer}>
+          <FooterPage />
+        </footer>
       </div>
       <BackToTopButton />
     </div>

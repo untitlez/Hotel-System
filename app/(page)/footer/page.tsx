@@ -12,10 +12,10 @@ const footerItems = {
   },
 
   social: [
-    { icon: <Facebook />, link: "#" },
-    { icon: <Instagram />, link: "#" },
-    { icon: <Github />, link: "#" },
-    { icon: <Linkedin />, link: "#" },
+    { icon: <Facebook />, link: "https://www.facebook.com/THE.Tlez/#" },
+    { icon: <Instagram />, link: "https://www.instagram.com/the.tlez/" },
+    { icon: <Github />, link: "https://github.com/untitlez/Hotel-System" },
+    { icon: <Linkedin />, link: "https://www.linkedin.com/in/thetlez/" },
   ],
   quickLinks: {
     title: "Quick Links",
@@ -24,7 +24,7 @@ const footerItems = {
       { label: "Properties", link: `#${Routes.navbar.id.property}` },
       { label: "Review", link: `#${Routes.navbar.id.review}` },
       { label: "FAQs", link: `#${Routes.navbar.id.fqa}` },
-      { label: "Contact", link: `#${Routes.navbar.id.footer}` },
+      { label: "Contact", link: "mailto:supanatt.cs@gmail.com" },
     ],
   },
   locations: {
@@ -52,19 +52,19 @@ const footerItems = {
 
 export default function FooterPage() {
   return (
-    <div className="bg-secondary px-16 border">
+    <div className="bg-secondary-foreground dark:bg-secondary px-4 sm:px-16 border-t text-secondary dark:text-secondary-foreground">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 my-16">
-        <div className="space-y-8">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-8">
+          <div className="flex items-center gap-2 ">
             <TentTree />
             <span className="text-xl font-bold">
               {footerItems.brand.header}
             </span>
           </div>
-          <p className="text-muted-foreground leading-7 w-2/3">
+          <p className="text-muted-foreground leading-7 ">
             {footerItems.brand.subHeader}
           </p>
-          <div className="flex items-center gap-6 text-secondary">
+          <div className="flex flex-wrap items-center gap-6 text-secondary">
             {footerItems.social.map((item, i) => (
               <Button
                 key={i}
@@ -72,12 +72,15 @@ export default function FooterPage() {
                 size="icon"
                 className="bg-secondary-foreground dark:bg-secondary-foreground dark:text-secondary rounded-full"
               >
-                <Link href={item.link}>{item.icon}</Link>
+                <Link href={item.link} target="_blank">
+                  {item.icon}
+                </Link>
               </Button>
             ))}
           </div>
         </div>
-        <div className="flex items-start justify-between lg:justify-end gap-16">
+
+        <div className="flex flex-wrap items-start justify-center sm:justify-between lg:justify-end gap-16">
           <div className="grid gap-8">
             <h3 className="text-lg font-bold">
               {footerItems.quickLinks.title}
@@ -118,7 +121,7 @@ export default function FooterPage() {
         <p className="text-sm text-muted-foreground">
           {footerItems.legal.title}
         </p>
-        <div className="flex items-center">
+        <div className="flex flex-wrap items-center justify-center">
           {footerItems.legal.button.map((item, i) => (
             <Button
               key={i}

@@ -25,7 +25,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-interface BookingListProfileProps {
+interface ProfileBookingsListProps {
   data: ResponseUserType;
 }
 
@@ -34,7 +34,7 @@ type BookingState = {
   room: ResponseRoomType;
 };
 
-export const BookingListProfile = ({ data }: BookingListProfileProps) => {
+export const ProfileBookingsList = ({ data }: ProfileBookingsListProps) => {
   const router = useRouter();
   const [bookingList, setBookingList] = useState<BookingState[]>([]);
 
@@ -44,7 +44,6 @@ export const BookingListProfile = ({ data }: BookingListProfileProps) => {
       toast.success("Booking has been deleted.");
       router.push(Routes.pages.home);
     } catch (error: unknown) {
-      console.error("Error", error);
       toast.error("Failed to Delete!");
     }
   };
@@ -53,13 +52,13 @@ export const BookingListProfile = ({ data }: BookingListProfileProps) => {
     const results = await Promise.all(
       data.bookings.map(async (booking) => {
         const res = await axios.get(
-          Config.API_URL + Endpoints.room.baseRoom + booking.roomId
+          Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
         );
         return {
           booking,
           room: res.data,
         };
-      })
+      }),
     );
     setBookingList(results);
   };

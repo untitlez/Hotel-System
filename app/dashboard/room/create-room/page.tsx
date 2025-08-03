@@ -1,5 +1,5 @@
-import { DashboardRoomForm } from "@/components/dashboard/room/room-form";
+import { AppRoomForm } from "@/components/dashboard/room/app-room-form";
 
 export default async function DashboardCreateRoomPage() {
-  return <DashboardRoomForm />;
+  return <AppRoomForm />;
 }

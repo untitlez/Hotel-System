@@ -41,35 +41,35 @@ const navHome = {
   contents: [
     {
       title: "Looking For",
-      href: `#${Routes.navbar.id.hero}`,
+      href: Routes.navbar.id.hero,
       description: "What to look for ?",
     },
     {
       title: "Properties",
-      href: `#${Routes.navbar.id.property}`,
+      href: Routes.navbar.id.property,
       description: "Residence in Australia",
     },
     {
       title: "Review",
-      href: `#${Routes.navbar.id.review}`,
+      href: Routes.navbar.id.review,
       description: "Would you like to share your feedback about this project?",
     },
     {
       title: "Popular Locations",
-      href: "#",
+      href: Routes.navbar.id.location,
       description:
         "Explore properties in Australia's most sought-after cities and regions.",
     },
     {
       title: "FQAs",
-      href: `#${Routes.navbar.id.fqa}`,
+      href: Routes.navbar.id.fqa,
       description:
         "Find quick answers to common questions about our properties, services, and booking process.",
     },
     {
-      title: "CTA",
-      href: `#${Routes.navbar.id.cta}`,
-      description: "Not Thing",
+      title: "Explore",
+      href: Routes.navbar.id.cta,
+      description: "Find your perfect escape with Us",
     },
   ],
 };
@@ -162,6 +162,10 @@ export const Navbar = () => {
   const session = useSession();
   const isMobile = useIsMobile();
 
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <NavigationMenu viewport={isMobile ? true : false} className="z-50">
       <NavigationMenuList>
@@ -182,7 +186,7 @@ export const Navbar = () => {
                     <DropdownMenuSubContent>
                       {navHome.contents.map((content, i) => (
                         <DropdownMenuItem asChild key={i}>
-                          <Link href={content.href}>{content.title}</Link>
+                          <Link href={`#${content.href}`}>{content.title}</Link>
                         </DropdownMenuItem>
                       ))}
                     </DropdownMenuSubContent>
@@ -272,15 +276,19 @@ export const Navbar = () => {
                   </li>
 
                   {navHome.contents.map((content, i) => (
-                    <NavigationMenuLink asChild key={i}>
-                      <Link href={content.href}>
+                    <NavigationMenuLink
+                      asChild
+                      key={i}
+                      className="cursor-pointer"
+                    >
+                      <div onClick={() => scrollTo(content.href)}>
                         <div className="text-sm leading-none font-medium">
                           {content.title}
                         </div>
                         <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
                           {content.description}
                         </p>
-                      </Link>
+                      </div>
                     </NavigationMenuLink>
                   ))}
                 </ul>

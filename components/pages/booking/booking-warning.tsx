@@ -1,21 +1,31 @@
 "use client";
 
+import { format } from "date-fns";
 import { XCircle } from "lucide-react";
 
-export const BookingWarning = () => {
+import { Card, CardContent } from "@/components/ui/card";
+
+interface BookingWarningProps {
+  checkIn: Date | undefined;
+}
+
+export const BookingWarning = ({ checkIn }: BookingWarningProps) => {
   return (
-    <div className="bg-card flex items-center p-6 rounded-xl">
-      <XCircle className="text-destructive m-4" />
-      <div>
-        <p>Cancellation policy</p>
-        <p className="text-sm">
-          Free cancellation before 3:00 PM on Oct 20.
-          <span className="text-muted-foreground">
-            {" "}
-            Cancel before Oct 27 for a partial refund.
-          </span>
-        </p>
-      </div>
-    </div>
+    <Card>
+      <CardContent className="flex items-center gap-6">
+        <XCircle className="text-destructive" />
+        <div>
+          <p>Cancellation policy</p>
+          <p className="text-sm">
+            Free cancellation before 3:00 PM on {""}
+            {format(checkIn ?? "", "MMM dd")}. {""}
+            <span className="text-muted-foreground">
+              Cancel before {format(checkIn ?? "", "MMM dd")} for a partial
+              refund.
+            </span>
+          </p>
+        </div>
+      </CardContent>
+    </Card>
   );
 };

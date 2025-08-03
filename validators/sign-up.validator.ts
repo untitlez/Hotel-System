@@ -2,12 +2,15 @@ import { z } from "zod";
 
 export const SignUpSchema = z
   .object({
-    email: z.string().email("อีเมลไม่ถูกต้อง"),
-    password: z.string().min(6, "รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร").trim(),
+    email: z.string().email("Invalid email address."),
+    password: z
+      .string()
+      .min(6, "Password must be at least 6 characters.")
+      .trim(),
     confirmPassword: z.string().trim(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "รหัสผ่านไม่ตรงกัน",
+    message: "Passwords do not match.",
     path: ["confirmPassword"],
   });
 export type SignUpType = z.infer<typeof SignUpSchema>;

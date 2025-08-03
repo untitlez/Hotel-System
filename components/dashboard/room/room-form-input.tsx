@@ -19,6 +19,7 @@ interface RoomFormInputProps {
     placeholder?: string;
     options?: { value: string }[];
     value?: { id: string }[];
+    required?: boolean;
   };
 }
 
@@ -33,7 +34,7 @@ export const RoomFormInput = ({ item }: RoomFormInputProps) => {
         <FormItem>
           <FormLabel>
             {item.label}
-            <span className="text-primary">*</span>
+            {item.required ? <span className="text-primary">*</span> : ""}
           </FormLabel>
           <FormControl>
             <Input {...field} type={item.type} placeholder={item.placeholder} />

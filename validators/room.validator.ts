@@ -2,18 +2,24 @@ import { z } from "zod";
 
 export const RoomSchema = z.object({
   id: z.string().cuid(),
-  name: z.string().min(1, "โปรดระบุชื่อห้อง").trim(),
-  location: z.string().min(1, "โปรดเพิ่มสถานที่").trim(),
-  type: z.coerce.string().min(1, "โปรดเลือกประเภทห้อง").trim(),
-  pricePerNight: z.coerce.number().positive("ราคาต่อคืนต้องเป็นบวก"),
+  name: z.string().min(1, "Room name is required.").trim(),
+  location: z.string().min(1, "Location is required.").trim(),
+  type: z.coerce.string().min(1, "Room type is required.").trim(),
+  pricePerNight: z.coerce
+    .number()
+    .min(1, "Price is required.")
+    .positive("Price per night must be a positive number."),
   maxGuests: z.coerce
     .number()
-    .positive("จำนวนผู้เข้าพักต้องเป็นบวก")
+    .positive("Max guests must be a positive number.")
     .optional(),
-  roomSize: z.coerce.number().positive("ขนาดห้องต้องเป็นบวก").optional(),
+  roomSize: z.coerce
+    .number()
+    .positive("Room size must be a positive number.")
+    .optional(),
   beds: z.string().trim().optional(),
   amenities: z.array(z.string()).default([]),
-  image: z.string().trim().optional(),
+  image: z.union([z.string().url(), z.instanceof(File)]),
   availableDates: z.array(z.coerce.date()).default([]),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
@@ -24,10 +30,16 @@ export const CreateRoomSchema = RoomSchema.omit({
   availableDates: true,
   createdAt: true,
   updatedAt: true,
+}).extend({
+  image: z.string().url(),
 });
 
-export const UpdateRoomSchema = CreateRoomSchema.partial();
+export const UpdateRoomSchema = CreateRoomSchema.partial().extend({
+  image: z.string().url(),
+});
+
 export const ResponseRoomSchema = RoomSchema.extend({
+  image: z.string().url(),
   availableDates: z.array(z.string()),
   createdAt: z.string(),
   updatedAt: z.string(),

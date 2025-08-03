@@ -12,7 +12,7 @@ import {
 
 import { ResponseUserType } from "@/validators/user.validator";
 
-import { EditProfile } from "./edit-profile";
+import { ProfileEditButton } from "./profile-edit-button";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -20,11 +20,11 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-interface SidebarMenuProfileProps {
+interface ProfileSidebarMenuProps {
   data: ResponseUserType;
 }
 
-export const SidebarMenuProfile = ({ data }: SidebarMenuProfileProps) => {
+export const ProfileSidebarMenu = ({ data }: ProfileSidebarMenuProps) => {
   const sidebarItems = [
     {
       name: "Name",
@@ -73,7 +73,7 @@ export const SidebarMenuProfile = ({ data }: SidebarMenuProfileProps) => {
       <SidebarGroup className="mt-auto">
         <SidebarGroupContent>
           <SidebarMenu>
-            <EditProfile data={data} />
+            <ProfileEditButton data={data} />
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>

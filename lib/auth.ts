@@ -1,5 +1,5 @@
 import "next-auth/jwt";
-import NextAuth, { type DefaultSession } from "next-auth";
+import NextAuth, { CredentialsSignin, type DefaultSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -56,9 +56,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const validate = validateLogin(credentials);
         const user = await loginAccount(validate);
         if (!user) {
-          throw new Error("Invalid credentials.");
+          throw new CredentialsSignin("Invalid credentials.");
         }
-        return user ?? null;
+        return user;
       },
     }),
   ],
@@ -67,7 +67,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user?.id) {
         token.id = user.id;
         token.role = user.role;
-        token.picture = user.image;
       }
       return token;
     },

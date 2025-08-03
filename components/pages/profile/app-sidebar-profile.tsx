@@ -4,10 +4,10 @@ import Image from "next/image";
 
 import { ResponseUserType } from "@/validators/user.validator";
 
-import { SidebarMenuProfile } from "./sidebar-menu-profile";
+import { ProfileSidebarMenu } from "./profile-sidebar-menu";
+import { ProfileBookingsList } from "./profile-bookings-list";
 import { SidebarAccount } from "../../sidebar-account";
 import { SidebarBreadcrumb } from "../../sidebar-breadcrumb";
-import { BookingListProfile } from "./booking-list-profile";
 import { Separator } from "@/components/ui/separator";
 import {
   Sidebar,
@@ -24,7 +24,6 @@ interface AppSidebarProfileProps {
 }
 
 export default function AppSidebarProfile({ data }: AppSidebarProfileProps) {
-  
   return (
     <SidebarProvider>
       {/* Profile Image */}
@@ -43,7 +42,7 @@ export default function AppSidebarProfile({ data }: AppSidebarProfileProps) {
 
         {/* Sidebar Menu */}
         <SidebarContent>
-          <SidebarMenuProfile data={data} />
+          <ProfileSidebarMenu data={data} />
         </SidebarContent>
 
         {/* Sidebar Account */}
@@ -53,7 +52,7 @@ export default function AppSidebarProfile({ data }: AppSidebarProfileProps) {
       </Sidebar>
 
       {/* Content */}
-      <SidebarInset>
+      <SidebarInset className="bg-secondary dark:bg-background">
         <header className="flex h-16 shrink-0 items-center gap-2 px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator
@@ -64,7 +63,7 @@ export default function AppSidebarProfile({ data }: AppSidebarProfileProps) {
           <SidebarBreadcrumb />
         </header>
         <div className="grid md:grid-cols-2 gap-4 px-4">
-          <BookingListProfile data={data} />
+          <ProfileBookingsList data={data} />
         </div>
       </SidebarInset>
     </SidebarProvider>

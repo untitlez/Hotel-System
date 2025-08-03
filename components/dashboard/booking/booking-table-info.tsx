@@ -35,7 +35,7 @@ export const BookingTableInfo = ({ booking }: BookingTableInfoProps) => {
   const getUser = async () => {
     if (!booking) return;
     const { data } = await axios.get(
-      Config.API_URL + Endpoints.users + booking.userId
+      Config.API_URL + Endpoints.users + booking.userId,
     );
     setUser(data);
   };
@@ -43,7 +43,7 @@ export const BookingTableInfo = ({ booking }: BookingTableInfoProps) => {
   const getRoom = async () => {
     if (!booking) return;
     const { data } = await axios.get(
-      Config.API_URL + Endpoints.room.baseRoom + booking.roomId
+      Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
     );
     setRoom(data);
   };
@@ -152,7 +152,9 @@ export const BookingTableInfo = ({ booking }: BookingTableInfoProps) => {
               <Badge variant="secondary">{booking.request.roomType}</Badge>
             )}
             {booking.request?.note && (
-              <Badge variant="secondary" className="whitespace-break-spaces">{booking.request.note}</Badge>
+              <Badge variant="secondary" className="whitespace-break-spaces">
+                {booking.request.note}
+              </Badge>
             )}
           </p>
         </div>

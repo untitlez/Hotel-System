@@ -25,6 +25,7 @@ interface RoomFormSelectProps {
     placeholder?: string;
     options?: { value: string }[];
     value?: { id: string }[];
+    required?: boolean;
   };
 }
 
@@ -39,7 +40,7 @@ export const RoomFormSelect = ({ item }: RoomFormSelectProps) => {
         <FormItem>
           <FormLabel>
             {item.label}
-            <span className="text-primary">*</span>
+            {item.required ? <span className="text-primary">*</span> : ""}
           </FormLabel>
           <FormControl>
             <Select

@@ -9,19 +9,19 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 
-interface AmenityCardPropertyProps {
+interface PropertyAmenityCardProps {
   beds?: string;
   maxGuests?: number;
   roomSize?: number;
   amenities: string[];
 }
 
-export function AmenityCardProperty({
+export function PropertyAmenityCard({
   beds,
   maxGuests,
   roomSize,
   amenities,
-}: AmenityCardPropertyProps) {
+}: PropertyAmenityCardProps) {
   return (
     <div className="flex flex-wrap gap-1.5 items-end">
       <Button size="sm" variant="outline">

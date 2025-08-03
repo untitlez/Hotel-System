@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const inputItems = {
   payments: {
@@ -74,7 +75,6 @@ const inputItems = {
       "Please scan this QR code with your banking app. And Upload Payment Slip",
     type: "file",
   },
-  
 };
 
 interface BookingPaymentProps {
@@ -87,80 +87,87 @@ export const BookingPayment = ({
   setPayment,
 }: BookingPaymentProps) => {
   return (
-    <div className="bg-card p-6 rounded-xl space-y-6">
-      <p>Pay with</p>
+    <Card>
+      <CardHeader>
+        <CardTitle>Pay with</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <Select
+          onValueChange={(value) => setPayment(value)}
+          defaultValue={payment}
+        >
+          <SelectTrigger className="w-full cursor-pointer">
+            <SelectValue placeholder={inputItems.payments.placeholder} />
+          </SelectTrigger>
+          <SelectContent>
+            {inputItems.payments.options.map((value, i) => (
+              <SelectItem
+                key={i}
+                className="cursor-pointer"
+                value={value.value}
+              >
+                {value.value}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-      <Select
-        onValueChange={(value) => setPayment(value)}
-        defaultValue={payment}
-      >
-        <SelectTrigger className="w-full cursor-pointer">
-          <SelectValue placeholder={inputItems.payments.placeholder} />
-        </SelectTrigger>
-        <SelectContent>
-          {inputItems.payments.options.map((value, i) => (
-            <SelectItem key={i} className="cursor-pointer" value={value.value}>
-              {value.value}
-            </SelectItem>
+        {payment === "Credit Card" &&
+          inputItems.CreditCard.map((item, i) => (
+            <div key={i} className="space-y-2">
+              <Label>{item.label}</Label>
+              <Input type={item.type} placeholder={item.placeholder} />
+            </div>
           ))}
-        </SelectContent>
-      </Select>
 
-      {payment === "Credit Card" &&
-        inputItems.CreditCard.map((item, i) => (
-          <div key={i} className="space-y-2">
-            <Label>{item.label}</Label>
-            <Input type={item.type} placeholder={item.placeholder} />
-          </div>
-        ))}
+        {payment === "Bank transfer" &&
+          inputItems.BankTransfer.map((item, index) => (
+            <div key={index}>
+              {item.type === "radio" ? (
+                <RadioGroup className="flex flex-wrap items-center gap-6 py-2 text-secondary-foreground/80">
+                  {item.options?.map((value, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <RadioGroupItem
+                        className="cursor-pointer"
+                        value={value.value}
+                        id={value.value}
+                      />
+                      <Label
+                        className="cursor-pointer hover:text-secondary-foreground"
+                        htmlFor={value.value}
+                      >
+                        {value.label}
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              ) : (
+                <div className="space-y-2">
+                  <Label>{item.label}</Label>
+                  <Input type={item.type} placeholder={item.placeholder} />
+                </div>
+              )}
+            </div>
+          ))}
 
-      {payment === "Bank transfer" &&
-        inputItems.BankTransfer.map((item, index) => (
-          <div key={index}>
-            {item.type === "radio" ? (
-              <RadioGroup className="flex items-center gap-6 py-2 text-secondary-foreground/80">
-                {item.options?.map((value, i) => (
-                  <div key={i} className="flex items-center gap-2">
-                    <RadioGroupItem
-                      className="cursor-pointer"
-                      value={value.value}
-                      id={value.value}
-                    />
-                    <Label
-                      className="cursor-pointer hover:text-secondary-foreground"
-                      htmlFor={value.value}
-                    >
-                      {value.label}
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            ) : (
-              <div className="space-y-2">
-                <Label>{item.label}</Label>
-                <Input type={item.type} placeholder={item.placeholder} />
-              </div>
-            )}
+        {payment === "QR Code" && (
+          <div className="flex flex-wrap gap-8 items-center justify-center">
+            <div className="relative w-full max-w-xs aspect-square bg-muted">
+              <Image
+                src={inputItems.QRCode.src}
+                alt="QR Code"
+                className="object-contain"
+                sizes="50vw"
+                fill
+              />
+            </div>
+            <div className="space-y-4 max-w-xs text-center">
+              <p>{inputItems.QRCode.label}</p>
+              <Input type={inputItems.QRCode.type} />
+            </div>
           </div>
-        ))}
-
-      {payment === "QR Code" && (
-        <div className="flex flex-wrap gap-8 items-center justify-center">
-          <div className="relative w-full max-w-xs aspect-square bg-muted">
-            <Image
-              src={inputItems.QRCode.src}
-              alt="QR Code"
-              className="object-contain"
-              sizes="50vw"
-              fill
-            />
-          </div>
-          <div className="space-y-4 max-w-xs text-center">
-            <p>{inputItems.QRCode.label}</p>
-            <Input type={inputItems.QRCode.type} />
-          </div>
-        </div>
-      )}
-    </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };

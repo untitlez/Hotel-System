@@ -25,14 +25,14 @@ export default function HeroPage() {
           </blockquote>
         </div>
       </div>
-      <div className="relative h-[50vh] bg-muted">
+      <div className="relative h-[50vh]">
         <Image
           src={heroItems.heroImage}
           alt="Cover Image"
           className="object-cover rounded-3xl"
+          priority={true}
           sizes="100vw"
           fill
-          priority
         />
         <div className="absolute bottom-0 w-full">
           <SearchBox />

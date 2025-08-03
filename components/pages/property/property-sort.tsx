@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export const SortProperty = () => {
+export const PropertySort = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const query = new URLSearchParams(searchParams);
@@ -26,7 +26,7 @@ export const SortProperty = () => {
     <div className="flex items-center gap-2">
       <span className="text-sm ">Sort By:</span>
       <Select value={value} onValueChange={handleSortChange}>
-        <SelectTrigger className="border-secondary-foreground/59 cursor-pointer">
+        <SelectTrigger className="border-secondary-foreground/50 cursor-pointer">
           <SelectValue placeholder="Price" />
         </SelectTrigger>
         <SelectContent>

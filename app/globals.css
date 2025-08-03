@@ -46,29 +46,9 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-secondary dark:bg-background text-foreground;
   }
 }
-
-.bg-gradient {
-  background: linear-gradient(
-    135deg,
-    oklch(0.65 0.2 250) 0%,
-    oklch(0.85 0.15 150) 100%
-  );
-}
-
-.dark .bg-gradient {
-  background: linear-gradient(
-    135deg,
-    oklch(0.45 0.2 250) 0%,
-    oklch(0.65 0.15 150) 100%
-  );
-}
-
-/* .bg-sidebar {
-  @apply rounded-xl;
-} */
 
 :root {
   --radius: 0.65rem;
@@ -139,7 +119,6 @@
   --sidebar-ring: oklch(0.645 0.246 16.439);
 }
 
-
 .box {
   @apply border-2 border-white;
 }
@@ -149,5 +128,5 @@
 }
 
 .animate {
-  @apply transition duration-500
+  @apply transition duration-500;
 }

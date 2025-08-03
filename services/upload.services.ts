@@ -6,7 +6,7 @@ import { UpdateProfileType } from "@/validators/profile.validator";
 //
 export const updateImageProfile = async (
   paramsId: string,
-  parsed: UpdateProfileType
+  parsed: UpdateProfileType,
 ) => {
   const services = await prisma.profile.update({
     where: {

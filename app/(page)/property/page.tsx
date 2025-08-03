@@ -2,9 +2,9 @@ import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
 
 import { Navbar } from "@/components/navbar";
-import { SortProperty } from "@/components/pages/property/sort-property";
+import { PropertySort } from "@/components/pages/property/property-sort";
 import { AppCardProperty } from "@/components/pages/property/app-card-property";
-import { NextPageProperty } from "@/components/pages/property/next-page-property";
+import { PropertyNextPage } from "@/components/pages/property/property-next-page";
 
 interface PropertyPageProps {
   searchParams: { [key: string]: string };
@@ -15,14 +15,12 @@ export default async function PropertyPage({
 }: PropertyPageProps) {
   const params = await searchParams;
   const query = new URLSearchParams(params);
-  const res = await fetch(
-    Config.API_URL + Endpoints.room.member + "?" + query
-  );
+  const res = await fetch(Config.API_URL + Endpoints.room.member + "?" + query);
   const data = await res.json();
 
   return (
-    <>
-      <nav className="w-full justify-items-end md:justify-items-center py-4 px-4">
+    <div className="bg-background w-full max-w-screen-2xl flex flex-col justify-self-center items-center px-4 md:px-8 xl:px-12">
+      <nav className="w-full justify-items-end md:justify-items-center py-4">
         <Navbar />
       </nav>
       <div className="w-full max-w-screen-xl justify-self-center">
@@ -38,7 +36,7 @@ export default async function PropertyPage({
               properties
             </p>
           </div>
-          <SortProperty />
+          <PropertySort />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -46,9 +44,9 @@ export default async function PropertyPage({
         </div>
 
         <div className="flex justify-center my-12">
-          <NextPageProperty pagination={data.pagination} />
+          <PropertyNextPage pagination={data.pagination} />
         </div>
       </div>
-    </>
+    </div>
   );
 }

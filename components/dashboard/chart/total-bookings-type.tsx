@@ -50,10 +50,10 @@ export const TotalBookingsType = ({ data }: TotalBookingsTypeProps) => {
           label: item.type,
           color: `var(--chart-${index + 1})`,
         },
-      ])
+      ]),
     ),
   } satisfies ChartConfig;
-  console.log("chartConfig", chartConfig);
+
   return (
     <Card>
       <CardHeader>
