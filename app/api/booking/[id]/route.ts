@@ -3,7 +3,7 @@ import { listBooking, removeBooking } from "@/services/booking.services";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
@@ -12,14 +12,14 @@ export async function GET(
   } catch (error) {
     return NextResponse.json(
       { message: "Something went wrong", error },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
@@ -31,7 +31,7 @@ export async function DELETE(
     }
     return NextResponse.json(
       { message: "Something went wrong", error },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

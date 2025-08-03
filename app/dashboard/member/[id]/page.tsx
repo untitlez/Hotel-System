@@ -3,7 +3,7 @@ import { Endpoints } from "@/lib/endpoints";
 import { MemberTableInfo } from "@/components/dashboard/member/member-table-info";
 
 interface DashboardMemberIdPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function DashboardMemberIdPage({
