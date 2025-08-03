@@ -40,7 +40,7 @@ export const MemberTable = ({ data }: MemberTableProps) => {
       setUsers(data);
       if (!searchInput) return;
       toast(`Found ${data.length} results for "${searchInput}"`);
-    } catch (_error: unknown) {
+    } catch  {
       toast.warning("Search failed. Please try again.");
     }
   };

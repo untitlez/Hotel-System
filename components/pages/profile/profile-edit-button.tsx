@@ -129,7 +129,7 @@ export const ProfileEditButton = ({ data }: ProfileEditButtonProps) => {
       await axios.put(Config.API_URL + Endpoints.profile + id, payload);
       toast.success("Changes saved successfully.");
       setOpen(false);
-    } catch (_error: unknown) {
+    } catch  {
       toast.error("Failed to Edit Room Info!");
     }
   };
@@ -139,7 +139,7 @@ export const ProfileEditButton = ({ data }: ProfileEditButtonProps) => {
       await axios.delete(Config.API_URL + Endpoints.users + id);
       toast.success("Account has been deleted.");
       router.push(Routes.auth.login);
-    } catch (_error: unknown) {
+    } catch  {
       toast.error("Failed to Delete!");
     }
   };

@@ -9,7 +9,7 @@ import { BookingBack } from "@/components/pages/booking/booking-back";
 export default async function BookingPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const responseRoom = await fetch(

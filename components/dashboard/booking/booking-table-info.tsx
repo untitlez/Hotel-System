@@ -45,7 +45,7 @@ export const BookingTableInfo = ({ booking }: BookingTableInfoProps) => {
 
         setUser(userData);
         setRoom(roomData);
-      } catch (_error) {
+      } catch {
         toast.error("Failed to fetch booking info:");
       }
     };

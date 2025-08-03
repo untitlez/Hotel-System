@@ -58,7 +58,7 @@ export const AppBookingForm = ({
   useEffect(() => {
     if (checkIn && checkOut) {
       const getDay = Math.ceil(
-        (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24),
+        (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)
       );
       setNight(getDay);
       form.setValue("checkInDate", checkIn);
@@ -71,9 +71,9 @@ export const AppBookingForm = ({
       await axios.post(Config.API_URL + Endpoints.booking, bookingData);
       toast.success("Your booking was successful!");
       router.push(Routes.pages.profile);
-    } catch (_error) {
+    } catch {
       toast.error(
-        "Something went wrong. Please check your information and try again.",
+        "Something went wrong. Please check your information and try again."
       );
     }
   };
