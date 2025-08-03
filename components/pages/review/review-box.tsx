@@ -35,8 +35,7 @@ export const ReviewBox = ({ session, user, review }: ReviewBoxProps) => {
       await axios.delete(Config.API_URL + Endpoints.review + id);
       setReviewData((prev) => prev.filter((item) => item.id !== id));
       toast.success("Item has been deleted.");
-    } catch (error: unknown) {
-      console.log("error", error);
+    } catch (_error: unknown) {
       toast.error("Failed to Delete!");
     }
   };
@@ -85,7 +84,7 @@ export const ReviewBox = ({ session, user, review }: ReviewBoxProps) => {
             </CardAction>
           </CardHeader>
           <CardContent className="grid place-items-center">
-            <p>" {item.review} "</p>
+            <p>&quot; {item.review} &quot;</p>
           </CardContent>
         </Card>
       ))}

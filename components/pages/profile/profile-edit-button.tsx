@@ -129,7 +129,7 @@ export const ProfileEditButton = ({ data }: ProfileEditButtonProps) => {
       await axios.put(Config.API_URL + Endpoints.profile + id, payload);
       toast.success("Changes saved successfully.");
       setOpen(false);
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
       toast.error("Failed to Edit Room Info!");
     }
   };
@@ -139,7 +139,7 @@ export const ProfileEditButton = ({ data }: ProfileEditButtonProps) => {
       await axios.delete(Config.API_URL + Endpoints.users + id);
       toast.success("Account has been deleted.");
       router.push(Routes.auth.login);
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
       toast.error("Failed to Delete!");
     }
   };
@@ -155,7 +155,7 @@ export const ProfileEditButton = ({ data }: ProfileEditButtonProps) => {
         <SheetHeader>
           <SheetTitle>Edit Profile</SheetTitle>
           <SheetDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your profile here. Click save when you&apos;re done.
           </SheetDescription>
         </SheetHeader>
 
@@ -179,7 +179,10 @@ export const ProfileEditButton = ({ data }: ProfileEditButtonProps) => {
                         placeholder={inputItems.image.placeholder}
                         onChange={(e) => field.onChange(e.target.files?.[0])}
                       />
-                      <Image className="absolute right-2.5 top-2.5 size-4 text-muted-foreground" />
+                      <Image
+                        aria-label="Image icon"
+                        className="absolute right-2.5 top-2.5 size-4 text-muted-foreground"
+                      />
                     </div>
                   </FormControl>
                   <FormMessage />

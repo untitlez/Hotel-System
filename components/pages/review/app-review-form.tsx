@@ -21,7 +21,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -69,7 +68,7 @@ export const AppReviewForm = () => {
       await axios.post(Config.API_URL + Endpoints.review, newData);
       setOpen(true);
       form.reset();
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
       toast.error("Failed to sent feedback!");
     }
   };

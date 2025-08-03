@@ -21,7 +21,7 @@ export default function HeroPage() {
           </p>
           <blockquote className="text-sm italic w-2/3">
             Discover premium properties with exceptional design and unparalleled
-            comfort across Australia's most desirable locations.
+            comfort across Australia&apos;s most desirable locations.
           </blockquote>
         </div>
       </div>

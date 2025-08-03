@@ -38,7 +38,7 @@ export const CountDown = ({ minute }: CountDownProps) => {
     setInterval(() => {
       setMin((prev) => prev - 1);
     }, 1000 * initTime);
-  }, []);
+  }, [initTime]);
 
   useEffect(() => {
     if (min < 0) {

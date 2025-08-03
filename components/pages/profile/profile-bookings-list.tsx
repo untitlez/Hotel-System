@@ -43,27 +43,29 @@ export const ProfileBookingsList = ({ data }: ProfileBookingsListProps) => {
       await axios.delete(Config.API_URL + Endpoints.booking + id);
       toast.success("Booking has been deleted.");
       router.push(Routes.pages.home);
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
       toast.error("Failed to Delete!");
     }
   };
 
-  const fetchRooms = async () => {
-    const results = await Promise.all(
-      data.bookings.map(async (booking) => {
-        const res = await axios.get(
-          Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
-        );
-        return {
-          booking,
-          room: res.data,
-        };
-      }),
-    );
-    setBookingList(results);
-  };
-
   useEffect(() => {
+    if (!data) return;
+
+    const fetchRooms = async () => {
+      const results = await Promise.all(
+        data.bookings.map(async (booking) => {
+          const res = await axios.get(
+            Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
+          );
+          return {
+            booking,
+            room: res.data,
+          };
+        }),
+      );
+      setBookingList(results);
+    };
+
     fetchRooms();
   }, []);
 

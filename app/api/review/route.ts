@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { allReview, createReview } from "@/services/review.services";
 import { validateReview } from "@/validators/review.validator";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const payload = await allReview();
     return NextResponse.json(payload);

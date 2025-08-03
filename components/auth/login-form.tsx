@@ -177,7 +177,7 @@ export const LoginForm = () => {
             </Button>
           </div>
           <div className="text-center text-sm space-x-2">
-            <span>Don't have an account?</span>
+            <span>Don&apos;t have an account?</span>
             <Link
               href={Routes.auth.signUp}
               className="underline underline-offset-4"

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { validateCreateBooking } from "@/validators/booking.validator";
 import { allBooking, createBooking } from "@/services/booking.services";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const payload = await allBooking();
     return NextResponse.json(payload);

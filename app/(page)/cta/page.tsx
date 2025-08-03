@@ -22,7 +22,8 @@ export default function CTAPage() {
           <blockquote className="text-sm italic max-w-sm text-secondary dark:text-secondary-foreground">
             Looking for a place to stay in Australia? Discover top-rated
             accommodations with Aurora from cozy rentals to premium stays. Book
-            your perfect home away from home in Australia's most vibrant cities.
+            your perfect home away from home in Australia&apos;s most vibrant
+            cities.
           </blockquote>
           <div className="flex flex-wrap justify-center lg:justify-end gap-4">
             <Button

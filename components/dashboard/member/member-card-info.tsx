@@ -28,24 +28,24 @@ type BookingState = {
 export const MemberCardInfo = ({ data }: MemberCardInfoProps) => {
   const [bookingList, setBookingList] = useState<BookingState[]>([]);
 
-  const fetchRooms = async () => {
-    const results = await Promise.all(
-      data.bookings.map(async (booking) => {
-        const res = await axios.get(
-          Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
-        );
-        return {
-          booking,
-          room: res.data,
-        };
-      }),
-    );
-    setBookingList(results);
-  };
-
   useEffect(() => {
+    const fetchRooms = async () => {
+      const results = await Promise.all(
+        data.bookings.map(async (booking) => {
+          const res = await axios.get(
+            Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
+          );
+          return {
+            booking,
+            room: res.data,
+          };
+        }),
+      );
+      setBookingList(results);
+    };
     fetchRooms();
-  }, []);
+  }, [data.bookings]);
+
   return (
     <Sheet>
       <SheetTrigger asChild className="w-full cursor-pointer">

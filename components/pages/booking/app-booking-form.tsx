@@ -64,14 +64,14 @@ export const AppBookingForm = ({
       form.setValue("checkInDate", checkIn);
       form.setValue("checkOutDate", checkOut);
     }
-  }, [checkIn, checkOut]);
+  }, [checkIn, checkOut, form]);
 
   const onConfirm = async (bookingData: CreateBookingType) => {
     try {
       await axios.post(Config.API_URL + Endpoints.booking, bookingData);
       toast.success("Your booking was successful!");
       router.push(Routes.pages.profile);
-    } catch (error) {
+    } catch (_error) {
       toast.error(
         "Something went wrong. Please check your information and try again.",
       );

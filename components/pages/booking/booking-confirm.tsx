@@ -18,10 +18,10 @@ export const BookingConfirm = ({ pricePerNight }: BookingConfirmProps) => {
     <Card>
       <CardContent className="flex flex-col gap-4 text-justify">
         <p>
-          By selecting the button below, I agree to the Host's House Rules,
-          Ground rules for guests, Teraluxe's Rebooking and Refund Policy, and
-          that Teraluxe can charge my payment method if I'm responsible for
-          damage.
+          By selecting the button below, I agree to the Host&apos;s House Rules,
+          Ground rules for guests, Teraluxe&apos;s Rebooking and Refund Policy,
+          and that Teraluxe can charge my payment method if I&apos;m responsible
+          for damage.
         </p>
         <p>
           I also agree to the{" "}

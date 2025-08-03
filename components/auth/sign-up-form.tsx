@@ -70,7 +70,11 @@ export const SignUpForm = () => {
       toast.success("Account created successfully!");
       router.push(Routes.auth.login);
     } catch (error: unknown) {
-      toast.error("Failed to create account.");
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || "Sign up failed!");
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
     }
   };
 

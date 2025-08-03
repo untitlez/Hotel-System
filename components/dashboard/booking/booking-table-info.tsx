@@ -19,6 +19,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { toast } from "sonner";
 
 interface BookingTableInfoProps {
   booking: ResponseBookingType;
@@ -32,25 +33,24 @@ export const BookingTableInfo = ({ booking }: BookingTableInfoProps) => {
     new Date(booking.checkInDate).getTime();
   const night = getTime / (1000 * 60 * 60 * 24);
 
-  const getUser = async () => {
-    if (!booking) return;
-    const { data } = await axios.get(
-      Config.API_URL + Endpoints.users + booking.userId,
-    );
-    setUser(data);
-  };
-
-  const getRoom = async () => {
-    if (!booking) return;
-    const { data } = await axios.get(
-      Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
-    );
-    setRoom(data);
-  };
-
   useEffect(() => {
-    getUser();
-    getRoom();
+    if (!booking) return;
+
+    const fetchUserAndRoom = async () => {
+      try {
+        const [{ data: userData }, { data: roomData }] = await Promise.all([
+          axios.get(Config.API_URL + Endpoints.users + booking.userId),
+          axios.get(Config.API_URL + Endpoints.room.baseRoom + booking.roomId),
+        ]);
+
+        setUser(userData);
+        setRoom(roomData);
+      } catch (_error) {
+        toast.error("Failed to fetch booking info:");
+      }
+    };
+
+    fetchUserAndRoom();
   }, [booking.userId, booking.roomId]);
 
   return (

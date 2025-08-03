@@ -4,10 +4,9 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 interface GlobalErrorProps {
-  error: Error & { digest?: string };
   reset: () => void;
 }
-export default function GlobalError({ error, reset }: GlobalErrorProps) {
+export default function GlobalError({ reset }: GlobalErrorProps) {
   const router = useRouter();
 
   return (

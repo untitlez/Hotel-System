@@ -41,8 +41,8 @@ export async function PUT(
       },
       { status: 200 },
     );
-  } catch (error: any) {
-    if (error.code === "P2025") {
+  } catch (error: unknown) {
+    if ((error as { code: string }).code === "P2025") {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
     return NextResponse.json(
@@ -60,8 +60,8 @@ export async function DELETE(
     const { id } = await params;
     await removeUser(id);
     return NextResponse.json({ message: "Delete successfully" });
-  } catch (error: any) {
-    if (error.code === "P2025") {
+  } catch (error: unknown) {
+    if ((error as { code: string }).code === "P2025") {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
     return NextResponse.json(
