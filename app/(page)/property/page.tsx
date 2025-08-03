@@ -7,7 +7,7 @@ import { AppCardProperty } from "@/components/pages/property/app-card-property";
 import { PropertyNextPage } from "@/components/pages/property/property-next-page";
 
 interface PropertyPageProps {
-  searchParams: { [key: string]: string };
+  searchParams: Promise<{ [key: string]: string }>;
 }
 
 export default async function PropertyPage({

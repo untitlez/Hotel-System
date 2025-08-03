@@ -6,11 +6,11 @@ import { AppBookingForm } from "@/components/pages/booking/app-booking-form";
 import { CountDown } from "@/components/pages/booking/count-down";
 import { BookingBack } from "@/components/pages/booking/booking-back";
 
-export default async function BookingPage({
-  params,
-}: {
+interface BookingPageProps {
   params: Promise<{ id: string }>;
-}) {
+}
+
+export default async function BookingPage({ params }: BookingPageProps) {
   const { id } = await params;
   const responseRoom = await fetch(
     Config.API_URL + Endpoints.room.baseRoom + id
