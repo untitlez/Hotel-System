@@ -16,6 +16,11 @@ const quicksand = Quicksand({
 export const metadata: Metadata = {
   title: "Hotel System",
   description: "Practice Web Services",
+  icons: {
+    icon: "/favicon/bed.png",
+    apple: "/favicon/bed.png",
+    shortcut: "/favicon/bed.png",
+  },
 };
 
 export default async function RootLayout({

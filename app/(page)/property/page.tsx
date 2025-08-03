@@ -18,10 +18,12 @@ export default async function PropertyPage({
   const res = await fetch(Config.API_URL + Endpoints.room.member + "?" + query);
   const data = await res.json();
 
+  const isPropertyPage = true;
+
   return (
     <div className="bg-background w-full max-w-screen-2xl flex flex-col justify-self-center items-center px-4 md:px-8 xl:px-12">
-      <nav className="w-full justify-items-end md:justify-items-center py-4">
-        <Navbar />
+      <nav className="w-full max-w-screen-2xl md:justify-items-center py-4 bg-background">
+        <Navbar isPropertyPage={isPropertyPage} />
       </nav>
       <div className="w-full max-w-screen-xl justify-self-center">
         <div className="flex flex-wrap justify-between items-center gap-6 my-12">

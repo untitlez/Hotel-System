@@ -158,7 +158,11 @@ const navDashboard = {
 };
 const navAuth = { title: "Login", href: Routes.auth.login };
 
-export const Navbar = () => {
+interface NavbarProps {
+  isPropertyPage?: boolean;
+}
+
+export const Navbar = ({ isPropertyPage }: NavbarProps) => {
   const session = useSession();
   const isMobile = useIsMobile();
 
@@ -180,22 +184,32 @@ export const Navbar = () => {
             <DropdownMenuContent align="start">
               <DropdownMenuGroup>
                 {/* Nav Home */}
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Home</DropdownMenuSubTrigger>
-                  <DropdownMenuPortal>
-                    <DropdownMenuSubContent>
-                      {navHome.contents.map((content, i) => (
-                        <DropdownMenuItem asChild key={i}>
-                          <Link href={`#${content.href}`}>{content.title}</Link>
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuSubContent>
-                  </DropdownMenuPortal>
-                </DropdownMenuSub>
+                {isPropertyPage ? (
+                  <DropdownMenuItem>
+                    <Link href={Routes.pages.home}>{navHome.trigger}</Link>
+                  </DropdownMenuItem>
+                ) : (
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      {navHome.trigger}
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent>
+                        {navHome.contents.map((content, i) => (
+                          <DropdownMenuItem asChild key={i}>
+                            <Link href={content.href}>{content.title}</Link>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+                )}
 
                 {/* Nav Property */}
                 <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Property</DropdownMenuSubTrigger>
+                  <DropdownMenuSubTrigger>
+                    {navProperty.trigger}
+                  </DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       {navProperty.contents.map((content, i) => (
@@ -209,7 +223,9 @@ export const Navbar = () => {
 
                 {/* Nav Location */}
                 <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Location</DropdownMenuSubTrigger>
+                  <DropdownMenuSubTrigger>
+                    {navLocation.trigger}
+                  </DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       {navLocation.contents.map((content, i) => (
@@ -253,47 +269,60 @@ export const Navbar = () => {
           </DropdownMenu>
         ) : (
           <>
-            {/* Nav Home */}
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>{navHome.trigger}</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-2 grid-cols-2 md:grid-cols-3 w-[300px] md:w-[500px]">
-                  <li className="row-span-2 md:row-span-3">
-                    <NavigationMenuLink asChild>
-                      <Link
-                        className="bg-secondary flex h-full w-full flex-col justify-end p-6 rounded-md no-underline outline-hidden select-none focus:shadow-md"
-                        href={Routes.pages.home}
-                      >
-                        <navHome.headerContent.icon className="size-8" />
-                        <div className="mt-4 mb-1 text-lg font-medium">
-                          {navHome.headerContent.title}
-                        </div>
-                        <p className="text-muted-foreground text-sm leading-tight">
-                          {navHome.headerContent.description}
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
+            {/* Desktop */}
 
-                  {navHome.contents.map((content, i) => (
-                    <NavigationMenuLink
-                      asChild
-                      key={i}
-                      className="cursor-pointer"
-                    >
-                      <div onClick={() => scrollTo(content.href)}>
-                        <div className="text-sm leading-none font-medium">
-                          {content.title}
+            {/* Nav Home */}
+            {isPropertyPage ? (
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={navigationMenuTriggerStyle()}
+                >
+                  <Link href={Routes.pages.home}>{navHome.trigger}</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            ) : (
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>{navHome.trigger}</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-2 grid-cols-2 md:grid-cols-3 w-[300px] md:w-[500px]">
+                    <li className="row-span-2 md:row-span-3">
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className="bg-secondary flex h-full w-full flex-col justify-end p-6 rounded-md no-underline outline-hidden select-none focus:shadow-md"
+                          href={Routes.pages.home}
+                        >
+                          <navHome.headerContent.icon className="size-8" />
+                          <div className="mt-4 mb-1 text-lg font-medium">
+                            {navHome.headerContent.title}
+                          </div>
+                          <p className="text-muted-foreground text-sm leading-tight">
+                            {navHome.headerContent.description}
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+
+                    {navHome.contents.map((content, i) => (
+                      <NavigationMenuLink
+                        asChild
+                        key={i}
+                        className="cursor-pointer"
+                      >
+                        <div onClick={() => scrollTo(content.href)}>
+                          <div className="text-sm leading-none font-medium">
+                            {content.title}
+                          </div>
+                          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+                            {content.description}
+                          </p>
                         </div>
-                        <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-                          {content.description}
-                        </p>
-                      </div>
-                    </NavigationMenuLink>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
+                      </NavigationMenuLink>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            )}
 
             {/* Nav Property */}
             <NavigationMenuItem>
@@ -349,12 +378,7 @@ export const Navbar = () => {
                     asChild
                     className={navigationMenuTriggerStyle()}
                   >
-                    <Link
-                      href={navProfile.href}
-                      className="font-medium border border-secondary md:border-none"
-                    >
-                      {navProfile.title}
-                    </Link>
+                    <Link href={navProfile.href}>{navProfile.title}</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
 
@@ -365,32 +389,20 @@ export const Navbar = () => {
                       asChild
                       className={navigationMenuTriggerStyle()}
                     >
-                      <Link
-                        href={navDashboard.href}
-                        className="font-medium border border-secondary md:border-none"
-                      >
-                        {navDashboard.title}
-                      </Link>
+                      <Link href={navDashboard.href}>{navDashboard.title}</Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 )}
               </>
             ) : (
               <>
-                {/* Desktop */}
-
                 {/* Nav Login */}
                 <NavigationMenuItem>
                   <NavigationMenuLink
                     asChild
                     className={navigationMenuTriggerStyle()}
                   >
-                    <Link
-                      href={navAuth.href}
-                      className="font-medium border border-secondary md:border-none"
-                    >
-                      {navAuth.title}
-                    </Link>
+                    <Link href={navAuth.href}>{navAuth.title}</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               </>

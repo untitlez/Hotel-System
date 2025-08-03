@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
 import { Routes } from "@/lib/routes";
@@ -23,10 +24,16 @@ import {
 
 interface AppCardPropertyProps {
   data: ResponseRoomType[];
+  session?: Session | null;
 }
 
-export const AppCardProperty = ({ data }: AppCardPropertyProps) => {
+export const AppCardProperty = ({ data, session }: AppCardPropertyProps) => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const onBooking = (id: string) => {
+    setIsLoading(true);
+    router.push(Routes.pages.booking + id);
+  };
   return (
     <>
       {data.map((item) => (
@@ -42,15 +49,23 @@ export const AppCardProperty = ({ data }: AppCardPropertyProps) => {
               </SheetHeader>
               <PropertyCardInfo item={item} />
               <SheetFooter>
-                <Button asChild onClick={() => setIsLoading(true)}>
-                  <Link href={Routes.pages.booking + item.id}>
+                {!session ? (
+                  <Button disabled variant={"destructive"}>
+                    Please Login
+                  </Button>
+                ) : (
+                  <Button
+                    className="cursor-pointer"
+                    disabled={isLoading}
+                    onClick={() => onBooking(item.id)}
+                  >
                     {isLoading ? (
                       <Loader2 className="animate-spin" />
                     ) : (
                       "Booking Now..."
                     )}
-                  </Link>
-                </Button>
+                  </Button>
+                )}
               </SheetFooter>
             </SheetContent>
           </Sheet>

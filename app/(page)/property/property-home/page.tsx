@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { auth } from "@/lib/auth";
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
 import { Routes } from "@/lib/routes";
@@ -8,6 +9,7 @@ import { AppCardProperty } from "@/components/pages/property/app-card-property";
 import { Button } from "@/components/ui/button";
 
 export default async function PropertyHomePage() {
+  const session = await auth();
   const res = await fetch(Config.API_URL + Endpoints.room.member + "?limit=9");
   const data = await res.json();
 
@@ -26,7 +28,7 @@ export default async function PropertyHomePage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <AppCardProperty data={data.rooms} />
+        <AppCardProperty data={data.rooms} session={session} />
       </div>
 
       <div className="flex justify-center mt-12">
