@@ -44,10 +44,7 @@ export default async function DashboardHomePage() {
         Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
         { cache: "no-store" }
       );
-
-      if (!res.ok) {
-        return <p>Something went wrong. Please try again later.</p>;
-      }
+      if (!res.ok) return null;
       const data = await res.json();
       return data;
     })
