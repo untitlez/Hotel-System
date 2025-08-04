@@ -9,12 +9,17 @@ import { ReviewBox } from "@/components/pages/review/review-box";
 
 export default async function ReviewPage() {
   const session = await auth();
+  if (!session) return;
   const id = session?.user.id;
 
-  const userRes = await fetch(Config.API_URL + Endpoints.users + id);
+  const userRes = await fetch(Config.API_URL + Endpoints.users + id, {
+    cache: "no-store",
+  });
   const userData = await userRes.json();
 
-  const reviewRes = await fetch(Config.API_URL + Endpoints.review);
+  const reviewRes = await fetch(Config.API_URL + Endpoints.review, {
+    next: { revalidate: 60 },
+  });
   const reviewData = await reviewRes.json();
 
   return (

@@ -10,7 +10,11 @@ import { Button } from "@/components/ui/button";
 
 export default async function PropertyHomePage() {
   const session = await auth();
-  const res = await fetch(Config.API_URL + Endpoints.room.member + "?limit=9");
+  if (!session) return;
+
+  const res = await fetch(Config.API_URL + Endpoints.room.member + "?limit=9", {
+    cache: "no-store",
+  });
   const data = await res.json();
 
   return (

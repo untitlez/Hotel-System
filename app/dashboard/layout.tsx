@@ -22,8 +22,12 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+  if (!session) return;
   const id = session?.user.id;
-  const res = await fetch(Config.API_URL + Endpoints.users + id);
+
+  const res = await fetch(Config.API_URL + Endpoints.users + id, {
+    cache: "no-store",
+  });
   const data = await res.json();
 
   return (

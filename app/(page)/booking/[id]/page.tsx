@@ -18,7 +18,9 @@ export default async function BookingPage({ params }: BookingPageProps) {
   const roomData = await responseRoom.json();
 
   const session = await auth();
+  if (!session) return;
   const userId = session?.user.id;
+
   const responseMember = await fetch(Config.API_URL + Endpoints.users + userId);
   const memberData = await responseMember.json();
 
