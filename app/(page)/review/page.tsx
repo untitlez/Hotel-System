@@ -12,14 +12,26 @@ export default async function ReviewPage() {
   if (!session) return;
   const id = session?.user.id;
 
+  //
+  // fetch user id
+  //
   const userRes = await fetch(Config.API_URL + Endpoints.users + id, {
     cache: "no-store",
   });
+  if (!userRes.ok) {
+    return <p>Something went wrong. Please try again later.</p>;
+  }
   const userData = await userRes.json();
 
+  //
+  // fetch reviews
+  //
   const reviewRes = await fetch(Config.API_URL + Endpoints.review, {
     next: { revalidate: 60 },
   });
+  if (!reviewRes.ok) {
+    return <p>Something went wrong. Please try again later.</p>;
+  }
   const reviewData = await reviewRes.json();
 
   return (

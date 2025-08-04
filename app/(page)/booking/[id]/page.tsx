@@ -12,16 +12,30 @@ interface BookingPageProps {
 
 export default async function BookingPage({ params }: BookingPageProps) {
   const { id } = await params;
-  const responseRoom = await fetch(
-    Config.API_URL + Endpoints.room.baseRoom + id
-  );
-  const roomData = await responseRoom.json();
+  if (!id) return;
 
   const session = await auth();
   if (!session) return;
   const userId = session?.user.id;
 
+  //
+  // fetch room id
+  //
+  const responseRoom = await fetch(
+    Config.API_URL + Endpoints.room.baseRoom + id
+  );
+  if (!responseRoom.ok) {
+    return <p>Something went wrong. Please try again later.</p>;
+  }
+  const roomData = await responseRoom.json();
+
+  //
+  // fetch user id
+  //
   const responseMember = await fetch(Config.API_URL + Endpoints.users + userId);
+  if (!responseMember.ok) {
+    return <p>Something went wrong. Please try again later.</p>;
+  }
   const memberData = await responseMember.json();
 
   const timeOut = 5;

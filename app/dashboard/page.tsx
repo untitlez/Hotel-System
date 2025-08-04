@@ -8,26 +8,46 @@ import { TotalBookingsType } from "@/components/dashboard/chart/total-bookings-t
 import { TotalBookingsLocation } from "@/components/dashboard/chart/total-bookings-location";
 
 export default async function DashboardHomePage() {
+  //
+  // fetch users
+  //
   const usersRes = await fetch(Config.API_URL + Endpoints.users, {
     cache: "no-store",
   });
+  if (!usersRes.ok) {
+    return <p>Something went wrong. Please try again later.</p>;
+  }
   const users = await usersRes.json();
 
+  //
+  // fetch bookings
+  //
   const bookingRes = await fetch(Config.API_URL + Endpoints.booking, {
     cache: "no-store",
   });
+  if (!bookingRes.ok) {
+    return <p>Something went wrong. Please try again later.</p>;
+  }
   const bookings = await bookingRes.json();
+
   const currentBookings = bookings.filter(
     (booking: ResponseBookingType) =>
       new Date(booking.checkInDate).getFullYear() === 2025
   );
 
+  //
+  // fetch room id
+  //
   const roomData = await Promise.all(
     currentBookings.map(async (booking: ResponseBookingType) => {
       const res = await fetch(
         Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
         { cache: "no-store" }
       );
+
+      if (!res.ok) {
+        return <p>Something went wrong. Please try again later.</p>;
+      }
       const data = await res.json();
       return data;
     })

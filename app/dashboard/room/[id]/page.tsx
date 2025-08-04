@@ -10,7 +10,14 @@ export default async function DashboardRoomIdPage({
   params,
 }: DashboardRoomIdPageProps) {
   const { id } = await params;
+  if (!id) return;
+
   const res = await fetch(Config.API_URL + Endpoints.room.baseRoom + id);
+
+  if (!res.ok) {
+    return <p>Something went wrong. Please try again later.</p>;
+  }
+
   const data = await res.json();
 
   return <AppRoomForm data={data} />;

@@ -15,12 +15,20 @@ export default async function PropertyPage({
 }: PropertyPageProps) {
   const params = await searchParams;
   const query = new URLSearchParams(params);
+
+  //
+  // fetch rooms member
+  //
   const res = await fetch(
     Config.API_URL + Endpoints.room.member + "?" + query,
     { cache: "no-store" }
   );
-  const data = await res.json();
 
+  if (!res.ok) {
+    return <p>Something went wrong. Please try again later.</p>;
+  }
+
+  const data = await res.json();
   const isPropertyPage = true;
 
   return (
