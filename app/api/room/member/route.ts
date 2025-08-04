@@ -17,9 +17,9 @@ export async function GET(req: NextRequest) {
     const query = validateQuery({ search, type, location, sort, page, limit });
     const payload = await queryRoom(query);
     return NextResponse.json(payload);
-  } catch (error) {
+  } catch   {
     return NextResponse.json(
-      { message: "Something went wrong", error },
+      { message: "Something went wrong" },
       { status: 500 },
     );
   }

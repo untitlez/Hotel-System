@@ -9,9 +9,9 @@ export async function GET(
     const { id } = await params;
     const payload = await listBooking(id);
     return NextResponse.json(payload);
-  } catch (error) {
+  } catch   {
     return NextResponse.json(
-      { message: "Something went wrong", error },
+      { message: "Something went wrong" },
       { status: 500 }
     );
   }
@@ -30,7 +30,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
     return NextResponse.json(
-      { message: "Something went wrong", error },
+      { message: "Something went wrong" },
       { status: 500 }
     );
   }

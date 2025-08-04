@@ -15,9 +15,9 @@ export async function POST(req: NextRequest) {
       },
       { status: 201 },
     );
-  } catch (error) {
+  } catch   {
     return NextResponse.json(
-      { message: "Something went wrong", error },
+      { message: "Something went wrong" },
       { status: 500 },
     );
   }

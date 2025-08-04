@@ -6,9 +6,9 @@ export async function GET() {
   try {
     const payload = await allReview();
     return NextResponse.json(payload);
-  } catch (error) {
+  } catch   {
     return NextResponse.json(
-      { message: "Something went wrong", error },
+      { message: "Something went wrong" },
       { status: 500 },
     );
   }
@@ -26,9 +26,9 @@ export async function POST(req: NextRequest) {
       },
       { status: 201 },
     );
-  } catch (error) {
+  } catch   {
     return NextResponse.json(
-      { message: "Something went wrong", error },
+      { message: "Something went wrong" },
       { status: 500 },
     );
   }
