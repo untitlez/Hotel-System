@@ -15,7 +15,7 @@ const quicksand = Quicksand({
 
 export const metadata: Metadata = {
   title: "Hotel System",
-  description: "Practice Web Services",
+  description: "Practice Web Application",
   icons: {
     icon: "/favicon/bed.png",
     apple: "/favicon/bed.png",
