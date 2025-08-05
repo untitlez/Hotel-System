@@ -61,70 +61,132 @@ http://localhost:3000
 
 ## 🧱 Project Structure (Best Practice – App Router)
 ```plaintext
-/app
+root/
 │
-├── (auth)
-│   ├── sign-in/page.tsx
-│   ├── sign-up/page.tsx
-│   └── layout.tsx
-│
-├── (dashboard)
-│   ├── layout.tsx
-│   ├── page.tsx
-│   ├── booking/
+├── app/                     
+│   ├── (auth)/              
+│   │   ├── login/page.tsx
+│   │   └── sign-up/page.tsx
+│   │
+│   ├── (page)/              
+│   │   ├── page.tsx         
+│   │   ├── hero/page.tsx
+│   │   ├── cta/page.tsx
+│   │   ├── fqa/page.tsx
+│   │   ├── footer/page.tsx
+│   │   ├── popular-location/page.tsx
+│   │   ├── property/
+│   │   │   ├── page.tsx
+│   │   │   └── property-home/page.tsx
+│   │   ├── booking/[id]/page.tsx
+│   │   ├── profile/page.tsx
+│   │   └── review/page.tsx
+│   │
+│   ├── dashboard/           
+│   │   ├── layout.tsx
 │   │   ├── page.tsx
-│   │   └── [id]/page.tsx
-│   ├── member/
-│   │   └── [id]/page.tsx
-│   └── room/
-│       ├── page.tsx
-│       ├── create-room/page.tsx
-│       └── [id]/page.tsx
+│   │   ├── booking/
+│   │   │   ├── page.tsx
+│   │   │   └── [id]/page.tsx
+│   │   ├── member/
+│   │   │   ├── page.tsx
+│   │   │   └── [id]/page.tsx
+│   │   └── room/
+│   │       ├── page.tsx
+│   │       ├── create-room/page.tsx
+│   │       └── [id]/page.tsx
+│   │
+│   ├── api/                 
+│   │   ├── auth/
+│   │   │   ├── [...nextauth]/route.ts
+│   │   │   └── sign-up/route.ts
+│   │   ├── booking/
+│   │   │   ├── route.ts
+│   │   │   └── [id]/route.ts
+│   │   ├── profile/[id]/route.ts
+│   │   ├── review/
+│   │   │   ├── route.ts
+│   │   │   └── [id]/route.ts
+│   │   ├── room/
+│   │   │   ├── route.ts
+│   │   │   ├── admin/route.ts
+│   │   │   ├── member/route.ts
+│   │   │   └── [id]/route.ts
+│   │   ├── upload/route.ts
+│   │   └── users/
+│   │       ├── route.ts
+│   │       └── [id]/route.ts
+│   │
+│   ├── layout.tsx           
+│   ├── page.tsx             
+│   ├── loading.tsx          
+│   ├── error.tsx            
+│   ├── not-found.tsx        
+│   └── globals.css
 │
-├── (public)
-│   ├── layout.tsx
-│   ├── page.tsx          # Homepage (Luxury stays overview)
-│   ├── property/page.tsx # Explore all rooms
-│   ├── booking/[id]/page.tsx
-│   └── review/page.tsx
+├── components/              
+│   ├── ui/                  
+│   ├── auth/                
+│   ├── dashboard/           
+│   │   ├── layout/
+│   │   ├── booking/
+│   │   ├── member/
+│   │   └── room/
+│   └── pages/               
+│       ├── booking/
+│       ├── hero/
+│       ├── profile/
+│       ├── property/
+│       └── review/
 │
-├── api
-│   ├── auth/[...nextauth]/route.ts
-│   ├── booking/route.ts
-│   ├── room/
-│   │   ├── route.ts
-│   │   └── [id]/route.ts
-│   ├── users/route.ts
-│   └── review/route.ts
+├── hooks/                   
+│   └── use-mobile.ts
 │
-├── components
-│   ├── ui/               # shadcn components
-│   ├── booking/
-│   ├── dashboard/
-│   └── property/
+├── lib/                     
+│   ├── auth.ts              
+│   ├── cloudinary.ts        
+│   ├── config.ts            
+│   ├── endpoints.ts         
+│   ├── prisma.ts            
+│   ├── routes.ts            
+│   ├── utils.ts             
+│   └── store/
+│       └── site.ts          
 │
-├── lib
-│   ├── prisma.ts         # Prisma client singleton
-│   ├── auth.ts           # NextAuth config
-│   ├── validation/
-│   │   └── booking.schema.ts
-│   └── utils/
-│       ├── fetcher.ts
-│       └── error-handler.ts
-│
-├── prisma
+├── prisma/                  
 │   ├── schema.prisma
-│   └── seed.ts
+│   └── migrations/
 │
-├── types
-│   ├── booking.ts
-│   ├── room.ts
-│   └── user.ts
+├── public/                  
+│   ├── favicon/
+│   ├── QR.webp
+│   └── shiba.jpg
 │
-├── globals.css
-├── layout.tsx
-├── loading.tsx
-└── page.tsx
+├── services/                
+│   ├── booking.services.ts
+│   ├── login.services.ts
+│   ├── profile.services.ts
+│   ├── review.services.ts
+│   ├── room.services.ts
+│   ├── sign-up.services.ts
+│   ├── upload.services.ts
+│   └── user.services.ts
+│
+├── validators/              
+│   ├── booking.validator.ts
+│   ├── login.validator.ts
+│   ├── profile.validator.ts
+│   ├── query.validator.ts
+│   ├── review.validator.ts
+│   ├── room.validator.ts
+│   ├── session.validator.ts
+│   ├── sign-up.validator.ts
+│   └── user.validator.ts
+│
+├── .env.example
+├── middleware.ts            
+└── package.json
+
 ```
 
 ## 🛠️ Scripts
@@ -158,4 +220,3 @@ http://localhost:3000
 ```
 
 ---
-
