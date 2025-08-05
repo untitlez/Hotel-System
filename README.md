@@ -1,20 +1,20 @@
-# 🏝️ Hotel System Project (Next.js App Router + PostgreSQL)
+# 🏝️ Hotel System Project (Fullstack Next.js App Router + PostgreSQL)
 
-> Modern, fullstack, and scalable web application for luxury accommodation booking in Australia. Built with Next.js App Router 15.3.3 + Prisma ORM + PostgreSQL, featuring secure auth, dynamic booking, and admin dashboard.
+> Modern & scalable web application for luxury accommodation booking in Australia.Built with Next.js App Router 15.3.3, Prisma ORM + PostgreSQL, Zod, Shadcn UI, and Vercel Serverless.
 
 ---
 
 ## ✨ Features
 
-- ⚡ Next.js App Router 15.3.3 – Full support for server & client components, streaming, and layouts
+- ⚡ Next.js App Router 15.3.3 – Full support for server components, streaming, and layouts
 - 🗄️ Prisma ORM + PostgreSQL – Type-safe queries, migrations, and production-ready DB
-- ✅ Zod validation – Ensure payload validation for both frontend & backend
-- 🎨 Shadcn/UI + TailwindCSS – Accessible and responsive UI components with modern styling
-- 🔐 NextAuth.js – Secure authentication and session management
-- 📊 Admin Dashboard – Manage rooms, users, and bookings
-- 🏨 Booking System – Real-time room availability and booking flow
-- 🚀 Vercel Optimized – Serverless-friendly with Prisma Data Proxy and automatic caching
-- 🛡️ Error Handling + Logging – Production-grade fallback and structured logging
+- ✅ Zod validation – End-to-end type safety & payload validation
+- 🎨 Shadcn/UI + TailwindCSS – Modern, responsive & accessible UI
+- 🔐 NextAuth.js – Secure authentication & session handling (JWT / OAuth ready)
+- 🏨 Booking System – Real-time room availability & booking flow
+- 📊 Admin Dashboard – Manage users, rooms & bookings efficiently
+- 🚀 Vercel Optimized – Serverless-ready with Prisma Data Proxy or Accelerate
+- 🛡️ Error Handling & Logging – Production-grade fallback UI + structured logs
 
 ---
 
@@ -33,13 +33,13 @@ npm install
 
 ### 3. Setup Environment Variables
 Create .env file:
-
-env
+```env
 DATABASE_URL="postgresql://username:password@host:5432/luxury_stay"
 NEXTAUTH_SECRET="your-random-secret"
 NEXTAUTH_URL="http://localhost:3000"
 NEXT_PUBLIC_API_URL="http://localhost:3000"
-Tip: Use separate DB URLs for Production and Preview in Vercel.
+```
+> Tip: Use separate DB URLs for Production and Preview in Vercel.
 
 ### 4. Setup Database & Prisma
 ```bash
@@ -60,7 +60,6 @@ http://localhost:3000
 ---
 
 ## 🧱 Project Structure (Best Practice – App Router)
-
 ```plaintext
 /app
 │
@@ -131,32 +130,32 @@ http://localhost:3000
 ## 🛠️ Scripts
 ```json
 "scripts": {
-  "dev": "next dev",
+  "dev": "next dev --turbopack",
   "build": "next build",
   "start": "next start",
-  "postinstall": "prisma generate",
   "lint": "next lint",
-  "vercel-build": "prisma generate && prisma migrate deploy && next build"
+  "postinstall": "prisma generate"  
 }
 ```
 
 ## 🔐 Security & Production Tips
-Use Prisma Data Proxy or Accelerate on Vercel to avoid connection limits
 
-Always validate payloads with Zod in API routes
-
-Use try/catch + fallback UI for fetch in Server Components
-
-Setup structured logging (e.g., Sentry or Vercel Logs) for production errors
+```plaintext
+- Use Prisma Data Proxy or Accelerate on Vercel to avoid connection limits
+- Always validate API payloads with Zod
+- Wrap all server fetches with try/catch and provide fallback UI
+- Setup structured logging (Sentry or Vercel Logs) for production error tracking
+```
 
 ## 📦 Tech Stack
 
-Frontend: Next.js 15.3.3 App Router, TailwindCSS, Shadcn UI
+```plaintext
+- Frontend: Next.js 15.3.3 App Router, TailwindCSS, Shadcn UI
+- Backend: Next.js API Routes, Prisma ORM, PostgreSQL
+- Auth: NextAuth.js (JWT & OAuth)
+- Validation: Zod
+- Deployment: Vercel (Serverless)
+```
 
-Backend: Next.js API Routes, Prisma ORM, PostgreSQL
+---
 
-Auth: NextAuth.js (JWT + OAuth)
-
-Validation: Zod
-
-Deployment: Vercel Serverless
