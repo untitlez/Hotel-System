@@ -34,10 +34,18 @@ npm install
 ### 3. Setup Environment Variables
 Create .env file:
 ```env
-DATABASE_URL="postgresql://username:password@host:5432/luxury_stay"
-NEXTAUTH_SECRET="your-random-secret"
-NEXTAUTH_URL="http://localhost:3000"
 NEXT_PUBLIC_API_URL="http://localhost:3000"
+
+DATABASE_URL="postgresql://user:password@localhost:5432/hotel_system"
+
+AUTH_SECRET="super-secret-key"
+
+AUTH_GOOGLE_ID="your-google-oauth-client-id"
+AUTH_GOOGLE_SECRET="your-google-oauth-client-secret"
+
+CLOUDINARY_CLOUD_NAME="your-cloud-name"
+CLOUDINARY_API_KEY="your-api-key"
+CLOUDINARY_API_SECRET="your-api-secret"
 ```
 > Tip: Use separate DB URLs for Production and Preview in Vercel.
 
