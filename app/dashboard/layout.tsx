@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
-import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 import { SessionProvider } from "next-auth/react";
 
+import { auth } from "@/lib/auth";
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
 
@@ -22,7 +23,8 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  if (!session) return;
+  if (session?.user.role !== "ADMIN") return redirect("/");
+
   const id = session?.user.id;
 
   //

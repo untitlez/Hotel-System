@@ -120,7 +120,7 @@ export default function PopularLocationPage() {
               src={location.image}
               alt={location.name}
               className="object-cover md:group-hover:scale-105 transform duration-700 delay-100"
-              sizes="30vw"
+              sizes="100vw"
               fill
             />
 

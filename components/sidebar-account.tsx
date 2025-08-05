@@ -49,7 +49,7 @@ export const SidebarAccount = ({ data }: SidebarAccountProps) => {
   const isDark = theme === "dark";
 
   const handleLogOut = () => {
-    signOut({ callbackUrl: Routes.auth.login });
+    signOut({ callbackUrl: Routes.pages.home });
   };
   return (
     <SidebarMenu>

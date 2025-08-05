@@ -6,7 +6,6 @@ import AppSidebarProfile from "@/components/pages/profile/app-sidebar-profile";
 
 export default async function ProfilePage() {
   const session = await auth();
-  if (!session) return;
   const id = session?.user.id;
 
   //

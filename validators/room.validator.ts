@@ -30,14 +30,9 @@ export const CreateRoomSchema = RoomSchema.omit({
   availableDates: true,
   createdAt: true,
   updatedAt: true,
-}).extend({
-  image: z.string().url(),
 });
 
-export const UpdateRoomSchema = CreateRoomSchema.partial().extend({
-  image: z.string().url(),
-});
-
+export const UpdateRoomSchema = CreateRoomSchema.partial();
 export const ResponseRoomSchema = RoomSchema.extend({
   image: z.string().url(),
   availableDates: z.array(z.string()),

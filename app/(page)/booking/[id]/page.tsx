@@ -12,10 +12,7 @@ interface BookingPageProps {
 
 export default async function BookingPage({ params }: BookingPageProps) {
   const { id } = await params;
-  if (!id) return;
-
   const session = await auth();
-  if (!session) return;
   const userId = session?.user.id;
 
   //

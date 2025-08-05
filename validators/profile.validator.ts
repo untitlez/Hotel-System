@@ -20,9 +20,7 @@ export const ProfileSchema = z.object({
   updatedAt: z.coerce.date(),
 });
 
-export const UpdateProfileSchema = ProfileSchema.partial().extend({
-  image: z.string().url(),
-});
+export const UpdateProfileSchema = ProfileSchema.partial();
 export const ResponseProfileSchema = ProfileSchema.extend({
   image: z.string().url(),
   birthday: z.string(),

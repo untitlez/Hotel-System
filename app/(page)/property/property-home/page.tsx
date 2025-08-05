@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 
 export default async function PropertyHomePage() {
   const session = await auth();
-  if (!session) return;
 
   //
   // fetch rooms member

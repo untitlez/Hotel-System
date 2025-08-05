@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
 import { ResponseBookingType } from "@/validators/booking.validator";
@@ -8,11 +10,16 @@ import { TotalBookingsType } from "@/components/dashboard/chart/total-bookings-t
 import { TotalBookingsLocation } from "@/components/dashboard/chart/total-bookings-location";
 
 export default async function DashboardHomePage() {
+  const cookieStore = cookies();
+
   //
   // fetch users
   //
   const usersRes = await fetch(Config.API_URL + Endpoints.users, {
     cache: "no-store",
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
   });
   if (!usersRes.ok) {
     return <p>Something went wrong. Please try again later.</p>;

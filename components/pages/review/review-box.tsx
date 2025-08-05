@@ -35,7 +35,7 @@ export const ReviewBox = ({ session, user, review }: ReviewBoxProps) => {
       await axios.delete(Config.API_URL + Endpoints.review + id);
       setReviewData((prev) => prev.filter((item) => item.id !== id));
       toast.success("Item has been deleted.");
-    } catch  {
+    } catch {
       toast.error("Failed to Delete!");
     }
   };
@@ -50,17 +50,17 @@ export const ReviewBox = ({ session, user, review }: ReviewBoxProps) => {
               size="lg"
               className="p-0 pointer-events-none"
             >
-              <Avatar className="size-9 border border-muted-foreground/75 rounded-lg grayscale-50">
-                {session?.user.image || user?.profile.image ? (
+              <Avatar className="size-9 border dark:border-muted-foreground/75 rounded-lg">
+                {/* {session?.user.image || user?.profile.image ? (
                   <AvatarImage
                     src={session?.user.image || user?.profile.image}
                     alt="Profile Image"
                   />
-                ) : (
-                  <AvatarFallback className="rounded-lg">
-                    <User2 className="size-5" />
-                  </AvatarFallback>
-                )}
+                ) : ( */}
+                <AvatarFallback className="rounded-lg bg-primary text-secondary dark:text-secondary-foreground">
+                  <User2 className="size-5" />
+                </AvatarFallback>
+                {/* )} */}
               </Avatar>
               <div className="grid flex-1 text-left leading-tight">
                 <span className="truncate font-medium">

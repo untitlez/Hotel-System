@@ -62,7 +62,7 @@ export const AppCardProperty = ({ data, session }: AppCardPropertyProps) => {
                     {isLoading ? (
                       <Loader2 className="animate-spin" />
                     ) : (
-                      "Booking Now..."
+                      "Booking Now"
                     )}
                   </Button>
                 )}
