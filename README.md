@@ -1,38 +1,162 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏝️ Hotel System Project (Next.js App Router + PostgreSQL)
 
-## Getting Started
+> Modern, fullstack, and scalable web application for luxury accommodation booking in Australia. Built with Next.js App Router 15.3.3 + Prisma ORM + PostgreSQL, featuring secure auth, dynamic booking, and admin dashboard.
 
-First, run the development server:
+---
 
+## ✨ Features
+
+- ⚡ Next.js App Router 15.3.3 – Full support for server & client components, streaming, and layouts
+- 🗄️ Prisma ORM + PostgreSQL – Type-safe queries, migrations, and production-ready DB
+- ✅ Zod validation – Ensure payload validation for both frontend & backend
+- 🎨 Shadcn/UI + TailwindCSS – Accessible and responsive UI components with modern styling
+- 🔐 NextAuth.js – Secure authentication and session management
+- 📊 Admin Dashboard – Manage rooms, users, and bookings
+- 🏨 Booking System – Real-time room availability and booking flow
+- 🚀 Vercel Optimized – Serverless-friendly with Prisma Data Proxy and automatic caching
+- 🛡️ Error Handling + Logging – Production-grade fallback and structured logging
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-org/luxury-stay-au.git
+cd luxury-stay-au
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Setup Environment Variables
+Create .env file:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+env
+DATABASE_URL="postgresql://username:password@host:5432/luxury_stay"
+NEXTAUTH_SECRET="your-random-secret"
+NEXTAUTH_URL="http://localhost:3000"
+NEXT_PUBLIC_API_URL="http://localhost:3000"
+Tip: Use separate DB URLs for Production and Preview in Vercel.
 
-## Learn More
+### 4. Setup Database & Prisma
+```bash
+npx prisma migrate dev
+npx prisma generate
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 5. Run Development Server
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4. Open in Browser
+```plaintext
+http://localhost:3000
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🧱 Project Structure (Best Practice – App Router)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```plaintext
+/app
+│
+├── (auth)
+│   ├── sign-in/page.tsx
+│   ├── sign-up/page.tsx
+│   └── layout.tsx
+│
+├── (dashboard)
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── booking/
+│   │   ├── page.tsx
+│   │   └── [id]/page.tsx
+│   ├── member/
+│   │   └── [id]/page.tsx
+│   └── room/
+│       ├── page.tsx
+│       ├── create-room/page.tsx
+│       └── [id]/page.tsx
+│
+├── (public)
+│   ├── layout.tsx
+│   ├── page.tsx          # Homepage (Luxury stays overview)
+│   ├── property/page.tsx # Explore all rooms
+│   ├── booking/[id]/page.tsx
+│   └── review/page.tsx
+│
+├── api
+│   ├── auth/[...nextauth]/route.ts
+│   ├── booking/route.ts
+│   ├── room/
+│   │   ├── route.ts
+│   │   └── [id]/route.ts
+│   ├── users/route.ts
+│   └── review/route.ts
+│
+├── components
+│   ├── ui/               # shadcn components
+│   ├── booking/
+│   ├── dashboard/
+│   └── property/
+│
+├── lib
+│   ├── prisma.ts         # Prisma client singleton
+│   ├── auth.ts           # NextAuth config
+│   ├── validation/
+│   │   └── booking.schema.ts
+│   └── utils/
+│       ├── fetcher.ts
+│       └── error-handler.ts
+│
+├── prisma
+│   ├── schema.prisma
+│   └── seed.ts
+│
+├── types
+│   ├── booking.ts
+│   ├── room.ts
+│   └── user.ts
+│
+├── globals.css
+├── layout.tsx
+├── loading.tsx
+└── page.tsx
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠️ Scripts
+```json
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "postinstall": "prisma generate",
+  "lint": "next lint",
+  "vercel-build": "prisma generate && prisma migrate deploy && next build"
+}
+```
 
-# Ecommerce-
+## 🔐 Security & Production Tips
+Use Prisma Data Proxy or Accelerate on Vercel to avoid connection limits
+
+Always validate payloads with Zod in API routes
+
+Use try/catch + fallback UI for fetch in Server Components
+
+Setup structured logging (e.g., Sentry or Vercel Logs) for production errors
+
+## 📦 Tech Stack
+
+Frontend: Next.js 15.3.3 App Router, TailwindCSS, Shadcn UI
+
+Backend: Next.js API Routes, Prisma ORM, PostgreSQL
+
+Auth: NextAuth.js (JWT + OAuth)
+
+Validation: Zod
+
+Deployment: Vercel Serverless
