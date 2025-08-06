@@ -1,12 +1,12 @@
 import { prisma } from "@/lib/prisma";
-import { UpdateProfileType } from "@/validators/profile.validator";
+import { UpdateProfileDataType } from "@/validators/profile.validator";
 
 //
 // PUT
 //
 export const updateProfile = async (
   paramsId: string,
-  parsed: UpdateProfileType,
+  parsed: UpdateProfileDataType,
 ) => {
   const services = await prisma.profile.update({
     where: {

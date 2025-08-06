@@ -21,6 +21,9 @@ export const ProfileSchema = z.object({
 });
 
 export const UpdateProfileSchema = ProfileSchema.partial();
+export const UpdateProfileDataSchema = UpdateProfileSchema.extend({
+  image: z.string().url().optional(),
+});
 export const ResponseProfileSchema = ProfileSchema.extend({
   image: z.string().url(),
   birthday: z.string(),
@@ -31,13 +34,14 @@ export const ResponseProfileSchema = ProfileSchema.extend({
 // Type
 //
 export type UpdateProfileType = z.infer<typeof UpdateProfileSchema>;
+export type UpdateProfileDataType = z.infer<typeof UpdateProfileDataSchema>;
 export type ResponseProfileType = z.infer<typeof ResponseProfileSchema>;
 
 //
 // Validate
 //
 export function validateUpdateProfile(data: unknown) {
-  const parsed = UpdateProfileSchema.safeParse(data);
+  const parsed = UpdateProfileDataSchema.safeParse(data);
   if (!parsed.success) throw parsed.error;
   return parsed.data;
 }

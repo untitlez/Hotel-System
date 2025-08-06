@@ -31,8 +31,12 @@ export const CreateRoomSchema = RoomSchema.omit({
   createdAt: true,
   updatedAt: true,
 });
+export const CreateRoomDataSchema = CreateRoomSchema.extend({
+  image: z.string().url().optional(),
+});
 
 export const UpdateRoomSchema = CreateRoomSchema.partial();
+export const UpdateRoomDataSchema = CreateRoomDataSchema.partial();
 export const ResponseRoomSchema = RoomSchema.extend({
   image: z.string().url(),
   availableDates: z.array(z.string()),
@@ -44,20 +48,22 @@ export const ResponseRoomSchema = RoomSchema.extend({
 // Type
 //
 export type CreateRoomType = z.infer<typeof CreateRoomSchema>;
+export type CreateRoomDataType = z.infer<typeof CreateRoomDataSchema>;
 export type UpdateRoomType = z.infer<typeof UpdateRoomSchema>;
+export type UpdateRoomDataType = z.infer<typeof UpdateRoomDataSchema>;
 export type ResponseRoomType = z.infer<typeof ResponseRoomSchema>;
 
 //
 // Validate
 //
 export function validateCreateRoom(data: unknown) {
-  const parsed = CreateRoomSchema.safeParse(data);
+  const parsed = CreateRoomDataSchema.safeParse(data);
   if (!parsed.success) throw parsed.error;
   return parsed.data;
 }
 
 export function validateUpdateRoom(data: unknown) {
-  const parsed = UpdateRoomSchema.safeParse(data);
+  const parsed = UpdateRoomDataSchema.safeParse(data);
   if (!parsed.success) throw parsed.error;
   return parsed.data;
 }

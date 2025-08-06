@@ -47,7 +47,7 @@ export default async function DashboardLayout({
           {/* Sidebar Content */}
           <SidebarInset className="bg-secondary dark:bg-background">
             <SidebarContentHeader />
-            <section className="mx-4">{children}</section>
+            <section className="mx-4 mb-8">{children}</section>
           </SidebarInset>
         </SidebarProvider>
       )}

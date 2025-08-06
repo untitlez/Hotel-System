@@ -1,6 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import { QueryType } from "@/validators/query.validator";
-import { CreateRoomType, UpdateRoomType } from "@/validators/room.validator";
+import {
+  CreateRoomDataType,
+  UpdateRoomDataType,
+} from "@/validators/room.validator";
 
 //
 // GET for Member
@@ -58,7 +61,7 @@ export const getAllRoom = async (query: string) => {
 //
 // POST
 //
-export const createRoom = async (parsed: CreateRoomType) => {
+export const createRoom = async (parsed: CreateRoomDataType) => {
   const services = await prisma.room.create({
     data: parsed,
   });
@@ -91,7 +94,10 @@ export const listRoom = async (paramsId: string) => {
 ///
 // PUT
 //
-export const updateRoom = async (paramsId: string, parsed: UpdateRoomType) => {
+export const updateRoom = async (
+  paramsId: string,
+  parsed: UpdateRoomDataType,
+) => {
   const services = await prisma.room.update({
     where: {
       id: paramsId,
