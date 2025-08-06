@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import axios from "axios";
@@ -11,7 +10,6 @@ import { BedDouble, Cigarette, Mail, User2 } from "lucide-react";
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
 import { Routes } from "@/lib/routes";
-import { ResponseUserType } from "@/validators/user.validator";
 import { ResponseRoomType } from "@/validators/room.validator";
 import { ResponseBookingType } from "@/validators/booking.validator";
 

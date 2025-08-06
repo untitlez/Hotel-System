@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/lib/auth";
@@ -6,10 +7,9 @@ import { Endpoints } from "@/lib/endpoints";
 import { Routes } from "@/lib/routes";
 
 import AppSidebarProfile from "@/components/pages/profile/app-sidebar-profile";
-import { cookies } from "next/headers";
 
 export default async function ProfilePage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const session = await auth();
   if (!session) return redirect(Routes.auth.login);
   const id = session?.user.id;
@@ -37,12 +37,12 @@ export default async function ProfilePage() {
           headers: {
             Cookie: cookieStore.toString(),
           },
-        }
+        },
       );
 
       const room = await roomRes.json();
       return { booking, room };
-    })
+    }),
   );
 
   return <AppSidebarProfile data={data} bookings={bookingsData} />;

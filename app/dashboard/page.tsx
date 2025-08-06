@@ -10,7 +10,7 @@ import { TotalBookingsType } from "@/components/dashboard/chart/total-bookings-t
 import { TotalBookingsLocation } from "@/components/dashboard/chart/total-bookings-location";
 
 export default async function DashboardHomePage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
 
   //
   // fetch users

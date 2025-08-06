@@ -5,7 +5,7 @@ import { Endpoints } from "@/lib/endpoints";
 import { MemberTable } from "@/components/dashboard/member/member-table";
 
 export default async function DashboardMemberPage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
 
   const res = await fetch(Config.API_URL + Endpoints.users, {
     cache: "no-store",

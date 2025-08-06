@@ -23,7 +23,7 @@ export default async function BookingPage({ params }: BookingPageProps) {
   // fetch room id
   //
   const responseRoom = await fetch(
-    Config.API_URL + Endpoints.room.baseRoom + id
+    Config.API_URL + Endpoints.room.baseRoom + id,
   );
   if (!responseRoom.ok) {
     return <p>Something went wrong. Please try again later.</p>;
