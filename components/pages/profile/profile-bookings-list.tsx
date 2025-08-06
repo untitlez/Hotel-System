@@ -49,14 +49,11 @@ export const ProfileBookingsList = ({ data }: ProfileBookingsListProps) => {
   };
 
   useEffect(() => {
-    if (!data) return;
-
     const fetchRooms = async () => {
       const results = await Promise.all(
         data.bookings.map(async (booking) => {
           const res = await axios.get(
-            Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
-            { withCredentials: true }
+            Config.API_URL + Endpoints.room.baseRoom + booking.roomId
           );
           return {
             booking,

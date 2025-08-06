@@ -1,12 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
-import axios from "axios";
 import { BadgeInfo } from "lucide-react";
 
-import { Config } from "@/lib/config";
-import { Endpoints } from "@/lib/endpoints";
 import { ResponseUserType } from "@/validators/user.validator";
 import { ResponseRoomType } from "@/validators/room.validator";
 import { ResponseBookingType } from "@/validators/booking.validator";
@@ -19,43 +15,22 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { toast } from "sonner";
 
 interface BookingTableInfoProps {
   booking: ResponseBookingType;
+  user: ResponseUserType;
+  room: ResponseRoomType;
 }
 
-export const BookingTableInfo = ({ booking }: BookingTableInfoProps) => {
-  const [user, setUser] = useState<ResponseUserType>();
-  const [room, setRoom] = useState<ResponseRoomType>();
+export const BookingTableInfo = ({
+  booking,
+  user,
+  room,
+}: BookingTableInfoProps) => {
   const getTime =
     new Date(booking.checkOutDate).getTime() -
     new Date(booking.checkInDate).getTime();
   const night = getTime / (1000 * 60 * 60 * 24);
-
-  useEffect(() => {
-    if (!booking) return;
-
-    const fetchUserAndRoom = async () => {
-      try {
-        const [{ data: userData }, { data: roomData }] = await Promise.all([
-          axios.get(Config.API_URL + Endpoints.users + booking.userId, {
-            withCredentials: true,
-          }),
-          axios.get(Config.API_URL + Endpoints.room.baseRoom + booking.roomId, {
-            withCredentials: true,
-          }),
-        ]);
-
-        setUser(userData);
-        setRoom(roomData);
-      } catch {
-        toast.error("Failed to fetch booking info:");
-      }
-    };
-
-    fetchUserAndRoom();
-  }, [booking.userId, booking.roomId]);
 
   return (
     <Card className="max-w-screen-sm mx-auto">

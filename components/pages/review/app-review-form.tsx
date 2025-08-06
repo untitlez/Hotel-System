@@ -28,6 +28,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useSession } from "next-auth/react";
 
 const inputItems = [
   {
@@ -52,11 +53,13 @@ const inputItems = [
 ];
 
 export const AppReviewForm = () => {
+  const session = useSession();
   const [open, setOpen] = useState(false);
   const form = useForm<CreateReviewType>({
     resolver: zodResolver(CreateReviewSchema),
     defaultValues: {
-      name: "",
+      userId: session.data?.user.id,
+      name: session.data?.user.email ?? "",
       email: "",
       review: "",
     },

@@ -38,6 +38,7 @@ export const ReviewBox = ({ review }: ReviewBoxProps) => {
     }
   };
 
+
   return (
     <>
       {reviewData.map((item, i) => (
@@ -55,9 +56,9 @@ export const ReviewBox = ({ review }: ReviewBoxProps) => {
                     alt="Profile Image"
                   />
                 ) : (
-                <AvatarFallback className="rounded-lg bg-primary text-secondary dark:text-secondary-foreground">
-                  <User2 className="size-5" />
-                </AvatarFallback>
+                  <AvatarFallback className="rounded-lg bg-primary text-secondary dark:text-secondary-foreground">
+                    <User2 className="size-5" />
+                  </AvatarFallback>
                 )}
               </Avatar>
               <div className="grid flex-1 text-left leading-tight">
