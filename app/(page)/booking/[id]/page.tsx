@@ -1,6 +1,9 @@
+import { redirect } from "next/navigation";
+
 import { auth } from "@/lib/auth";
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
+import { Routes } from "@/lib/routes";
 
 import { AppBookingForm } from "@/components/pages/booking/app-booking-form";
 import { CountDown } from "@/components/pages/booking/count-down";
@@ -13,13 +16,14 @@ interface BookingPageProps {
 export default async function BookingPage({ params }: BookingPageProps) {
   const { id } = await params;
   const session = await auth();
+  if (!session) return redirect(Routes.auth.login);
   const userId = session?.user.id;
 
   //
   // fetch room id
   //
   const responseRoom = await fetch(
-    Config.API_URL + Endpoints.room.baseRoom + id,
+    Config.API_URL + Endpoints.room.baseRoom + id
   );
   if (!responseRoom.ok) {
     return <p>Something went wrong. Please try again later.</p>;

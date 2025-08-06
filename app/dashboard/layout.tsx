@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { auth } from "@/lib/auth";
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
+import { Routes } from "@/lib/routes";
 
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { SidebarMenuDashboard } from "@/components/dashboard/layout/sidebar-menu-dashboard";
@@ -23,8 +24,8 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  if (session?.user.role !== "ADMIN") return redirect("/");
-
+  if (!session) return redirect(Routes.auth.login);
+  if (session?.user.role !== "ADMIN") return redirect(Routes.pages.home);
   const id = session?.user.id;
 
   //
