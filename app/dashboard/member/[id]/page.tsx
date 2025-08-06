@@ -10,8 +10,6 @@ export default async function DashboardMemberIdPage({
   params,
 }: DashboardMemberIdPageProps) {
   const { id } = await params;
-  if (!id) return;
-
   const res = await fetch(Config.API_URL + Endpoints.users + id);
 
   if (!res.ok) {

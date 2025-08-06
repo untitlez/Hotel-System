@@ -56,12 +56,13 @@ export const ProfileBookingsList = ({ data }: ProfileBookingsListProps) => {
         data.bookings.map(async (booking) => {
           const res = await axios.get(
             Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
+            { withCredentials: true }
           );
           return {
             booking,
             room: res.data,
           };
-        }),
+        })
       );
       setBookingList(results);
     };

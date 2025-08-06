@@ -10,8 +10,6 @@ export default async function DashboardRoomIdPage({
   params,
 }: DashboardRoomIdPageProps) {
   const { id } = await params;
-  if (!id) return;
-
   const res = await fetch(Config.API_URL + Endpoints.room.baseRoom + id);
 
   if (!res.ok) {

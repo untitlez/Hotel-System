@@ -39,8 +39,12 @@ export const BookingTableInfo = ({ booking }: BookingTableInfoProps) => {
     const fetchUserAndRoom = async () => {
       try {
         const [{ data: userData }, { data: roomData }] = await Promise.all([
-          axios.get(Config.API_URL + Endpoints.users + booking.userId),
-          axios.get(Config.API_URL + Endpoints.room.baseRoom + booking.roomId),
+          axios.get(Config.API_URL + Endpoints.users + booking.userId, {
+            withCredentials: true,
+          }),
+          axios.get(Config.API_URL + Endpoints.room.baseRoom + booking.roomId, {
+            withCredentials: true,
+          }),
         ]);
 
         setUser(userData);

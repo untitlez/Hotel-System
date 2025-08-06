@@ -10,8 +10,6 @@ export default async function DashboardBookingIdPage({
   params,
 }: DashboardBookingIdPageProps) {
   const { id } = await params;
-  if (!id) return;
-
   const res = await fetch(Config.API_URL + Endpoints.booking + id);
 
   if (!res.ok) {
