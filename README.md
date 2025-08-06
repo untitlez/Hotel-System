@@ -21,18 +21,22 @@
 ## 🚀 Getting Started
 
 ### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/your-org/luxury-stay-au.git
 cd luxury-stay-au
 ```
 
 ### 2. Install dependencies
+
 ```bash
 npm install
 ```
 
 ### 3. Setup Environment Variables
+
 Create .env file:
+
 ```env
 NEXT_PUBLIC_API_URL="http://localhost:3000"
 
@@ -47,20 +51,24 @@ CLOUDINARY_CLOUD_NAME="your-cloud-name"
 CLOUDINARY_API_KEY="your-api-key"
 CLOUDINARY_API_SECRET="your-api-secret"
 ```
+
 > Tip: Use separate DB URLs for Production and Preview in Vercel.
 
 ### 4. Setup Database & Prisma
+
 ```bash
 npx prisma migrate dev
 npx prisma generate
 ```
 
 ### 5. Run Development Server
+
 ```bash
 npm run dev
 ```
 
 ### 4. Open in Browser
+
 ```plaintext
 http://localhost:3000
 ```
@@ -68,16 +76,17 @@ http://localhost:3000
 ---
 
 ## 🧱 Project Structure (Best Practice – App Router)
+
 ```plaintext
 root/
 │
-├── app/                     
-│   ├── (auth)/              
+├── app/
+│   ├── (auth)/
 │   │   ├── login/page.tsx
 │   │   └── sign-up/page.tsx
 │   │
-│   ├── (page)/              
-│   │   ├── page.tsx         
+│   ├── (page)/
+│   │   ├── page.tsx
 │   │   ├── hero/page.tsx
 │   │   ├── cta/page.tsx
 │   │   ├── fqa/page.tsx
@@ -90,7 +99,7 @@ root/
 │   │   ├── profile/page.tsx
 │   │   └── review/page.tsx
 │   │
-│   ├── dashboard/           
+│   ├── dashboard/
 │   │   ├── layout.tsx
 │   │   ├── page.tsx
 │   │   ├── booking/
@@ -104,7 +113,7 @@ root/
 │   │       ├── create-room/page.tsx
 │   │       └── [id]/page.tsx
 │   │
-│   ├── api/                 
+│   ├── api/
 │   │   ├── auth/
 │   │   │   ├── [...nextauth]/route.ts
 │   │   │   └── sign-up/route.ts
@@ -125,52 +134,52 @@ root/
 │   │       ├── route.ts
 │   │       └── [id]/route.ts
 │   │
-│   ├── layout.tsx           
-│   ├── page.tsx             
-│   ├── loading.tsx          
-│   ├── error.tsx            
-│   ├── not-found.tsx        
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── loading.tsx
+│   ├── error.tsx
+│   ├── not-found.tsx
 │   └── globals.css
 │
-├── components/              
-│   ├── ui/                  
-│   ├── auth/                
-│   ├── dashboard/           
+├── components/
+│   ├── ui/
+│   ├── auth/
+│   ├── dashboard/
 │   │   ├── layout/
 │   │   ├── booking/
 │   │   ├── member/
 │   │   └── room/
-│   └── pages/               
+│   └── pages/
 │       ├── booking/
 │       ├── hero/
 │       ├── profile/
 │       ├── property/
 │       └── review/
 │
-├── hooks/                   
+├── hooks/
 │   └── use-mobile.ts
 │
-├── lib/                     
-│   ├── auth.ts              
-│   ├── cloudinary.ts        
-│   ├── config.ts            
-│   ├── endpoints.ts         
-│   ├── prisma.ts            
-│   ├── routes.ts            
-│   ├── utils.ts             
+├── lib/
+│   ├── auth.ts
+│   ├── cloudinary.ts
+│   ├── config.ts
+│   ├── endpoints.ts
+│   ├── prisma.ts
+│   ├── routes.ts
+│   ├── utils.ts
 │   └── store/
-│       └── site.ts          
+│       └── site.ts
 │
-├── prisma/                  
+├── prisma/
 │   ├── schema.prisma
 │   └── migrations/
 │
-├── public/                  
+├── public/
 │   ├── favicon/
 │   ├── QR.webp
 │   └── shiba.jpg
 │
-├── services/                
+├── services/
 │   ├── booking.services.ts
 │   ├── login.services.ts
 │   ├── profile.services.ts
@@ -180,7 +189,7 @@ root/
 │   ├── upload.services.ts
 │   └── user.services.ts
 │
-├── validators/              
+├── validators/
 │   ├── booking.validator.ts
 │   ├── login.validator.ts
 │   ├── profile.validator.ts
@@ -192,19 +201,20 @@ root/
 │   └── user.validator.ts
 │
 ├── .env.example
-├── middleware.ts            
+├── middleware.ts
 └── package.json
 
 ```
 
 ## 🛠️ Scripts
+
 ```json
 "scripts": {
   "dev": "next dev --turbopack",
   "build": "next build",
   "start": "next start",
   "lint": "next lint",
-  "postinstall": "prisma generate"  
+  "postinstall": "prisma generate"
 }
 ```
 

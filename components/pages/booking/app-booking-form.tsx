@@ -58,7 +58,7 @@ export const AppBookingForm = ({
   useEffect(() => {
     if (checkIn && checkOut) {
       const getDay = Math.ceil(
-        (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)
+        (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24),
       );
       setNight(getDay);
       form.setValue("checkInDate", checkIn);
@@ -73,7 +73,7 @@ export const AppBookingForm = ({
       router.push(Routes.pages.profile);
     } catch {
       toast.error(
-        "Something went wrong. Please check your information and try again."
+        "Something went wrong. Please check your information and try again.",
       );
     }
   };

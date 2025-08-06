@@ -39,7 +39,7 @@ export default async function DashboardHomePage() {
 
   const currentBookings = bookings.filter(
     (booking: ResponseBookingType) =>
-      new Date(booking.checkInDate).getFullYear() === 2025
+      new Date(booking.checkInDate).getFullYear() === 2025,
   );
 
   //
@@ -49,12 +49,12 @@ export default async function DashboardHomePage() {
     currentBookings.map(async (booking: ResponseBookingType) => {
       const res = await fetch(
         Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
-        { cache: "no-store" }
+        { cache: "no-store" },
       );
       if (!res.ok) return null;
       const data = await res.json();
       return data;
-    })
+    }),
   );
 
   return (

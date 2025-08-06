@@ -68,7 +68,7 @@ export const AppReviewForm = () => {
       await axios.post(Config.API_URL + Endpoints.review, newData);
       setOpen(true);
       form.reset();
-    } catch  {
+    } catch {
       toast.error("Failed to sent feedback!");
     }
   };

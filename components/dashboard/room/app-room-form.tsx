@@ -153,7 +153,7 @@ export const AppRoomForm = ({ data }: AppRoomFormProps) => {
       }
 
       router.push(Routes.dashboard.room);
-    } catch  {
+    } catch {
       toast.error(
         data ? "Failed to Edit Room Info!" : "Failed to Create Room!",
       );
@@ -166,7 +166,7 @@ export const AppRoomForm = ({ data }: AppRoomFormProps) => {
       await axios.delete(Config.API_URL + Endpoints.room.baseRoom + paramsId);
       toast.success("Item has been deleted.");
       router.push(Routes.dashboard.room);
-    } catch  {
+    } catch {
       toast.error("Failed to Delete!");
     }
   };

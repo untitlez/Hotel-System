@@ -43,7 +43,7 @@ export const ProfileBookingsList = ({ data }: ProfileBookingsListProps) => {
       await axios.delete(Config.API_URL + Endpoints.booking + id);
       toast.success("Booking has been deleted.");
       router.push(Routes.pages.home);
-    } catch  {
+    } catch {
       toast.error("Failed to Delete!");
     }
   };

@@ -6,23 +6,23 @@ import { listUser, removeUser, updateUser } from "@/services/user.services";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
     const payload = await listUser(id);
     return NextResponse.json(payload);
-  } catch   {
+  } catch {
     return NextResponse.json(
       { message: "Something went wrong" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
@@ -39,7 +39,7 @@ export async function PUT(
         message: "Update successfully",
         payload,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: unknown) {
     if ((error as { code: string }).code === "P2025") {
@@ -47,14 +47,14 @@ export async function PUT(
     }
     return NextResponse.json(
       { message: "Something went wrong" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
@@ -66,7 +66,7 @@ export async function DELETE(
     }
     return NextResponse.json(
       { message: "Something went wrong" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

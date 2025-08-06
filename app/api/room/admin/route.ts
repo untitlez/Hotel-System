@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
     const query = searchParams.get("search") ?? "";
     const payload = await getAllRoom(query);
     return NextResponse.json(payload);
-  } catch   {
+  } catch {
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 },

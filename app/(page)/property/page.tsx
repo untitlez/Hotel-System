@@ -21,7 +21,7 @@ export default async function PropertyPage({
   //
   const res = await fetch(
     Config.API_URL + Endpoints.room.member + "?" + query,
-    { cache: "no-store" }
+    { cache: "no-store" },
   );
 
   if (!res.ok) {
