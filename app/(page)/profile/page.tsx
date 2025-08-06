@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth";
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
 import { Routes } from "@/lib/routes";
+import { ResponseBookingType } from "@/validators/booking.validator";
 
 import AppSidebarProfile from "@/components/pages/profile/app-sidebar-profile";
 
@@ -29,7 +30,7 @@ export default async function ProfilePage() {
   // fetch bookings & rooms
   //
   const bookingsData = await Promise.all(
-    data.bookings.map(async (booking: any) => {
+    data.bookings.map(async (booking: ResponseBookingType) => {
       const roomRes = await fetch(
         Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
         {
@@ -37,12 +38,12 @@ export default async function ProfilePage() {
           headers: {
             Cookie: cookieStore.toString(),
           },
-        },
+        }
       );
 
       const room = await roomRes.json();
       return { booking, room };
-    }),
+    })
   );
 
   return <AppSidebarProfile data={data} bookings={bookingsData} />;
