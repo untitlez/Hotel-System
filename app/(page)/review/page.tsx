@@ -8,20 +8,6 @@ import { AppReviewForm } from "@/components/pages/review/app-review-form";
 import { ReviewBox } from "@/components/pages/review/review-box";
 
 export default async function ReviewPage() {
-  const session = await auth();
-  const id = session?.user.id;
-
-  //
-  // fetch user id
-  //
-  const userRes = await fetch(Config.API_URL + Endpoints.users + id, {
-    cache: "no-store",
-  });
-  if (!userRes.ok) {
-    return <p>Something went wrong. Please try again later.</p>;
-  }
-  const userData = await userRes.json();
-
   //
   // fetch reviews
   //
@@ -48,7 +34,7 @@ export default async function ReviewPage() {
 
       {reviewData && (
         <div className="grid lg:grid-cols-3 gap-8">
-          <ReviewBox session={session} user={userData} review={reviewData} />
+          <ReviewBox review={reviewData} />
         </div>
       )}
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 import axios from "axios";
 import { User2 } from "lucide-react";
 import { toast } from "sonner";
@@ -22,13 +22,12 @@ import {
 } from "@/components/ui/card";
 
 interface ReviewBoxProps {
-  session: Session | null;
-  user: ResponseUserType;
   review: ResponseReviewType[];
 }
 
-export const ReviewBox = ({ session, user, review }: ReviewBoxProps) => {
+export const ReviewBox = ({ review }: ReviewBoxProps) => {
   const [reviewData, setReviewData] = useState<ResponseReviewType[]>(review);
+  const session = useSession();
 
   const onDelete = async (id: string) => {
     try {
@@ -39,6 +38,9 @@ export const ReviewBox = ({ session, user, review }: ReviewBoxProps) => {
       toast.error("Failed to Delete!");
     }
   };
+
+  console.log("session", session);
+  console.log("review", review);
 
   return (
     <>
@@ -51,9 +53,9 @@ export const ReviewBox = ({ session, user, review }: ReviewBoxProps) => {
               className="p-0 pointer-events-none"
             >
               <Avatar className="size-9 border dark:border-muted-foreground/75 rounded-lg">
-                {/* {session?.user.image || user?.profile.image ? (
+                {/* {session.data?.user.image || user?.profile.image ? (
                   <AvatarImage
-                    src={session?.user.image || user?.profile.image}
+                    src={session.data?.user.image || user?.profile.image}
                     alt="Profile Image"
                   />
                 ) : ( */}
@@ -64,15 +66,15 @@ export const ReviewBox = ({ session, user, review }: ReviewBoxProps) => {
               </Avatar>
               <div className="grid flex-1 text-left leading-tight">
                 <span className="truncate font-medium">
-                  {(item.name || user.profile.fullName) ?? "Anonymous"}
+                  {item.name ?? "Anonymous"}
                 </span>
                 <span className="text-muted-foreground truncate">
-                  {(item.email || session?.user.email) ?? "Anonymous"}
+                  {item.email ?? "Anonymous"}
                 </span>
               </div>
             </Button>
             <CardAction>
-              {session?.user.role === "ADMIN" && (
+              {session.data?.user.role === "ADMIN" && (
                 <DeleteButton
                   label="X"
                   size="sm"

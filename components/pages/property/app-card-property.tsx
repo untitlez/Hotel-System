@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
@@ -24,16 +24,19 @@ import {
 
 interface AppCardPropertyProps {
   data: ResponseRoomType[];
-  session?: Session | null;
 }
 
-export const AppCardProperty = ({ data, session }: AppCardPropertyProps) => {
+export const AppCardProperty = ({ data }: AppCardPropertyProps) => {
   const router = useRouter();
+  const session = useSession();
+
   const [isLoading, setIsLoading] = useState(false);
+
   const onBooking = (id: string) => {
     setIsLoading(true);
     router.push(Routes.pages.booking + id);
   };
+
   return (
     <>
       {data.map((item) => (

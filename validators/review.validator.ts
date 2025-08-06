@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const ReviewSchema = z.object({
   id: z.string().cuid(),
+  userId: z.string().cuid().optional(),
   name: z
     .string()
     .max(50, "Name must be less than 50 characters.")
