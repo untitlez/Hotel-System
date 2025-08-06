@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-import { auth } from "@/lib/auth";
 import { Config } from "@/lib/config";
 import { Endpoints } from "@/lib/endpoints";
 
