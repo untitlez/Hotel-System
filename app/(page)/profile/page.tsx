@@ -6,8 +6,10 @@ import { Endpoints } from "@/lib/endpoints";
 import { Routes } from "@/lib/routes";
 
 import AppSidebarProfile from "@/components/pages/profile/app-sidebar-profile";
+import { cookies } from "next/headers";
 
 export default async function ProfilePage() {
+  const cookieStore = cookies();
   const session = await auth();
   if (!session) return redirect(Routes.auth.login);
   const id = session?.user.id;
@@ -15,13 +17,33 @@ export default async function ProfilePage() {
   //
   // fetch user id
   //
-  const res = await fetch(Config.API_URL + Endpoints.users + id, {
+  const userRes = await fetch(Config.API_URL + Endpoints.users + id, {
     cache: "no-store",
   });
-  if (!res.ok) {
+  if (!userRes.ok) {
     return <p>Something went wrong. Please try again later.</p>;
   }
-  const data = await res.json();
+  const data = await userRes.json();
 
-  return <AppSidebarProfile data={data} />;
+  //
+  // fetch bookings & rooms
+  //
+  const bookingsData = await Promise.all(
+    data.bookings.map(async (booking: any) => {
+      const roomRes = await fetch(
+        Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
+        {
+          cache: "no-store",
+          headers: {
+            Cookie: cookieStore.toString(),
+          },
+        }
+      );
+
+      const room = await roomRes.json();
+      return { booking, room };
+    })
+  );
+
+  return <AppSidebarProfile data={data} bookings={bookingsData} />;
 }

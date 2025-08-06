@@ -38,7 +38,6 @@ export const ReviewBox = ({ review }: ReviewBoxProps) => {
     }
   };
 
-
   return (
     <>
       {reviewData.map((item, i) => (

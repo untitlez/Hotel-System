@@ -59,8 +59,8 @@ export const AppReviewForm = () => {
     resolver: zodResolver(CreateReviewSchema),
     defaultValues: {
       userId: session.data?.user.id,
-      name: session.data?.user.email ?? "",
-      email: "",
+      name: session.data?.user.name ?? "",
+      email: session.data?.user.email ?? "",
       review: "",
     },
     mode: "onBlur",

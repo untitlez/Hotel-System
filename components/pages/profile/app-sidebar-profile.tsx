@@ -18,12 +18,21 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { ResponseBookingType } from "@/validators/booking.validator";
+import { ResponseRoomType } from "@/validators/room.validator";
 
 interface AppSidebarProfileProps {
   data: ResponseUserType;
+  bookings: {
+    booking: ResponseBookingType;
+    room: ResponseRoomType;
+  }[];
 }
 
-export default function AppSidebarProfile({ data }: AppSidebarProfileProps) {
+export default function AppSidebarProfile({
+  data,
+  bookings,
+}: AppSidebarProfileProps) {
   return (
     <SidebarProvider>
       {/* Profile Image */}
@@ -63,7 +72,7 @@ export default function AppSidebarProfile({ data }: AppSidebarProfileProps) {
           <SidebarBreadcrumb />
         </header>
         <div className="grid md:grid-cols-2 gap-4 px-4">
-          <ProfileBookingsList data={data} />
+          <ProfileBookingsList bookings={bookings} />
         </div>
       </SidebarInset>
     </SidebarProvider>

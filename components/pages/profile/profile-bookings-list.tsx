@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import axios from "axios";
@@ -26,17 +26,14 @@ import {
 } from "@/components/ui/popover";
 
 interface ProfileBookingsListProps {
-  data: ResponseUserType;
+  bookings: {
+    booking: ResponseBookingType;
+    room: ResponseRoomType;
+  }[];
 }
 
-type BookingState = {
-  booking: ResponseBookingType;
-  room: ResponseRoomType;
-};
-
-export const ProfileBookingsList = ({ data }: ProfileBookingsListProps) => {
+export const ProfileBookingsList = ({ bookings }: ProfileBookingsListProps) => {
   const router = useRouter();
-  const [bookingList, setBookingList] = useState<BookingState[]>([]);
 
   const onDelete = async (id: string) => {
     try {
@@ -48,28 +45,9 @@ export const ProfileBookingsList = ({ data }: ProfileBookingsListProps) => {
     }
   };
 
-  useEffect(() => {
-    const fetchRooms = async () => {
-      const results = await Promise.all(
-        data.bookings.map(async (booking) => {
-          const res = await axios.get(
-            Config.API_URL + Endpoints.room.baseRoom + booking.roomId
-          );
-          return {
-            booking,
-            room: res.data,
-          };
-        })
-      );
-      setBookingList(results);
-    };
-
-    fetchRooms();
-  }, []);
-
   return (
     <>
-      {bookingList.map((list, i) => (
+      {bookings.map((list, i) => (
         <Card key={i}>
           <CardTitle className="flex items-center justify-between text-muted-foreground px-6">
             Booking ID : 000{i + 1}
