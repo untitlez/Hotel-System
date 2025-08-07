@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/lib/auth";
@@ -10,7 +9,6 @@ import { ResponseBookingType } from "@/validators/booking.validator";
 import AppSidebarProfile from "@/components/pages/profile/app-sidebar-profile";
 
 export default async function ProfilePage() {
-  const cookieStore = await cookies();
   const session = await auth();
   if (!session) return redirect(Routes.auth.login);
   const id = session?.user.id;
@@ -32,13 +30,7 @@ export default async function ProfilePage() {
   const bookingsData = await Promise.all(
     data.bookings.map(async (booking: ResponseBookingType) => {
       const roomRes = await fetch(
-        Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
-        {
-          cache: "no-store",
-          headers: {
-            Cookie: cookieStore.toString(),
-          },
-        }
+        Config.API_URL + Endpoints.room.baseRoom + booking.roomId
       );
 
       const room = await roomRes.json();

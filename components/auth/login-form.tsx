@@ -57,23 +57,25 @@ export const LoginForm = () => {
   });
 
   const onLogin = async (loginForm: LoginType) => {
-    const res = await signIn("credentials", {
-      email: loginForm.email,
-      password: loginForm.password,
-      redirect: false,
-      callbackUrl: Routes.dashboard.base,
-    });
-    if (res?.error) {
-      toast.error("Invalid email or password");
+    try {
+      const res = await signIn("credentials", {
+        email: loginForm.email,
+        password: loginForm.password,
+        redirect: false,
+        callbackUrl: Routes.dashboard.base,
+      });
+      if (!res?.ok) {
+        toast.error("Invalid email or password");
+      }
+      router.push(Routes.pages.home);
+    } catch (error) {
       form.setError("email", { message: "" });
       form.setError("password", { message: "" });
-      return;
     }
-    router.push(Routes.pages.home);
   };
 
   const onLoginWithGoogle = () => {
-    signIn("google");
+    signIn("google", { callbackUrl: "/" });
   };
 
   const onFillAdmin = () => {
