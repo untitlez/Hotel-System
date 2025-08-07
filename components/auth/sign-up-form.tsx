@@ -13,6 +13,7 @@ import { Endpoints } from "@/lib/endpoints";
 import { Routes } from "@/lib/routes";
 import { SignUpSchema, SignUpType } from "@/validators/sign-up.validator";
 
+import { BorderBeam } from "../ui/magicui/border-beam";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -79,7 +80,7 @@ export const SignUpForm = () => {
   };
 
   return (
-    <Card>
+    <Card className="relative overflow-hidden">
       <CardHeader className="text-center">
         <CardTitle className="text-xl">Create an account</CardTitle>
         <CardDescription>
@@ -138,6 +139,11 @@ export const SignUpForm = () => {
           </Link>
         </div>
       </CardContent>
+      <BorderBeam
+        reverse
+        size={300}
+        className="from-transparent via-primary to-transparent"
+      />
     </Card>
   );
 };

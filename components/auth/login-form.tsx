@@ -12,6 +12,7 @@ import { Config } from "@/lib/config";
 import { Routes } from "@/lib/routes";
 import { LoginSchema, LoginType } from "@/validators/login.validator";
 
+import { BorderBeam } from "../ui/magicui/border-beam";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -89,7 +90,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <Card>
+    <Card className="relative overflow-hidden">
       <CardHeader className="text-center">
         <CardTitle className="text-xl">Login to your account</CardTitle>
         <CardDescription>
@@ -189,6 +190,10 @@ export const LoginForm = () => {
           </div>
         </div>
       </CardContent>
+      <BorderBeam
+        size={300}
+        className="from-transparent via-primary to-transparent"
+      />
     </Card>
   );
 };
