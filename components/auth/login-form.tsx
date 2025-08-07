@@ -73,7 +73,7 @@ export const LoginForm = () => {
   };
 
   const onLoginWithGoogle = () => {
-    signIn("google", { callbackUrl: "/" });
+    signIn("google");
   };
 
   const onFillAdmin = () => {
