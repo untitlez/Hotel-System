@@ -68,7 +68,7 @@ export const LoginForm = () => {
         toast.error("Invalid email or password");
       }
       router.push(Routes.pages.home);
-    } catch (error) {
+    } catch {
       form.setError("email", { message: "" });
       form.setError("password", { message: "" });
     }
