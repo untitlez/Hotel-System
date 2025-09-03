@@ -23,8 +23,8 @@
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-org/luxury-stay-au.git
-cd luxury-stay-au
+git clone https://github.com/untitlez/Hotel-System.git
+cd Hotel-System
 ```
 
 ### 2. Install dependencies
