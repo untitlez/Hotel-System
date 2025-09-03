@@ -10,10 +10,9 @@ export default async function ReviewPage() {
   //
   // fetch reviews
   //
-  const reviewRes = await fetch(Config.API_URL + Endpoints.review);
-  if (!reviewRes.ok) {
-    return <p>Something went wrong. Please try again later.</p>;
-  }
+  const reviewRes = await fetch(Config.API_URL + Endpoints.review, {
+    cache: "no-store",
+  });
   const reviewData = await reviewRes.json();
 
   return (

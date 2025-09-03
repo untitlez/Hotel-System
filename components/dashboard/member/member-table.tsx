@@ -89,23 +89,29 @@ export const MemberTable = ({ data }: MemberTableProps) => {
           {users.map((item, i) => (
             <TableRow
               key={i}
-              onClick={() => handleView(item.profile.userId)}
+              onClick={() => handleView(item.profile?.userId ?? item.id)}
               className="cursor-pointer"
             >
               <TableCell>{i + 1}</TableCell>
-              <TableCell>{item.profile.fullName}</TableCell>
-              <TableCell>{item.profile.gender}</TableCell>
+              <TableCell>{item.profile?.fullName ?? "-"}</TableCell>
+              <TableCell>{item.profile?.gender ?? "-"}</TableCell>
               <TableCell>
-                {format(item.profile.birthday, "dd MMM yyyy")}
+                {item.profile?.birthday
+                  ? format(new Date(item.profile.birthday), "dd MMM yyyy")
+                  : "-"}
               </TableCell>
-              <TableCell>{item.profile.address}</TableCell>
-              <TableCell>{item.profile.phone}</TableCell>
+              <TableCell>{item.profile?.address ?? "-"}</TableCell>
+              <TableCell>{item.profile?.phone ?? "-"}</TableCell>
               <TableCell>{item.email}</TableCell>
               <TableCell>
-                <Badge className="bg-chart-1">{item.profile.status}</Badge>
+                <Badge className="bg-chart-1 uppercase">
+                  {item.profile?.status ?? "active"}
+                </Badge>
               </TableCell>
               <TableCell>
-                {format(item.profile.updatedAt, "dd MM yyyy")}
+                {item.profile?.updatedAt
+                  ? format(item.profile?.updatedAt, "dd MM yyyy")
+                  : "-"}
               </TableCell>
             </TableRow>
           ))}

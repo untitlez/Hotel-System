@@ -66,20 +66,29 @@ export const BookingTableInfo = ({
                     <div className="space-y-1 text-sm text-muted-foreground">
                       <div className="flex gap-4">
                         Full Name :
-                        <p className="mx-auto">{user?.profile.fullName}</p>
+                        <p className="mx-auto">
+                          {user?.profile?.fullName ?? "-"}
+                        </p>
                       </div>
                       <div className="flex gap-4">
                         Birthdate :
                         <p className="mx-auto">
-                          {new Date(user.profile.birthday).toLocaleDateString()}
+                          {user.profile?.birthday
+                            ? new Date(
+                                user.profile?.birthday,
+                              ).toLocaleDateString()
+                            : "-"}
                         </p>
                       </div>
                       <div className="flex gap-4">
                         Address :
-                        <p className="mx-auto">{user?.profile.address}</p>
+                        <p className="mx-auto">
+                          {user?.profile?.address ?? "-"}
+                        </p>
                       </div>
                       <div className="flex gap-4">
-                        Phone :<p className="mx-auto">{user?.profile.phone}</p>
+                        Phone :
+                        <p className="mx-auto">{user?.profile?.phone ?? "-"}</p>
                       </div>
                       <div className="flex gap-4">
                         Email :<p className="mx-auto">{user?.email}</p>
@@ -100,7 +109,7 @@ export const BookingTableInfo = ({
 
           {/* Detail */}
           <div className="grid grid-rows-8 items-center gap-2">
-            <p>{user?.profile.fullName}</p>
+            <p>{user?.profile?.fullName ?? "-"}</p>
             <p>{room?.name}</p>
             <p>{room?.type}</p>
             <p>{new Date(booking.checkInDate).toLocaleDateString()}</p>

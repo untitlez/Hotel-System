@@ -30,12 +30,15 @@ export default async function ProfilePage() {
   const bookingsData = await Promise.all(
     data.bookings.map(async (booking: ResponseBookingType) => {
       const roomRes = await fetch(
-        Config.API_URL + Endpoints.room.baseRoom + booking.roomId
+        Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
+        {
+          cache: "no-store",
+        },
       );
 
       const room = await roomRes.json();
       return { booking, room };
-    })
+    }),
   );
 
   return <AppSidebarProfile data={data} bookings={bookingsData} />;

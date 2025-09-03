@@ -14,9 +14,10 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import { FileX } from "lucide-react";
 
 interface MemberTableInfoProps {
-  data: ResponseUserType;
+  data: ResponseUserType | null;
 }
 export const MemberTableInfo = ({ data }: MemberTableInfoProps) => {
   return (
@@ -25,45 +26,64 @@ export const MemberTableInfo = ({ data }: MemberTableInfoProps) => {
         <CardTitle className="text-lg font-bold">Member Info :</CardTitle>
       </CardHeader>
       <CardContent className="grid sm:grid-cols-2 justify-center gap-8 text-sm">
-        <div className="relative aspect-square w-full max-w-xs bg-muted rounded-md overflow-hidden shadow-lg mb-6">
-          {data && (
-            <Image
-              src={data.profile.image ?? "/shiba.jpg"}
-              alt="Profile Image"
-              className="object-cover"
-              sizes="50vw"
-              fill
-            />
-          )}
-        </div>
+        <>
+          {data?.profile ? (
+            <>
+              <div className="relative aspect-square w-full max-w-xs bg-muted rounded-md overflow-hidden shadow-lg mb-6">
+                {data && (
+                  <Image
+                    src={data.profile.image ?? "/shiba.jpg"}
+                    alt="Profile Image"
+                    className="object-cover"
+                    sizes="50vw"
+                    fill
+                  />
+                )}
+              </div>
 
-        <div className="grid grid-cols-2">
-          {/* Title */}
-          <div className="grid grid-rows-8 items-center">
-            <p>Full Name</p>
-            <p>Gender</p>
-            <p>Birthday</p>
-            <p>Address</p>
-            <p>Phone</p>
-            <p>Email</p>
-            <p>Status</p>
-            <p>Updated Date</p>
-          </div>
-          {/* Detail */}
-          <div className="grid grid-rows-8 items-center">
-            <p>{data?.profile.fullName}</p>
-            <p>{data?.profile.gender}</p>
-            <p> {format(data?.profile.birthday, "dd MMM yyyy")}</p>
-            <p>{data?.profile.address}</p>
-            <p>{data?.profile.phone}</p>
-            <p className="truncate">{data?.email}</p>
-            <Badge className="bg-chart-1">{data?.profile.status}</Badge>
-            <p>{format(data?.profile.updatedAt, "dd MMM yyyy")}</p>
-          </div>
-        </div>
+              <div className="grid grid-cols-2">
+                {/* Title */}
+                <div className="grid grid-rows-8 items-center">
+                  <p>Full Name</p>
+                  <p>Gender</p>
+                  <p>Birthday</p>
+                  <p>Address</p>
+                  <p>Phone</p>
+                  <p>Email</p>
+                  <p>Status</p>
+                  <p>Updated Date</p>
+                </div>
+                {/* Detail */}
+                <div className="grid grid-rows-8 items-center">
+                  <p>{data?.profile.fullName}</p>
+                  <p>{data?.profile.gender}</p>
+                  <p>
+                    {data?.profile.birthday
+                      ? format(data?.profile.birthday, "dd MMM yyyy")
+                      : ""}
+                  </p>
+                  <p>{data?.profile.address}</p>
+                  <p>{data?.profile.phone}</p>
+                  <p className="truncate">{data?.email}</p>
+                  <Badge className="bg-chart-1">{data?.profile.status}</Badge>
+                  <p>
+                    {data?.profile.updatedAt
+                      ? format(data?.profile.updatedAt, "dd MMM yyyy")
+                      : ""}
+                  </p>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="col-span-2 flex items-center justify-center gap-2 my-12 text-muted-foreground">
+              <FileX className="size-5" />
+              No Profile Information
+            </div>
+          )}
+        </>
       </CardContent>
       <CardFooter>
-        <MemberCardInfo data={data} />
+        <MemberCardInfo bookings={data?.bookings} />
       </CardFooter>
     </Card>
   );

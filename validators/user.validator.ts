@@ -23,10 +23,11 @@ export const CreateUserSchema = UserSchema.omit({
 
 export const UpdateUserSchema = CreateUserSchema.partial();
 export const ResponseUserSchema = UserSchema.pick({
+  id: true,
   email: true,
   role: true,
 }).extend({
-  profile: ResponseProfileSchema,
+  profile: ResponseProfileSchema.nullable(),
   bookings: z.array(ResponseBookingSchema),
 });
 

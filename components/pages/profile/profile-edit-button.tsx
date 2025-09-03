@@ -95,20 +95,20 @@ export const ProfileEditButton = ({ data }: ProfileEditButtonProps) => {
   const form = useForm<UpdateProfileType>({
     resolver: zodResolver(UpdateProfileSchema),
     defaultValues: {
-      image: data.profile.image ?? undefined,
-      fullName: data.profile.fullName ?? "",
-      gender: data.profile.gender ?? "",
-      birthday: data.profile.birthday
-        ? new Date(data.profile.birthday)
+      image: data.profile?.image ?? undefined,
+      fullName: data.profile?.fullName ?? "",
+      gender: data.profile?.gender ?? "",
+      birthday: data.profile?.birthday
+        ? new Date(data.profile?.birthday)
         : undefined,
-      address: data.profile.address ?? "",
-      phone: data.profile.phone ?? "",
+      address: data.profile?.address ?? "",
+      phone: data.profile?.phone ?? "",
     },
     mode: "onBlur",
   });
   const { control, handleSubmit, formState } = form;
   const router = useRouter();
-  const id = data.profile.userId;
+  const id = data.profile?.userId ?? data.id;
 
   const onSubmit = async (newData: UpdateProfileType) => {
     try {
@@ -120,7 +120,7 @@ export const ProfileEditButton = ({ data }: ProfileEditButtonProps) => {
 
         const { data } = await axios.post(
           Config.API_URL + Endpoints.upload,
-          formData,
+          formData
         );
         imageUrl = data.url;
       }

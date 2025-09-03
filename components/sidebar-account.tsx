@@ -64,7 +64,7 @@ export const SidebarAccount = ({ data }: SidebarAccountProps) => {
               <Avatar className="size-8 rounded-lg">
                 {session.data?.user.role === "ADMIN" ? (
                   <AvatarImage
-                    src={data?.profile.image ?? session.data?.user.image}
+                    src={data?.profile?.image ?? session.data?.user.image ?? ""}
                     alt="Profile Image"
                   />
                 ) : (
@@ -98,7 +98,9 @@ export const SidebarAccount = ({ data }: SidebarAccountProps) => {
                 <Avatar className="size-8 rounded-lg">
                   {session.data?.user.role === "ADMIN" ? (
                     <AvatarImage
-                      src={data?.profile.image ?? session.data?.user.image}
+                      src={
+                        data?.profile?.image ?? session.data?.user.image ?? ""
+                      }
                       alt="Profile Image"
                     />
                   ) : (

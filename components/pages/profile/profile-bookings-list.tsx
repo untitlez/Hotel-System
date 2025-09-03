@@ -86,7 +86,11 @@ export const ProfileBookingsList = ({ bookings }: ProfileBookingsListProps) => {
                 <div className="grid gap-2 min-w-max">
                   Max Guests :
                   <div>
-                    <Button variant="outline" size="sm">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="pointer-events-none"
+                    >
                       <User2 />
                       {list.room.maxGuests}
                     </Button>
@@ -150,11 +154,19 @@ export const ProfileBookingsList = ({ bookings }: ProfileBookingsListProps) => {
 
               {/* Check In - Check Out */}
               <div className="grid gap-2">
-                <Button variant="secondary" size="sm" className="space-x-2">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="space-x-2 pointer-events-none"
+                >
                   <span>Check In :</span>
                   {format(list.booking.checkInDate, "dd MMM yyyy")}
                 </Button>
-                <Button variant="secondary" size="sm" className="space-x-2">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="space-x-2 pointer-events-none"
+                >
                   <span>Check Out :</span>
                   {format(list.booking.checkOutDate, "dd MMM yyyy")}
                 </Button>

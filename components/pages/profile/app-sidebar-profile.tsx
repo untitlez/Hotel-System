@@ -40,7 +40,7 @@ export default function AppSidebarProfile({
         <SidebarHeader className="p-3 space-y-1">
           <div className="relative aspect-4/3 bg-muted rounded-lg">
             <Image
-              src={data.profile.image ?? "/shiba.jpg"}
+              src={data.profile?.image ?? "/shiba.jpg"}
               alt="Profile Image"
               className="object-cover rounded-lg"
               sizes="30vw"

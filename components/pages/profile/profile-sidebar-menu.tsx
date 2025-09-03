@@ -29,23 +29,23 @@ export const ProfileSidebarMenu = ({ data }: ProfileSidebarMenuProps) => {
     {
       name: "Name",
       icon: CircleUser,
-      label: data?.profile.fullName,
+      label: data?.profile?.fullName,
     },
     { name: "Email", icon: Mail, label: data?.email },
-    { name: "Gender", icon: User, label: data?.profile.gender },
+    { name: "Gender", icon: User, label: data?.profile?.gender },
     {
       name: "Birthdate",
       icon: Calendar1Icon,
-      label: data?.profile.birthday
-        ? format(new Date(data?.profile.birthday), "dd MMM yyyy")
+      label: data?.profile?.birthday
+        ? format(new Date(data?.profile?.birthday), "dd MMM yyyy")
         : "",
     },
     {
       name: "Address",
       icon: MapPin,
-      label: data?.profile.address,
+      label: data?.profile?.address,
     },
-    { name: "Phone", icon: Phone, label: data?.profile.phone },
+    { name: "Phone", icon: Phone, label: data?.profile?.phone },
   ];
 
   return (
@@ -62,7 +62,7 @@ export const ProfileSidebarMenu = ({ data }: ProfileSidebarMenuProps) => {
                 <item.icon className="size-4" />
                 <span>{item.name}</span>
                 <span className="flex-1 text-center text-muted-foreground">
-                  {item.label}
+                  {item.label ?? "-"}
                 </span>
               </SidebarMenuItem>
             ))}

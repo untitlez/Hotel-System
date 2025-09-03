@@ -23,11 +23,6 @@ export default async function PropertyPage({
     Config.API_URL + Endpoints.room.member + "?" + query,
     { cache: "no-store" },
   );
-
-  if (!res.ok) {
-    return <p>Something went wrong. Please try again later.</p>;
-  }
-
   const data = await res.json();
   const isPropertyPage = true;
 

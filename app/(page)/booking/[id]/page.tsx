@@ -24,19 +24,21 @@ export default async function BookingPage({ params }: BookingPageProps) {
   //
   const responseRoom = await fetch(
     Config.API_URL + Endpoints.room.baseRoom + id,
+    {
+      cache: "no-store",
+    },
   );
-  if (!responseRoom.ok) {
-    return <p>Something went wrong. Please try again later.</p>;
-  }
   const roomData = await responseRoom.json();
 
   //
   // fetch user id
   //
-  const responseMember = await fetch(Config.API_URL + Endpoints.users + userId);
-  if (!responseMember.ok) {
-    return <p>Something went wrong. Please try again later.</p>;
-  }
+  const responseMember = await fetch(
+    Config.API_URL + Endpoints.users + userId,
+    {
+      cache: "no-store",
+    },
+  );
   const memberData = await responseMember.json();
 
   const timeOut = 5;
