@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { User2 } from "lucide-react";
 import { toast } from "sonner";
@@ -26,6 +27,7 @@ interface ReviewBoxProps {
 
 export const ReviewBox = ({ review }: ReviewBoxProps) => {
   const [reviewData, setReviewData] = useState<ResponseReviewType[]>(review);
+  const router = useRouter();
   const session = useSession();
 
   const onDelete = async (id: string) => {
@@ -33,6 +35,7 @@ export const ReviewBox = ({ review }: ReviewBoxProps) => {
       await axios.delete(Config.API_URL + Endpoints.review + id);
       setReviewData((prev) => prev.filter((item) => item.id !== id));
       toast.success("Item has been deleted.");
+      router.refresh();
     } catch {
       toast.error("Failed to Delete!");
     }

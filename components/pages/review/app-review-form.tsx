@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "sonner";
 
@@ -28,7 +30,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useSession } from "next-auth/react";
 
 const inputItems = [
   {
@@ -54,6 +55,8 @@ const inputItems = [
 
 export const AppReviewForm = () => {
   const session = useSession();
+  const router = useRouter();
+
   const [open, setOpen] = useState(false);
   const form = useForm<CreateReviewType>({
     resolver: zodResolver(CreateReviewSchema),
@@ -69,6 +72,7 @@ export const AppReviewForm = () => {
   const onSubmit = async (newData: CreateReviewType) => {
     try {
       await axios.post(Config.API_URL + Endpoints.review, newData);
+      router.refresh();
       setOpen(true);
       form.reset();
     } catch {

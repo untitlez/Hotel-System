@@ -133,7 +133,7 @@ export const AppRoomForm = ({ data }: AppRoomFormProps) => {
 
         const { data } = await axios.post(
           Config.API_URL + Endpoints.upload,
-          formData,
+          formData
         );
         imageUrl = data.url;
       }
@@ -143,19 +143,20 @@ export const AppRoomForm = ({ data }: AppRoomFormProps) => {
       if (data) {
         await axios.put(
           Config.API_URL + Endpoints.room.baseRoom + paramsId,
-          payload,
+          payload
         );
         toast.success("Changes saved successfully.");
+        router.refresh();
       } else {
         await axios.post(Config.API_URL + Endpoints.room.baseRoom, payload);
         toast.success("Room created successfully!");
         form.reset();
       }
-
+      router.refresh();
       router.push(Routes.dashboard.room);
     } catch {
       toast.error(
-        data ? "Failed to Edit Room Info!" : "Failed to Create Room!",
+        data ? "Failed to Edit Room Info!" : "Failed to Create Room!"
       );
     }
   };
@@ -166,6 +167,7 @@ export const AppRoomForm = ({ data }: AppRoomFormProps) => {
       await axios.delete(Config.API_URL + Endpoints.room.baseRoom + paramsId);
       toast.success("Item has been deleted.");
       router.push(Routes.dashboard.room);
+      router.refresh();
     } catch {
       toast.error("Failed to Delete!");
     }
