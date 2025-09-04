@@ -19,9 +19,6 @@ export default async function ProfilePage() {
   const userRes = await fetch(Config.API_URL + Endpoints.users + id, {
     cache: "no-store",
   });
-  if (!userRes.ok) {
-    return <p>Something went wrong. Please try again later.</p>;
-  }
   const data = await userRes.json();
 
   //
@@ -33,12 +30,11 @@ export default async function ProfilePage() {
         Config.API_URL + Endpoints.room.baseRoom + booking.roomId,
         {
           cache: "no-store",
-        },
+        }
       );
-
       const room = await roomRes.json();
       return { booking, room };
-    }),
+    })
   );
 
   return <AppSidebarProfile data={data} bookings={bookingsData} />;

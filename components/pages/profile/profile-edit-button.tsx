@@ -114,7 +114,7 @@ export const ProfileEditButton = ({ data }: ProfileEditButtonProps) => {
     try {
       let imageUrl: string | undefined;
 
-      if (newData.image) {
+      if (newData.image && newData.image !== data.profile?.image) {
         const formData = new FormData();
         formData.append("file", newData.image);
 
