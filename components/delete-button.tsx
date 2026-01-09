@@ -30,6 +30,7 @@ interface DeleteButtonProps
   description?: string;
   cancel?: string;
   confirm?: string;
+  disabled?: boolean;
 }
 
 export const DeleteButton = ({
@@ -40,12 +41,13 @@ export const DeleteButton = ({
   description = "Description",
   cancel = "Cancel",
   confirm = "Confirm",
+  disabled,
   ...props
 }: DeleteButtonProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild className="cursor-pointer">
-        <Button variant={variant} size={size}>
+        <Button variant={variant} size={size} disabled={disabled}>
           {label ? label : <Trash2 />}
         </Button>
       </AlertDialogTrigger>

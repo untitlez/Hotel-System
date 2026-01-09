@@ -109,6 +109,7 @@ export const ProfileEditButton = ({ data }: ProfileEditButtonProps) => {
   const { control, handleSubmit, formState } = form;
   const router = useRouter();
   const id = data.profile?.userId ?? data.id;
+  const admin = Config.LOGIN_WITH_GUEST.EMAIL === data.email;
 
   const onSubmit = async (newData: UpdateProfileType) => {
     try {
@@ -136,6 +137,8 @@ export const ProfileEditButton = ({ data }: ProfileEditButtonProps) => {
   };
 
   const onDelete = async () => {
+    if (admin) return;
+
     try {
       await axios.delete(Config.API_URL + Endpoints.users + id);
       toast.success("Account has been deleted.");
@@ -145,6 +148,7 @@ export const ProfileEditButton = ({ data }: ProfileEditButtonProps) => {
       toast.error("Failed to Delete!");
     }
   };
+
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
@@ -350,6 +354,7 @@ export const ProfileEditButton = ({ data }: ProfileEditButtonProps) => {
                   description="This will permanently remove the your profile. Are you sure?"
                   cancel="No, keep it"
                   confirm="Yes, remove it"
+                  disabled={admin}
                   onClick={onDelete}
                 />
               )}

@@ -65,11 +65,11 @@ export const LoginForm = () => {
         redirect: false,
         callbackUrl: Routes.dashboard.base,
       });
-      if (!res?.ok) {
-        toast.error("Invalid email or password");
-      }
+      if (!res.url) throw new Error();
+
       router.push(Routes.pages.home);
     } catch {
+      toast.error("Invalid email or password");
       form.setError("email", { message: "" });
       form.setError("password", { message: "" });
     }
