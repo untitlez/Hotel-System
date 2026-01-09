@@ -65,7 +65,7 @@ export const LoginForm = () => {
         redirect: false,
         callbackUrl: Routes.dashboard.base,
       });
-      if (!res.url) throw new Error();
+      if (!res?.url) throw new Error();
 
       router.push(Routes.pages.home);
     } catch {
