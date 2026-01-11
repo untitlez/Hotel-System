@@ -2,7 +2,10 @@
 
 import Image from "next/image";
 
+import { SessionType } from "@/validators/session.validator ";
 import { ResponseUserType } from "@/validators/user.validator";
+import { ResponseBookingType } from "@/validators/booking.validator";
+import { ResponseRoomType } from "@/validators/room.validator";
 
 import { ProfileSidebarMenu } from "./profile-sidebar-menu";
 import { ProfileBookingsList } from "./profile-bookings-list";
@@ -18,10 +21,9 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { ResponseBookingType } from "@/validators/booking.validator";
-import { ResponseRoomType } from "@/validators/room.validator";
 
 interface AppSidebarProfileProps {
+  image?: string | null;
   data: ResponseUserType;
   bookings: {
     booking: ResponseBookingType;
@@ -30,6 +32,7 @@ interface AppSidebarProfileProps {
 }
 
 export default function AppSidebarProfile({
+  image,
   data,
   bookings,
 }: AppSidebarProfileProps) {
@@ -40,10 +43,11 @@ export default function AppSidebarProfile({
         <SidebarHeader className="p-3 space-y-1">
           <div className="relative aspect-4/3 bg-muted rounded-lg">
             <Image
-              src={data.profile?.image ?? "/shiba.jpg"}
+              src={data.profile?.image || image || "/shiba.jpg"}
               alt="Profile Image"
               className="object-cover rounded-lg"
-              sizes="30vw"
+              loading="eager"
+              sizes="50vw"
               fill
             />
           </div>

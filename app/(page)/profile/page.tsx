@@ -37,5 +37,11 @@ export default async function ProfilePage() {
     })
   );
 
-  return <AppSidebarProfile data={data} bookings={bookingsData} />;
+  return (
+    <AppSidebarProfile
+      image={session.user.image}
+      data={data}
+      bookings={bookingsData}
+    />
+  );
 }

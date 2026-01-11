@@ -76,7 +76,7 @@ export const LoginForm = () => {
   };
 
   const onLoginWithGoogle = () => {
-    signIn("google");
+    signIn("google", { callbackUrl: Routes.pages.home });
   };
 
   const onFillAdmin = () => {

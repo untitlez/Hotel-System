@@ -1,5 +1,10 @@
 export const Config = {
   API_URL: process.env.NEXT_PUBLIC_API_URL,
+  AUTH_SECRET: process.env.AUTH_SECRET,
+  GOOGLE_PROVIDER: {
+    CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  },
   LOGIN_WITH_ADMIN: {
     EMAIL: process.env.NEXT_PUBLIC_ADMIN_EMAIL!,
     PASSWORD: process.env.NEXT_PUBLIC_ADMIN_PASSWORD!,

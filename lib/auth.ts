@@ -1,16 +1,11 @@
 import "next-auth/jwt";
 import NextAuth from "next-auth";
-import type {
-  Account,
-  DefaultSession,
-  Profile,
-  Session,
-  User,
-} from "@auth/core/types";
+import type { DefaultSession } from "@auth/core/types";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
+import { Config } from "./config";
 import { prisma } from "@/lib/prisma";
 import { loginAccount } from "@/services/login.services";
 import { validateLogin } from "@/validators/login.validator";
@@ -38,11 +33,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma) as any,
   pages: { signIn: "/login" },
   session: { strategy: "jwt" },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: Config.AUTH_SECRET,
   providers: [
     Google({
-      clientId: process.env.AUTH_GOOGLE_ID!,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+      clientId: Config.GOOGLE_PROVIDER.CLIENT_ID,
+      clientSecret: Config.GOOGLE_PROVIDER.CLIENT_SECRET,
       allowDangerousEmailAccountLinking: true,
     }),
     Credentials({
@@ -54,9 +49,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         const validate = validateLogin(credentials);
         const user = await loginAccount(validate);
-        if (!user) {
-          return null;
-        }
+        if (!user) return null;
         return user;
       },
     }),
